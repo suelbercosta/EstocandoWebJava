@@ -117,9 +117,9 @@ public class CargoDAO {
 		return lista;
 	}
 	
-	public ArrayList<Cargo> buscarPorDescricao(Cargo itemCargo) throws SQLException {
+	public ArrayList<Cargo> buscarPorDescricao(Cargo c) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM Cargo WHERE descricao LIKE ? ");
+		sql.append("SELECT cod_cargo, descricao FROM Cargo WHERE descricao LIKE ? ");
 		sql.append("ORDER BY descricao ASC ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
@@ -127,7 +127,7 @@ public class CargoDAO {
 
 				// COMANDO DE PREPARAÇÃO
 				PreparedStatement comando = conexao.prepareStatement(sql.toString());
-				comando.setString(1, "%" + itemCargo.getDescricao() + "%");
+				comando.setString(1, "%" + c.getDescricao() + "%");
 				
 				ResultSet resultado = comando.executeQuery();
 				
@@ -136,11 +136,11 @@ public class CargoDAO {
 
 				//ESTRUTURA DE REPETIÇÃO PARA COLETAR TODOS OS DADOS DA CONSULTA
 				while (resultado.next()) {
-					Cargo c1 = new Cargo();
-					itemCargo.setCodigo(resultado.getLong("cod_cargo"));
-					itemCargo.setDescricao(resultado.getString("descricao"));
+					Cargo item = new Cargo();
+					item.setCodigo(resultado.getLong("cod_cargo"));
+					item.setDescricao(resultado.getString("descricao"));
 
-					lista.add(c1);
+					lista.add(item);
 				}
 
 				return lista;
@@ -239,6 +239,10 @@ public class CargoDAO {
 		
 		try {
 			ArrayList<Cargo> lista = cdao.buscarPorDescricao(c1);
+			
+			for(Cargo c : lista){
+				System.out.println("Resultado: " + c);
+			}
 		}catch(SQLException e) {
 			System.out.println("Ocorreu um erro ao tentar perquisar um cargo.");
 			e.printStackTrace();
