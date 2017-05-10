@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<p:growl autoUpdate="true" />
+
+		<p:panelMenu style="width:200px">
+			<p:submenu label="Arquivo">
+				<p:menuitem value="Sair" actionListener="#{menuView.home}" />
+			</p:submenu>
+			<p:submenu label="Cadastro">
+				<p:menuitem value="Gerar Requisição"
+					actionListener="#{menuView.delete}" ajax="false" />
+				<p:menuitem value="Produto" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Fornecedor" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Cargo" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Setor" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Almoxarife" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Requisitante" actionListener="#{menuView.delete}"
+					ajax="false" />
+			</p:submenu>
+			<p:submenu label="Consulta">
+				<p:menuitem value="Produto" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Fornecedor" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Cargo" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Setor" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Almoxarife" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Requisitante" actionListener="#{menuView.delete}"
+					ajax="false" />
+			</p:submenu>
+			<p:submenu label="Relatório">
+				<p:menuitem value="Estoque" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Fornecedor" actionListener="#{menuView.delete}"
+					ajax="false" />
+				<p:menuitem value="Requisição" actionListener="#{menuView.delete}"
+					ajax="false" />
+			</p:submenu>
+			<p:submenu label="Sobre">
+				<p:menuitem value="Ajuda" actionListener="#{menuView.delete}"
+					ajax="false" />
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+</ui:composition>
