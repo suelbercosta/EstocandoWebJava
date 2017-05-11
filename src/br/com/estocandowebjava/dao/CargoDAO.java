@@ -92,7 +92,7 @@ public class CargoDAO {
 	//CRIAÇÃO DE ARRAYLIST PARA LISTAR TODOS OS CARGOS
 	public ArrayList<Cargo> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select cod_cargo, descricao from Cargo order by salario desc ");
+		sql.append("select * from Cargo ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -217,7 +217,7 @@ public class CargoDAO {
 		}*/
 		
 		
-		/*
+		
 		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR CÓDIGO
 		CargoDAO cdao = new CargoDAO();
 		try {
@@ -229,10 +229,10 @@ public class CargoDAO {
 		}catch(SQLException e) {
 			System.out.println("Ocorreu um erro ao tentar listar os cargos!");
 			e.printStackTrace();
-		} */
+		} 
 		
 		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR DESCRIÇÃO
-		Cargo c1 = new Cargo();
+		/*Cargo c1 = new Cargo();
 		c1.setDescricao("de");
 		
 		CargoDAO cdao = new CargoDAO();
@@ -246,7 +246,7 @@ public class CargoDAO {
 		}catch(SQLException e) {
 			System.out.println("Ocorreu um erro ao tentar perquisar um cargo.");
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 }
