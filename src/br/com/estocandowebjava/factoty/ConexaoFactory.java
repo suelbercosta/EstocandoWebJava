@@ -13,6 +13,7 @@ public class ConexaoFactory {
 	
 	// Conexão com o banco de dados MySql...
 	public static Connection conectar() throws SQLException{
+		//DriverManeger.registerDriver(new com.mysql.jdbc.Driver());
 		Connection conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
 		return conexao;
 	}
