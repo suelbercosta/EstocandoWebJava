@@ -36,7 +36,7 @@ public class CargoBean {
 			ArrayList<Cargo> lista = dao.listar();
 			//A VARIÁVEL ITENS RECEBE OS DADOS DA LISTA
 			itens = new ListDataModel<Cargo>(lista);
-		}catch(SQLException ex){
+		} catch (SQLException ex){
 			ex.printStackTrace();
 		}
 	}

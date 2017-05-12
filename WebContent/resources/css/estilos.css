@@ -1,5 +1,15 @@
 @CHARSET "ISO-8859-1";
 
+* {
+	padding:0px;
+	margin:0px;
+}
+
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 12px !important;
+}
+
+p {
+	font-size: 18px;
+	padding:12px;
 }

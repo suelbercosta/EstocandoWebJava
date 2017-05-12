@@ -92,7 +92,7 @@ public class CargoDAO {
 	//CRIAÇÃO DE ARRAYLIST PARA LISTAR TODOS OS CARGOS
 	public ArrayList<Cargo> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select * from Cargo ");
+		sql.append("select * from Cargo ORDER BY descricao asc ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -110,6 +110,8 @@ public class CargoDAO {
 			Cargo c1 = new Cargo();
 			c1.setCodigo(resultado.getLong("cod_cargo"));
 			c1.setDescricao(resultado.getString("descricao"));
+			c1.setSalario(resultado.getDouble("salario"));
+			c1.setPermissao(resultado.getLong("permissao"));
 
 			lista.add(c1);
 		}
@@ -117,6 +119,7 @@ public class CargoDAO {
 		return lista;
 	}
 	
+	//CRIAÇÃO DE ARRAYLIST PARA LISTAR OS DADOS PESQUISADOS POR DESCRIÇÃO
 	public ArrayList<Cargo> buscarPorDescricao(Cargo c) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT cod_cargo, descricao FROM Cargo WHERE descricao LIKE ? ");
