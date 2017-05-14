@@ -82,6 +82,7 @@ public class CargoBean {
 
 			ArrayList<Cargo> lista = dao.listar();
 			itens = new ListDataModel<Cargo>(lista);
+			JSFUtil.adicionarMensagemSucesso("Dados removidos com sucesso");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
