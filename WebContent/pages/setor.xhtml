@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+		<h:form id="formListagemSetor">
+			<!-- TABELA COM OS DADOS DOS SETORES -->
+			<p:dataTable id="tblSetor" widgetVar="tabelaSetor" emptyMessage="Nenhum registro encontrado."
+				value="#{MBSetor.itens}" var="item" filteredValue="#{MBSetor.itensFiltrados}"
+				paginator="true" rows="12">
+				<f:facet name="header">
+					<h:outputText value="Setores Cadastrados" />
+				</f:facet>
+				<p:column headerText="Código" filterBy="#{item.codigo}" width="120">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" filterBy="#{item.descricao}"
+					width="400">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Andar" filterBy="#{item.andar}">
+					<h:outputText value="#{item.andar}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirSetor').show();"
+						update=":formExcluirSetor:pnlExcluirSetor">
+						<f:setPropertyActionListener target="#{MBSetor.setor}" value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgEditarSetor').show();"
+						update=":formEditarSetor:pnlEditarSetor">
+						<f:setPropertyActionListener target="#{MBSetor.setor}" value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVO SETOR -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar novo setor"
+						actionListener="#{MBSetor.prepararNovoSetor}"
+						oncomplete="PF('dlgNovoSetor').show();"
+						update=":formNovoSetor:pnlNovoSetor" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- XML PARA INSERIR UM NOVO Setor -->
+		<p:dialog header="Novo Setor" widgetVar="dlgNovoSetor" modal="true"
+			appendTo="@(body)" height="90" closable="true" draggable="false" resizable="false">
+			<h:form id="formNovoSetor">
+				<h:panelGrid id="pnlNovoSetor" columns="2">
+					<p:outputLabel value="Descrição" />
+					<p:inputText size="30" maxlength="40"
+						value="#{MBSetor.setor.descricao}" />
+
+					<p:outputLabel value="Andar" />
+					<p:inputText size="15" maxlength="10"
+						value="#{MBSetor.setor.andar}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{MBSetor.novoSetor}"
+						oncomplete="PF('dlgNovoSetor').hide(); " 
+						update=":formListagemSetor:tblSetor :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgNovoSetor').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA EXCLUIR UM SETOR -->
+		<p:dialog id="dialogExcluir" widgetVar="dlgExcluirSetor"
+			closable="true" draggable="false" resizable="false" modal="true"
+			appendTo="@(body)" header="Excluir Setor">
+			<h:form id="formExcluirSetor">
+				<h:panelGrid id="pnlExcluirSetor" columns="2">
+					<h:outputText value="Código" />
+					<h:outputText value="#{MBSetor.setor.codigo}" />
+
+					<h:outputText value="Descrição" />
+					<h:outputText value="#{MBSetor.setor.descricao}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBSetor.excluirSetor}"
+						oncomplete="PF('dlgExcluirSetor').hide(); PF('tabelaSetor').clearFilters();" 
+						update=":formListagemSetor:tblSetor :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgExcluirSetor').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA ALTERAR UM SETOR -->
+		<p:dialog widgetVar="dlgEditarSetor" closable="true" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Editar Setor">
+			<h:form id="formEditarSetor">
+				<h:panelGrid id="pnlEditarSetor" columns="2">
+					<p:outputLabel value="Código" />
+					<p:outputLabel value="#{MBSetor.setor.codigo}" />
+
+					<p:outputLabel value="Descrição" />
+					<p:inputText value="#{MBSetor.setor.descricao}" size="30"
+						maxlength="40" />
+
+					<p:outputLabel value="Andar" />
+					<p:inputText value="#{MBSetor.setor.andar}" size="15"
+						maxlength="10" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBSetor.editarSetor}"
+						oncomplete="PF('dlgEditarSetor').hide(); PF('tabelaSetor').clearFilters();" 
+						update=":formListagemSetor:tblSetor :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgEditarSetor').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
