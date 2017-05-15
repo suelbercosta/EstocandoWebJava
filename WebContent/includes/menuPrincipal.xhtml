@@ -11,32 +11,24 @@
 
 		<p:panelMenu style="width:200px">
 			<p:submenu label="Arquivo">
-				<p:menuitem value="Sair" action="#" />
+				<p:menuitem value="Sair" />
 			</p:submenu>
 			<p:submenu label="Cadastro">
-				<p:menuitem value="Gerar Requisição" action="#" />
-				<p:menuitem value="Produto" action="#"/>
-				<p:menuitem value="Fornecedor" action="#"/>
-				<p:menuitem value="Cargo" action="#"/>
-				<p:menuitem value="Setor" action="#" />
-				<p:menuitem value="Almoxarife" action="#"/>
-				<p:menuitem value="Requisitante" action="#"/>
-			</p:submenu>
-			<p:submenu label="Consulta">
-				<p:menuitem value="Produto" action="#"/>
-				<p:menuitem value="Fornecedor" action="#" />
-				<p:menuitem value="Cargo" action="#"/>
-				<p:menuitem value="Setor" action="#" />
-				<p:menuitem value="Almoxarife" action="#" />
-				<p:menuitem value="Requisitante" action="#" />
+				<p:menuitem value="Almoxarife" />
+				<p:menuitem value="Cargo" outcome="/pages/cargo.xhtml"/>
+				<p:menuitem value="Fornecedor" />
+				<p:menuitem value="Gerar Requisição" />
+				<p:menuitem value="Produto" />
+				<p:menuitem value="Requisitante" />
+				<p:menuitem value="Setor" outcome="/pages/setor.xhtml"/>
 			</p:submenu>
 			<p:submenu label="Relatório">
-				<p:menuitem value="Estoque" action="#" />
-				<p:menuitem value="Fornecedor" action="#" />
-				<p:menuitem value="Requisição" action="#" />
+				<p:menuitem value="Estoque" />
+				<p:menuitem value="Fornecedor" />
+				<p:menuitem value="Requisição" />
 			</p:submenu>
 			<p:submenu label="Sobre">
-				<p:menuitem value="Ajuda" action="#" />
+				<p:menuitem value="Ajuda" />
 			</p:submenu>
 		</p:panelMenu>
 	</h:form>
