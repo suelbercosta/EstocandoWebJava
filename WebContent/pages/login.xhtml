@@ -4,5 +4,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/modeloSistema.xhtml">
 
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
 
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<ui:include src="/pages/cadastroProduto.xhtml" />
+	</ui:define>
 </ui:composition>>
