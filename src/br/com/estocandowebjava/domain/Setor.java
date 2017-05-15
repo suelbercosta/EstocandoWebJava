@@ -28,5 +28,11 @@ public class Setor {
 	public void setAndar(String andar) {
 		this.andar = andar;
 	}
+	
+	@Override
+	public String toString() {
+		String saida = codigo + " / " + descricao;
+		return saida;
+	}
 
 }
