@@ -21,16 +21,18 @@
 	<ui:define id="conteudo" name="conteudo">
 		<h:form id="formListagemCargo">
 			<!-- TABELA COM OS DADOS DOS CARGOS -->
-			<p:dataTable id="tblCargo" emptyMessage="Nenhum registro encontrado."
-				value="#{MBCargo.itens}" var="item" paginator="true" rows="12">
+			<p:dataTable id="tblCargo" widgetVar="tabelaCargos" emptyMessage="Nenhum registro encontrado."
+				value="#{MBCargo.itens}" var="item" filteredValue="#{MBCargo.itensFiltrados}"
+				paginator="true" rows="12">
 				<f:facet name="header">
 					<h:outputText value="Cargos Cadastrados" />
 				</f:facet>
-				<p:column headerText="Código" filterBy="#{item.codigo}">
+				<p:column headerText="Código" filterBy="#{item.codigo}" width="120">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Descrição" filterBy="#{item.descricao}">
+				<p:column headerText="Descrição" filterBy="#{item.descricao}"
+					width="400">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
@@ -38,19 +40,28 @@
 					<h:outputText value="#{item.salario}" />
 				</p:column>
 
-				<p:column headerText="Permissão" filterBy="#{item.permissao}">
+				<p:column headerText="Permissão" filterBy="#{item.permissao}"
+					width="120">
 					<h:outputText value="#{item.permissao}" />
 				</p:column>
 
-				<p:column headerText="Opções">
+				<p:column headerText="Opções" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{MBCargo.prepararExcluirCargo}"
 						oncomplete="PF('dlgExcluirCargo').show();"
-						update=":formExcluirCargo:pnlExcluirCargo" />
-					<p:commandButton icon="ui-icon-pencil" />
+						update=":formExcluirCargo:pnlExcluirCargo">
+						<f:setPropertyActionListener target="#{MBCargo.cargo}" value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgEditarCargo').show();"
+						update=":formEditarCargo:pnlEditarCargo">
+						<f:setPropertyActionListener target="#{MBCargo.cargo}" value="#{item}" />
+					</p:commandButton>
 				</p:column>
-				
-				<!-- BOTÃO NOVO -->
+
+				<!-- BOTÃO ADICIONAR NOVO CARGO -->
 				<f:facet name="footer">
 					<p:commandButton value="Cadastrar novo cargo"
 						actionListener="#{MBCargo.prepararNovoCargo}"
@@ -60,6 +71,7 @@
 			</p:dataTable>
 		</h:form>
 
+		<!-- XML PARA INSERIR UM NOVO CARGO -->
 		<p:dialog header="Novo Cargo" widgetVar="dlgNovoCargo" modal="true"
 			appendTo="@(body)" height="110" closable="true" draggable="false">
 			<h:form id="formNovoCargo">
@@ -80,7 +92,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{MBCargo.novoCargo}"
-						oncomplete="PF('dlgNovoCargo').hide();"
+						oncomplete="PF('dlgNovoCargo').hide(); PF('tabelaCargos').clearFilters();" 
 						update=":formListagemCargo:tblCargo :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgNovoCargo').hide();" />
@@ -89,9 +101,9 @@
 		</p:dialog>
 
 		<!-- XML PARA EXCLUIR UM CARGO -->
-		<p:dialog id="dialogExcluir" widgetVar="dlgExcluirCargo" closable="true"
-			draggable="false" resizable="false" modal="true" appendTo="@(body)"
-			header="Excluir Cargo">
+		<p:dialog id="dialogExcluir" widgetVar="dlgExcluirCargo"
+			closable="true" draggable="false" resizable="false" modal="true"
+			appendTo="@(body)" header="Excluir Cargo">
 			<h:form id="formExcluirCargo">
 				<h:panelGrid id="pnlExcluirCargo" columns="2">
 					<h:outputText value="Código" />
@@ -104,12 +116,46 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Excluir"
 						actionListener="#{MBCargo.excluirCargo}"
-						oncomplete="PF('dlgExcluirCargo').hide();"
+						oncomplete="PF('dlgExcluirCargo').hide(); PF('tabelaCargos').clearFilters();" 
 						update=":formListagemCargo:tblCargo :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgExcluirCargo').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+
+		<!-- XML PARA ALTERAR UM CARGO -->
+		<p:dialog widgetVar="dlgEditarCargo" closable="true" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Editar Cargo">
+			<h:form id="formEditarCargo">
+				<h:panelGrid id="pnlEditarCargo" columns="2">
+					<p:outputLabel value="Código" />
+					<p:outputLabel value="#{MBCargo.cargo.codigo}" />
+
+					<p:outputLabel value="Descrição" />
+					<p:inputText value="#{MBCargo.cargo.descricao}" size="30"
+						maxlength="40" />
+
+					<p:outputLabel value="Salário" />
+					<p:inputText value="#{MBCargo.cargo.salario}" size="9"
+						maxlength="7" />
+
+					<p:outputLabel value="Permissão" />
+					<p:inputText value="#{MBCargo.cargo.permissao}" size="5"
+						maxlength="1" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBCargo.editarCargo}"
+						oncomplete="PF('dlgEditarCargo').hide(); PF('tabelaCargos').clearFilters();" 
+						update=":formListagemCargo:tblCargo :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgEditarCargo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>

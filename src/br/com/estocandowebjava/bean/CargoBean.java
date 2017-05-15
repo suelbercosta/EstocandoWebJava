@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.ListDataModel;
 
 import br.com.estocandowebjava.dao.CargoDAO;
 import br.com.estocandowebjava.domain.Cargo;
@@ -15,10 +14,9 @@ import br.com.estocandowebjava.util.JSFUtil;
 @ManagedBean(name = "MBCargo")
 @ViewScoped
 public class CargoBean {
-	// CRIAÇÃO DA VARIÁVEL CARGO PARA CADASTRO, ALTERAÇÃO E EXCLUSÃO
 	private Cargo cargo;
-	// CRIAÇÃO DA VARIÁVEL ITENS
-	private ListDataModel<Cargo> itens;
+	private ArrayList<Cargo> itens;
+	private ArrayList<Cargo> itensFiltrados;
 
 	public Cargo getCargo() {
 		return cargo;
@@ -28,25 +26,27 @@ public class CargoBean {
 		this.cargo = cargo;
 	}
 
-	public ListDataModel<Cargo> getItens() {
+	public ArrayList<Cargo> getItens() {
 		return itens;
 	}
 
-	public void setItens(ListDataModel<Cargo> itens) {
+	public void setItens(ArrayList<Cargo> itens) {
 		this.itens = itens;
+	}
+
+	public ArrayList<Cargo> getItensFiltrados() {
+		return itensFiltrados;
+	}
+
+	public void setItensFiltrados(ArrayList<Cargo> itensFiltrados) {
+		this.itensFiltrados = itensFiltrados;
 	}
 
 	@PostConstruct
 	public void prepararPesquisaCargo() {
-		// TRATAMENTO DA EXCESSÃO
 		try {
-			// CRIAÇÃO DA VARIÁVEL DAO DO TIPO CARGODAO
 			CargoDAO dao = new CargoDAO();
-			// CRIAÇÃO DA VARIÁVEL LISTA DO TIPO ARRAYLIST CARGO
-			// QUE RECEBE O MÉTODO LISTAR DA CLASSE CARGO DAO
-			ArrayList<Cargo> lista = dao.listar();
-			// A VARIÁVEL ITENS RECEBE OS DADOS DA LISTA
-			itens = new ListDataModel<Cargo>(lista);
+			itens = dao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -61,28 +61,43 @@ public class CargoBean {
 		try {
 			CargoDAO dao = new CargoDAO();
 			dao.salvarCargo(cargo);
-
-			ArrayList<Cargo> lista = dao.listar();
-			itens = new ListDataModel<Cargo>(lista);
+			
+			itens = dao.listar();
+			
 			JSFUtil.adicionarMensagemSucesso("Dados salvos com sucesso");
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 	}
 
-	public void prepararExcluirCargo() {
-		cargo = itens.getRowData(); // getRowData exclui o cargo clicado
-	}
-
+	// CARREGA OS DADOS DA TABELA QUE SERÃO EXCLUIDOS
 	public void excluirCargo() {
 		try {
 			CargoDAO dao = new CargoDAO();
 			dao.excluirCargo(cargo);
 
-			ArrayList<Cargo> lista = dao.listar();
-			itens = new ListDataModel<Cargo>(lista);
+			itens = dao.listar();
+			
 			JSFUtil.adicionarMensagemSucesso("Dados removidos com sucesso");
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
+
+	// CARREGA OS DADOS DA TABELA QUE SERÃO EDITADOS
+	public void editarCargo() {
+		try {
+			CargoDAO dao = new CargoDAO();
+			dao.editarCargo(cargo);
+
+			itens = dao.listar();
+			
+			JSFUtil.adicionarMensagemSucesso("Dados editados com sucesso.");
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
