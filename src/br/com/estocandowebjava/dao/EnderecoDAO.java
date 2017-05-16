@@ -162,75 +162,6 @@ public class EnderecoDAO {
 
 	// CRIAÇÃO DO MÉTODO MAIN
 	public static void main(String[] args) {
-		/*
-		 * CÓDIGO INSERÇÃO DOS DADOS NA TABELA Endereco e1 = new Endereco();
-		 * e1.setRua("Gestor de Transportes"); e1.setSalario(6000.00);
-		 * e1.setPermissao(0L);
-		 * 
-		 * Endereco c2 = new Endereco(); c2.setRua("Analista de Patrimônio");
-		 * c2.setSalario(1730.00); c2.setPermissao(0L);
-		 * 
-		 * EnderecoDAO cdao = new EnderecoDAO(); // TRATAMENTO DE ERRO DA PERSISTÊNCIA
-		 * NO BANCO DE DADOS try { cdao.salvarEndereco(e1); cdao.salvarEndereco(c2);
-		 * System.out.println("O(s) Endereco(a) foi(ram) salvo(s) com sucesso."); }
-		 * catch (SQLException e) {
-		 * System.out.println("Ocorreu um erro ao tentar salvar os dados.");
-		 * e.printStackTrace(); }
-		 */
-
-		/*
-		 * CÓDIGO INSERÇÃO DOS DADOS NA TABELA Endereco e1 = new Endereco();
-		 * e1.setCodigo(3L);
-		 * 
-		 * Endereco c2 = new Endereco(); c2.setCodigo(7L);
-		 * 
-		 * EnderecoDAO cdao = new EnderecoDAO();
-		 * 
-		 * // TRATAMENTO DE ERRO DE EXCLUSÃO NO BANCO DE DADOS try {
-		 * cdao.excluirEndereco(e1); cdao.excluirEndereco(c2);
-		 * System.out.println("Os Enderecos foram excluidos com sucesso."); } catch
-		 * (SQLException e) {
-		 * System.out.println("Ocorreu um erro ao tentar excluir o(s) Endereco(s)."
-		 * ); e.printStackTrace(); }
-		 */
-
-		/*
-		 * CÓDIGO ALTERAÇÃO DOS DADOS NA TABELA Endereco e1 = new Endereco();
-		 * e1.setCodigo(2L); e1.setRua("Analista de Expedição");
-		 * 
-		 * EnderecoDAO cdao = new EnderecoDAO();
-		 * 
-		 * // TRATAMENTO DE ERRO DA ALTERAÇÃO NO BANCO DE DADOS try {
-		 * cdao.editarEndereco(e1);
-		 * System.out.println("O Endereco foi editado com sucesso."); } catch
-		 * (SQLException e) {
-		 * System.out.println("Ocorreu um erro na alteração do Endereco.");
-		 * e.printStackTrace(); }
-		 */
-
-		/*
-		// CÓDIGO PARA CONSULTA NO BANCO DE DADOS
-		Endereco e1 = new Endereco();
-		e1.setCodigo(1L);
-
-		Endereco c2 = new Endereco();
-		c2.setCodigo(9L);
-
-		EnderecoDAO cdao = new EnderecoDAO();
-
-		// TRATAMENTO DE ERRO DA CONSULTA NO BANCO DE DADOS
-		try {
-			Endereco f3 = cdao.buscarPorCodigo(e1);
-			Endereco f4 = cdao.buscarPorCodigo(c2);
-			System.out.println("Resultado 1: " + f3);
-			System.out.println("Resultado 2: " + f4);
-		} catch (SQLException e) {
-			System.out.println("Ocorreu um erro ao tentar perquisar um dos Enderecos.");
-			e.printStackTrace();
-		}*/
-		
-		
-		
 		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR CÓDIGO
 		EnderecoDAO cdao = new EnderecoDAO();
 		try {
@@ -243,23 +174,5 @@ public class EnderecoDAO {
 			System.out.println("Ocorreu um erro ao tentar listar os Enderecos!");
 			e.printStackTrace();
 		} 
-		
-		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR DESCRIÇÃO
-		/*Endereco e1 = new Endereco();
-		e1.setRua("de");
-		
-		EnderecoDAO cdao = new EnderecoDAO();
-		
-		try {
-			ArrayList<Endereco> lista = cdao.buscarPorRua(e1);
-			
-			for(Endereco c : lista){
-				System.out.println("Resultado: " + c);
-			}
-		}catch(SQLException e) {
-			System.out.println("Ocorreu um erro ao tentar perquisar um Endereco.");
-			e.printStackTrace();
-		}*/
-
 	}
 }

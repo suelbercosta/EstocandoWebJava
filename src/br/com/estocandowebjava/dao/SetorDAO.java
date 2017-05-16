@@ -151,75 +151,6 @@ public class SetorDAO {
 
 	// CRIAÇÃO DO MÉTODO MAIN
 	public static void main(String[] args) {
-		/*
-		 * CÓDIGO INSERÇÃO DOS DADOS NA TABELA Cargo c1 = new Cargo();
-		 * c1.setDescricao("Gestor de Transportes"); c1.setSalario(6000.00);
-		 * c1.setPermissao(0L);
-		 * 
-		 * Cargo c2 = new Cargo(); c2.setDescricao("Analista de Patrimônio");
-		 * c2.setSalario(1730.00); c2.setPermissao(0L);
-		 * 
-		 * CargoDAO cdao = new CargoDAO(); // TRATAMENTO DE ERRO DA PERSISTÊNCIA
-		 * NO BANCO DE DADOS try { cdao.salvarCargo(c1); cdao.salvarCargo(c2);
-		 * System.out.println("O(s) cargo(a) foi(ram) salvo(s) com sucesso."); }
-		 * catch (SQLException e) {
-		 * System.out.println("Ocorreu um erro ao tentar salvar os dados.");
-		 * e.printStackTrace(); }
-		 */
-
-		/*
-		 * CÓDIGO INSERÇÃO DOS DADOS NA TABELA Cargo c1 = new Cargo();
-		 * c1.setCodigo(3L);
-		 * 
-		 * Cargo c2 = new Cargo(); c2.setCodigo(7L);
-		 * 
-		 * CargoDAO cdao = new CargoDAO();
-		 * 
-		 * // TRATAMENTO DE ERRO DE EXCLUSÃO NO BANCO DE DADOS try {
-		 * cdao.excluirCargo(c1); cdao.excluirCargo(c2);
-		 * System.out.println("Os cargos foram excluidos com sucesso."); } catch
-		 * (SQLException e) {
-		 * System.out.println("Ocorreu um erro ao tentar excluir o(s) cargo(s)."
-		 * ); e.printStackTrace(); }
-		 */
-
-		/*
-		 * CÓDIGO ALTERAÇÃO DOS DADOS NA TABELA Cargo c1 = new Cargo();
-		 * c1.setCodigo(2L); c1.setDescricao("Analista de Expedição");
-		 * 
-		 * CargoDAO cdao = new CargoDAO();
-		 * 
-		 * // TRATAMENTO DE ERRO DA ALTERAÇÃO NO BANCO DE DADOS try {
-		 * cdao.editarCargo(c1);
-		 * System.out.println("O cargo foi editado com sucesso."); } catch
-		 * (SQLException e) {
-		 * System.out.println("Ocorreu um erro na alteração do cargo.");
-		 * e.printStackTrace(); }
-		 */
-
-		/*
-		// CÓDIGO PARA CONSULTA NO BANCO DE DADOS
-		Cargo c1 = new Cargo();
-		c1.setCodigo(1L);
-
-		Cargo c2 = new Cargo();
-		c2.setCodigo(9L);
-
-		CargoDAO cdao = new CargoDAO();
-
-		// TRATAMENTO DE ERRO DA CONSULTA NO BANCO DE DADOS
-		try {
-			Cargo f3 = cdao.buscarPorCodigo(c1);
-			Cargo f4 = cdao.buscarPorCodigo(c2);
-			System.out.println("Resultado 1: " + f3);
-			System.out.println("Resultado 2: " + f4);
-		} catch (SQLException e) {
-			System.out.println("Ocorreu um erro ao tentar perquisar um dos cargos.");
-			e.printStackTrace();
-		}*/
-		
-		
-		
 		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR CÓDIGO
 		SetorDAO cdao = new SetorDAO();
 		try {
@@ -232,23 +163,5 @@ public class SetorDAO {
 			System.out.println("Ocorreu um erro ao tentar listar os cargos!");
 			e.printStackTrace();
 		} 
-		
-		// TRATAMENTO DE ERRO E LISTAGEM DA CONSULTA NO BANCO DE DADOS POR DESCRIÇÃO
-		/*Cargo c1 = new Cargo();
-		c1.setDescricao("de");
-		
-		CargoDAO cdao = new CargoDAO();
-		
-		try {
-			ArrayList<Cargo> lista = cdao.buscarPorDescricao(c1);
-			
-			for(Cargo c : lista){
-				System.out.println("Resultado: " + c);
-			}
-		}catch(SQLException e) {
-			System.out.println("Ocorreu um erro ao tentar perquisar um cargo.");
-			e.printStackTrace();
-		}*/
-
 	}
 }

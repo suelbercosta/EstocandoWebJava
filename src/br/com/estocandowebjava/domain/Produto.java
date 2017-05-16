@@ -13,7 +13,7 @@ public class Produto {
 	private Long quant_minima;
 	private Double peso;
 	private String cor;
-	private Tipo_Produto tipo_produto;
+	private TipoProduto tipo_produto;
 
 	public Long getCodigo() {
 		return codigo;
@@ -95,11 +95,11 @@ public class Produto {
 		this.cor = cor;
 	}
 
-	public Tipo_Produto getTipo_produto() {
+	public TipoProduto getTipo_produto() {
 		return tipo_produto;
 	}
 
-	public void setTipo_produto(Tipo_Produto tipo_produto) {
+	public void setTipo_produto(TipoProduto tipo_produto) {
 		this.tipo_produto = tipo_produto;
 	}
 
