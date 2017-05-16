@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+		<h:form id="formListagemEndereco">
+			<!-- TABELA COM OS DADOS DOS ENDEREÇOS -->
+			<p:dataTable id="tblEndereco" widgetVar="tabelaEnderecos"
+				emptyMessage="Nenhum registro encontrado."
+				value="#{MBEndereco.itens}" var="item"
+				filteredValue="#{MBEndereco.itensFiltrados}" paginator="true"
+				rows="12">
+				<f:facet name="header">
+					<h:outputText value="Enderecos Cadastrados" />
+				</f:facet>
+				<p:column headerText="Código" filterBy="#{item.codigo}" width="110">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Rua" filterBy="#{item.rua}">
+					<h:outputText value="#{item.rua}" />
+				</p:column>
+
+				<p:column headerText="Número" filterBy="#{item.numero}" width="110">
+					<h:outputText value="#{item.numero}" />
+				</p:column>
+
+				<p:column headerText="Bairro" filterBy="#{item.bairro}">
+					<h:outputText value="#{item.bairro}" />
+				</p:column>
+
+				<p:column headerText="Cidade" filterBy="#{item.cidade}">
+					<h:outputText value="#{item.cidade}" />
+				</p:column>
+
+				<p:column headerText="Estado" filterBy="#{item.estado}" width="110">
+					<h:outputText value="#{item.estado}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirEndereco').show();"
+						update=":formExcluirEndereco:pnlExcluirEndereco">
+						<f:setPropertyActionListener target="#{MBEndereco.endereco}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgEditarEndereco').show();"
+						update=":formEditarEndereco:pnlEditarEndereco">
+						<f:setPropertyActionListener target="#{MBEndereco.endereco}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVO ENDEREÇO -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar novo endereco"
+						actionListener="#{MBEndereco.prepararNovoEndereco}"
+						oncomplete="PF('dlgNovoEndereco').show();"
+						update=":formNovoEndereco:pnlNovoEndereco" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- XML PARA INSERIR UM NOVO ENDEREÇO -->
+		<p:dialog header="Novo Endereco" widgetVar="dlgNovoEndereco"
+			modal="true" appendTo="@(body)" height="160" closable="true"
+			draggable="false">
+			<h:form id="formNovoEndereco">
+				<h:panelGrid id="pnlNovoEndereco" columns="2">
+					<p:outputLabel value="Rua" />
+					<p:inputText size="40" maxlength="40"
+						value="#{MBEndereco.endereco.rua}" />
+
+					<p:outputLabel value="Número" />
+					<p:inputText size="9" maxlength="7"
+						value="#{MBEndereco.endereco.numero}" />
+
+					<p:outputLabel value="Bairro" />
+					<p:inputText size="40" maxlength="30"
+						value="#{MBEndereco.endereco.bairro}" />
+
+					<p:outputLabel value="Cidade" />
+					<p:inputText size="40" maxlength="30"
+						value="#{MBEndereco.endereco.cidade}" />
+
+					<p:outputLabel value="Estado" />
+					<p:inputText size="9" maxlength="2"
+						value="#{MBEndereco.endereco.estado}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{MBEndereco.novoEndereco}"
+						oncomplete="PF('dlgNovoEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
+						update=":formListagemEndereco:tblEndereco :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgNovoEndereco').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA EXCLUIR UM ENDEREÇO -->
+		<p:dialog id="dialogExcluir" widgetVar="dlgExcluirEndereco"
+			closable="true" draggable="false" resizable="false" modal="true"
+			height="200" appendTo="@(body)" header="Excluir Endereco">
+			<h:form id="formExcluirEndereco">
+				<h:panelGrid id="pnlExcluirEndereco" columns="4">
+					<h:outputText value="Código" />
+					<h:outputText value="#{MBEndereco.endereco.codigo}" />
+
+					<h:outputText value="Rua" />
+					<h:outputText value="#{MBEndereco.endereco.rua}" />
+
+					<h:outputText value="Cidade" />
+					<h:outputText value="#{MBEndereco.endereco.cidade}" />
+
+					<h:outputText value="estado" />
+					<h:outputText value="#{MBEndereco.endereco.estado}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBEndereco.excluirEndereco}"
+						oncomplete="PF('dlgExcluirEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
+						update=":formListagemEndereco:tblEndereco :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgExcluirEndereco').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA ALTERAR UM ENDEREÇO -->
+		<p:dialog widgetVar="dlgEditarEndereco" closable="true"
+			draggable="false" resizable="false" modal="true" appendTo="@(body)"
+			header="Editar Endereco">
+			<h:form id="formEditarEndereco">
+				<h:panelGrid id="pnlEditarEndereco" columns="2">
+					<p:outputLabel value="Código" />
+					<p:outputLabel value="#{MBEndereco.endereco.codigo}" />
+
+					<p:outputLabel value="Rua" />
+					<p:inputText size="40" maxlength="40"
+						value="#{MBEndereco.endereco.rua}" />
+
+					<p:outputLabel value="Número" />
+					<p:inputText size="9" maxlength="7"
+						value="#{MBEndereco.endereco.numero}" />
+
+					<p:outputLabel value="Bairro" />
+					<p:inputText size="40" maxlength="30"
+						value="#{MBEndereco.endereco.bairro}" />
+
+					<p:outputLabel value="Cidade" />
+					<p:inputText size="40" maxlength="30"
+						value="#{MBEndereco.endereco.cidade}" />
+
+					<p:outputLabel value="Estado" />
+					<p:inputText size="9" maxlength="2"
+						value="#{MBEndereco.endereco.estado}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBEndereco.editarEndereco}"
+						oncomplete="PF('dlgEditarEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
+						update=":formListagemEndereco:tblEndereco :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgEditarEndereco').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
