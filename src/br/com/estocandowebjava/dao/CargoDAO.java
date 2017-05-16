@@ -49,7 +49,7 @@ public class CargoDAO {
 	// DEFINIÇÃO DO COMANDO SQL PARA EDITAR OS DADOS
 	public void editarCargo(Cargo c) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("update Cargo set descricao = ? where cod_cargo = ? ");
+		sql.append("update Cargo set descricao = ?, salario = ?, permissao = ? where cod_cargo = ? ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -57,7 +57,9 @@ public class CargoDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, c.getDescricao());
-		comando.setLong(2, c.getCodigo());
+		comando.setDouble(2, c.getSalario());
+		comando.setLong(3, c.getPermissao());
+		comando.setLong(4, c.getCodigo());
 
 		comando.executeUpdate();
 

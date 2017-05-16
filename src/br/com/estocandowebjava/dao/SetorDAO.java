@@ -48,7 +48,7 @@ public class SetorDAO {
 	// DEFINIÇÃO DO COMANDO SQL PARA EDITAR OS DADOS
 	public void editarSetor(Setor s) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("update Setor set descricao = ? where cod_setor = ? ");
+		sql.append("update Setor set descricao = ?, andar = ? where cod_setor = ? ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -56,7 +56,8 @@ public class SetorDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, s.getDescricao());
-		comando.setLong(2, s.getCodigo());
+		comando.setString(2, s.getAndar());
+		comando.setLong(3, s.getCodigo());
 
 		comando.executeUpdate();
 
