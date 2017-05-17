@@ -1,19 +1,19 @@
 package br.com.estocandowebjava.domain;
 
 public class Fornecedor {
-	private Long cod_forn;
+	private Long codigo;
 	private Long tipo_pessoa;
 	private Long telefone;
 	private String email;
 	private Long fax;
 	private Endereco endereco;
 
-	public Long getCod_forn() {
-		return cod_forn;
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setCod_forn(Long cod_forn) {
-		this.cod_forn = cod_forn;
+	public void setCodigo(Long cod_forn) {
+		this.codigo = cod_forn;
 	}
 
 	public Long getTipo_pessoa() {
