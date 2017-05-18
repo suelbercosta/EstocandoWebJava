@@ -17,9 +17,12 @@
 				<p:menuitem value="Almoxarife" />
 				<p:menuitem value="Cargo" outcome="/pages/cargo.xhtml"/>
 				<p:menuitem value="Endereço" outcome="/pages/endereco.xhtml"/>
-				<p:menuitem value="Fornecedor" />
+				<p:submenu label="Fornecedor">
+					<p:menuitem value="Pessoa Física" outcome="/pages/fornecedorPF.xhtml"/>
+					<p:menuitem value="Pessoa Jurídica" outcome="/pages/fornecedorPJ.xhtml"/>
+				</p:submenu>
 				<p:menuitem value="Gerar Requisição" />
-				<p:menuitem value="Produto" outcome="/pages/fornecedor.xhtml"/>
+				<p:menuitem value="Produto" />
 				<p:menuitem value="Requisitante" />
 				<p:menuitem value="Setor" outcome="/pages/setor.xhtml"/>
 				<p:menuitem value="Tipo do Produto" outcome="/pages/tipoProduto.xhtml"/>
