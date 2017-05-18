@@ -7,6 +7,8 @@ public class Fornecedor {
 	private String email;
 	private Long fax;
 	private Endereco endereco;
+	private Pessoa_Fisica pessoafisica;
+	private Pessoa_Juridica pessoajuridica;
 
 	public Long getCodigo() {
 		return codigo;
@@ -56,4 +58,22 @@ public class Fornecedor {
 		this.endereco = endereco;
 	}
 
+	public Pessoa_Fisica getPf() {
+		return pessoafisica;
+	}
+
+	public void setPf(Pessoa_Fisica pessoafisica) {
+		this.pessoafisica = pessoafisica;
+	}
+
+	public Pessoa_Juridica getPj() {
+		return pessoajuridica;
+	}
+
+	public void setPj(Pessoa_Juridica pessoajuridica) {
+		this.pessoajuridica = pessoajuridica;
+	}
+	
+	
+	
 }
