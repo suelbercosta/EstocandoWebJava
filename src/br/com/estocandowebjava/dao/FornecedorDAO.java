@@ -36,6 +36,7 @@ public class FornecedorDAO {
 		sql.append("select * ");
 		sql.append("from fornecedor f ");
 		sql.append("inner join endereco e on e.codigo = f.endereco_codigo ");
+		sql.append("inner join pessoa_fisica pf on pf.Fornecedor_codigo = f.codigo ");
 		
 		Connection conexao = ConexaoFactory.conectar(); // COMANDO PARA CONECTAR COM O BANCO DE DADOS
 		
@@ -60,7 +61,7 @@ public class FornecedorDAO {
 			f.setTelefone(resultado.getLong("f.telefone"));
 			f.setEmail(resultado.getString("f.email"));
 			f.setFax(resultado.getLong("f.fax"));
-			f.setEndereco(e);
+			f.setEndereco(e);			
 			
 			itens.add(f);
 		}
