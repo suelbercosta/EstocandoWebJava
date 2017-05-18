@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+		<f:event listener="#{MBFornecedor.carregarListagem}"
+			type="preRenderView" />
+		<h:form id="formListagemFornecedores">
+			<p:dataTable id="tblFornecedores" value="#{MBFornecedor.itens}"
+				var="item" emptyMessage="Nenhum registro encontrado."
+				paginator="true" rows="12">
+				<f:facet name="header">
+					<h:outputText value="Listagem de Fornecedores de Pessoa Jurídica" />
+				</f:facet>
+
+				<p:column headerText="Código" width="110">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{item.telefone}" />
+				</p:column>
+
+				<p:column headerText="Email">
+					<h:outputText value="#{item.email}" />
+				</p:column>
+
+				<p:column headerText="Endereço">
+					<h:outputText value="#{item.endereco.rua} " />
+					<h:outputText value="#{item.endereco.numero}, " />
+					<h:outputText value="#{item.endereco.bairro}, " />
+					<h:outputText value="#{item.endereco.cidade} - " />
+					<h:outputText value="#{item.endereco.estado} " />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
