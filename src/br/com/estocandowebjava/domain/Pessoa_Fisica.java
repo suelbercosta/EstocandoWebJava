@@ -2,7 +2,7 @@ package br.com.estocandowebjava.domain;
 
 import java.util.*;
 
-public class Pessoa_Fisica {
+public class Pessoa_Fisica extends Fornecedor{
 	private Long cpf;
 	private String nome;
 	private Long rg;
