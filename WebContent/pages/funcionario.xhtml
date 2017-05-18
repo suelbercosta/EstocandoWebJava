@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+		<h:form id="formListagemFuncionario">
+			<!-- TABELA COM OS DADOS DOS FUNCIONÁRIOS -->
+			<p:dataTable id="tblFuncionario" widgetVar="tabelaFuncionarios"
+				emptyMessage="Nenhum registro encontrado." value="#{MBFuncionario.itens}"
+				var="item" filteredValue="#{MBFuncionario.itensFiltrados}"
+				paginator="true" rows="12">
+				<f:facet name="header">
+					<h:outputText value="Funcionarios Cadastrados" />
+				</f:facet>
+				<p:column headerText="Matrícula" filterBy="#{item.matricula}" width="120">
+					<h:outputText value="#{item.matricula}" />
+				</p:column>
+
+				<p:column headerText="Nome" filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+				
+				<p:column headerText="Setor" filterBy="#{item.setor.descricao}">
+					<h:outputText value="#{item.setor.descricao}" />
+				</p:column>
+
+				<p:column headerText="Cargo" filterBy="#{item.cargo.descricao}">
+					<h:outputText value="#{item.cargo.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirFuncionario').show();"
+						update=":formExcluirFuncionario:pnlExcluirFuncionario">
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgEditarFuncionario').show();"
+						update=":formEditarFuncionario:pnlEditarFuncionario">
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVO CARGO -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar novo funcionario"
+						actionListener="#{MBFuncionario.prepararNovoFuncionario}"
+						oncomplete="PF('dlgNovoFuncionario').show();"
+						update=":formNovoFuncionario:pnlNovoFuncionario" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- XML PARA INSERIR UM NOVO CARGO -->
+		<p:dialog header="Novo Funcionario" widgetVar="dlgNovoFuncionario" modal="true"
+			appendTo="@(body)"  closable="true" draggable="false">
+			<h:form id="formNovoFuncionario">
+				<h:panelGrid id="pnlNovoFuncionario" columns="1">
+					<p:outputLabel value="Descrição" />
+					<p:inputText size="30" maxlength="40"
+						value="#{MBFuncionario.funcionario.descricao}" />
+
+					<p:outputLabel value="Salário" />
+					<p:inputText size="9" maxlength="7"
+						value="#{MBFuncionario.funcionario.salario}" />
+
+					<p:outputLabel value="Permissão" />
+					<p:inputText size="5" maxlength="1"
+						value="#{MBFuncionario.funcionario.permissao}" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{MBFuncionario.novoFuncionario}"
+						oncomplete="PF('dlgNovoFuncionario').hide(); PF('tabelaFuncionarios').clearFilters();"
+						update=":formListagemFuncionario:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgNovoFuncionario').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA EXCLUIR UM CARGO -->
+		<p:dialog id="dialogExcluir" widgetVar="dlgExcluirFuncionario"
+			closable="true" draggable="false" resizable="false" modal="true"
+			appendTo="@(body)" header="Excluir Funcionario">
+			<h:form id="formExcluirFuncionario">
+				<h:panelGrid id="pnlExcluirFuncionario" columns="2">
+					<h:outputText value="Código" />
+					<h:outputText value="#{MBFuncionario.funcionario.codigo}" />
+
+					<h:outputText value="Descrição" />
+					<h:outputText value="#{MBFuncionario.funcionario.descricao}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFuncionario.excluirFuncionario}"
+						oncomplete="PF('dlgExcluirFuncionario').hide(); PF('tabelaFuncionarios').clearFilters();"
+						update=":formListagemFuncionario:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgExcluirFuncionario').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- XML PARA ALTERAR UM CARGO -->
+		<p:dialog widgetVar="dlgEditarFuncionario" closable="true" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Editar Funcionario">
+			<h:form id="formEditarFuncionario">
+				<h:panelGrid id="pnlEditarFuncionario" columns="2">
+					<p:outputLabel value="Código" />
+					<p:outputLabel value="#{MBFuncionario.funcionario.codigo}" />
+
+					<p:outputLabel value="Descrição" />
+					<p:inputText value="#{MBFuncionario.funcionario.descricao}" size="30"
+						maxlength="40" />
+
+					<p:outputLabel value="Salário" />
+					<p:inputText value="#{MBFuncionario.funcionario.salario}" size="9"
+						maxlength="7" />
+
+					<p:outputLabel value="Permissão" />
+					<p:inputText value="#{MBFuncionario.funcionario.permissao}" size="5"
+						maxlength="1" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFuncionario.editarFuncionario}"
+						oncomplete="PF('dlgEditarFuncionario').hide(); PF('tabelaFuncionarios').clearFilters();"
+						update=":formListagemFuncionario:tblFuncionario :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('dlgEditarFuncionario').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
