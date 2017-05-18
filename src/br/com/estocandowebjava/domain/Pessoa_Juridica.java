@@ -1,6 +1,6 @@
 package br.com.estocandowebjava.domain;
 
-public class Pessoa_Juridica {
+public class Pessoa_Juridica extends Fornecedor{
 	private Long cnpj;
 	private String razao_social;
 	private Long inscricao_estadual;
