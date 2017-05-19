@@ -7,15 +7,15 @@ public class Funcionario {
 	private String rg;
 	private String data_nasc;
 	private String sexo;
-	private Long ctps;
-	private Long pis;
+	private String ctps;
+	private String pis;
 	private String data_admissao;
 	private String tipo_sang;
-	private Cargo cargo;
+	private Cargo cargo = new Cargo();
 	private String login;
 	private String senha;
-	private Setor setor;
-	private Endereco endereco;
+	private Setor setor = new Setor();
+	private Endereco endereco = new Endereco();
 	
 	public Long getMatricula() {
 		return matricula;
@@ -53,16 +53,16 @@ public class Funcionario {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public Long getCtps() {
+	public String getCtps() {
 		return ctps;
 	}
-	public void setCtps(Long ctps) {
+	public void setCtps(String ctps) {
 		this.ctps = ctps;
 	}
-	public Long getPis() {
+	public String getPis() {
 		return pis;
 	}
-	public void setPis(Long pis) {
+	public void setPis(String pis) {
 		this.pis = pis;
 	}
 	public String getData_admissao() {
