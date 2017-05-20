@@ -50,8 +50,7 @@ public class FuncionarioDAO {
 	//DEFINIÇÃO DO COMANDO PARA LISTAR OS DADOS DA TABELA
 	public ArrayList<Funcionario> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT f.matricula, f.nome, ");
-		sql.append("f.data_nasc, c.descricao, c.salario, s.descricao ");
+		sql.append("SELECT * ");
 		sql.append("FROM Funcionario f inner join cargo c ");
 		sql.append("on c.cod_cargo = f.Cargo_cod_cargo ");
 		sql.append("inner join setor s on s.cod_setor = f.Setor_cod_setor order by f.nome");
@@ -71,6 +70,8 @@ public class FuncionarioDAO {
 			f.setMatricula(resultado.getLong("f.matricula"));
 			f.setNome(resultado.getString("f.nome"));
 			f.setData_nasc(resultado.getString("f.data_nasc"));
+			f.setCpf(resultado.getString("f.cpf"));
+			f.setRg(resultado.getString("f.rg"));
 			
 			Cargo c = new Cargo();
 			c.setDescricao(resultado.getString("c.descricao"));
