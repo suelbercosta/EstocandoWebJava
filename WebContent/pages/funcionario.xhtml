@@ -61,8 +61,9 @@
 
 				<p:column headerText="Opções" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
-					<p:commandButton icon="ui-icon-trash">
-
+					<p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgExcluirFuncionario').show();"
+									 update=":formExcluirFuncionario:pnlExcluirFuncionario">
+						<f:setPropertyActionListener value="#{item}" target="#{MBFuncionario.funcionario}" />
 					</p:commandButton>
 
 					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
@@ -111,7 +112,7 @@
 						
 					<p:outputLabel value="CTPS:" />
 					<p:inputText value="#{MBFuncionario.funcionario.ctps}"
-						maxlength="50" size="40" />
+						maxlength="5" size="10" />
 						
 					<p:outputLabel value="Data Admissão:" />
 					<p:inputMask mask="99/99/9999"
@@ -172,6 +173,39 @@
 					
 				</h:panelGrid>
 			</h:form>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgExcluirFuncionario" draggable="false"
+		resizable="false" closable="true" header="Exclusão de Funcionários">
+			<h:form id="formExcluirFuncionario">
+				<h:panelGrid id="pnlExcluirFuncionario" columns="2">
+					<p:outputLabel value="Matrícula"/>
+					<h:outputText value="#{MBFuncionario.funcionario.matricula}" />
+					
+					<p:outputLabel value="Nome"/>
+					<h:outputText value="#{MBFuncionario.funcionario.nome}" />
+					
+					<p:outputLabel value="CPF"/>
+					<h:outputText value="#{MBFuncionario.funcionario.cpf}" />
+					
+					<p:outputLabel value="RG"/>
+					<h:outputText value="#{MBFuncionario.funcionario.rg}" />
+					
+					<p:outputLabel value="Cargo"/>
+					<h:outputText value="#{MBFuncionario.funcionario.cargo.descricao}" />
+					
+					<p:outputLabel value="Setor"/>
+					<h:outputText value="#{MBFuncionario.funcionario.setor.descricao}" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir" actionListener="#{MBFuncionario.excluir}"
+									 update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
+									 oncomplete="PF('dlgExcluirFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();"/>
+					<p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirFuncionario').hide();"/>
+				</h:panelGrid>
+			</h:form>
+		
 		</p:dialog>
 
 	</ui:define>
