@@ -128,7 +128,22 @@ public class FuncionarioBean {
 
 			itens = fdao.listar();
 
-			JSFUtil.adicionarMensagemSucesso("Dados salvo com sucesso!");
+			JSFUtil.adicionarMensagemSucesso("Dados salvos com sucesso!");
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
+	
+	public void excluir() {
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			
+			fdao.excluir(funcionario);
+			
+			itens = fdao.listar();
+			
+			JSFUtil.adicionarMensagemSucesso("Dados excluidos com sucesso!");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
