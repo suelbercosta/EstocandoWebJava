@@ -69,9 +69,16 @@ public class FuncionarioDAO {
 			Funcionario f = new Funcionario();
 			f.setMatricula(resultado.getLong("f.matricula"));
 			f.setNome(resultado.getString("f.nome"));
-			f.setData_nasc(resultado.getString("f.data_nasc"));
 			f.setCpf(resultado.getString("f.cpf"));
 			f.setRg(resultado.getString("f.rg"));
+			f.setData_nasc(resultado.getString("f.data_nasc"));
+			f.setSexo(resultado.getString("f.sexo"));
+			f.setCtps(resultado.getString("f.ctps"));//ctps
+			f.setData_admissao(resultado.getString("f.data_admissao"));//data_admissao
+			f.setPis(resultado.getString("f.pis"));//pis
+			f.setTipo_sang(resultado.getString("f.tipo_sang"));//tipo_sang
+			f.setLogin(resultado.getString("f.login"));//login
+			f.setSenha(resultado.getString("f.senha"));//senha
 			
 			Cargo c = new Cargo();
 			c.setDescricao(resultado.getString("c.descricao"));
