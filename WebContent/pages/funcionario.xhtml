@@ -63,12 +63,13 @@
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgExcluirFuncionario').show();"
 									 update=":formExcluirFuncionario:pnlExcluirFuncionario">
-						<f:setPropertyActionListener value="#{item}" target="#{MBFuncionario.funcionario}" />
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}" value="#{item}"/>
 					</p:commandButton>
 
 					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
-					<p:commandButton icon="ui-icon-pencil">
-
+					<p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgEditarFuncionario').show();"
+									 update=":formEditarFuncionario:pnlEditarFuncionario">
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}" value="#{item}"/>
 					</p:commandButton>
 				</p:column>
 
@@ -82,6 +83,7 @@
 			</p:dataTable>
 		</h:form>
 
+		<!-- TELA PARA INSERIR UM NOVO FUNCIONÁRIO -->
 		<p:dialog widgetVar="dlgNovoFuncionario" closable="true"
 			draggable="false" resizable="false" header="Cadastro de Funcionários">
 			
@@ -175,6 +177,7 @@
 			</h:form>
 		</p:dialog>
 		
+		<!-- TELA PARA EXCLUIR O FUNCIONÁRIO SELECIONADO -->
 		<p:dialog widgetVar="dlgExcluirFuncionario" draggable="false"
 		resizable="false" closable="true" header="Exclusão de Funcionários">
 			<h:form id="formExcluirFuncionario">
@@ -206,6 +209,97 @@
 				</h:panelGrid>
 			</h:form>
 		
+		</p:dialog>
+		
+		<!-- TELA PARA EDITAR O FUNCIONÁRIO SELECIONADO -->
+		<p:dialog widgetVar="dlgEditarFuncionario" closable="true"
+			draggable="false" resizable="false" header="Editar Funcionários">
+			
+			<h:form id="formEditarFuncionario">
+			
+				<h:panelGrid id="pnlEditarFuncionario" columns="2">
+				
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{MBFuncionario.funcionario.nome}"
+						maxlength="50" size="40" />
+						
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99"
+						value="#{MBFuncionario.funcionario.cpf}" maxlength="15" size="20" />
+						
+					<p:outputLabel value="RG:" />
+					<p:inputMask mask="9.999.999"
+						value="#{MBFuncionario.funcionario.rg}" maxlength="15" size="20" />
+						
+					<p:outputLabel value="Data Nascimento:" />
+					<p:inputMask mask="99/99/9999"
+						value="#{MBFuncionario.funcionario.data_nasc}" maxlength="10"
+						size="20" />
+						
+					<p:outputLabel value="Sexo:" />
+					<p:inputText value="#{MBFuncionario.funcionario.sexo}"
+						maxlength="1" size="10" />
+						
+					<p:outputLabel value="CTPS:" />
+					<p:inputText value="#{MBFuncionario.funcionario.ctps}"
+						maxlength="5" size="10" />
+						
+					<p:outputLabel value="Data Admissão:" />
+					<p:inputMask mask="99/99/9999"
+						value="#{MBFuncionario.funcionario.data_admissao}" maxlength="10"
+						size="20" />
+						
+					<p:outputLabel value="PIS:" />
+					<p:inputText value="#{MBFuncionario.funcionario.pis}"
+						maxlength="15" size="20" />
+						
+					<p:outputLabel value="Tipo Sanguínio:" />
+					<p:inputText value="#{MBFuncionario.funcionario.tipo_sang}"
+						maxlength="3" size="10" />
+						
+					<p:outputLabel value="Cargo:" />
+					<p:selectOneMenu value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true">
+						<f:selectItem itemValue="" itemLabel="Selecione o Cargo" />
+						<f:selectItems value="#{MBFuncionario.comboCargo}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Login:" />
+					<p:inputText value="#{MBFuncionario.funcionario.login}"
+						maxlength="20" size="20" />
+						
+					<p:outputLabel value="Senha:" />
+					<p:inputText value="#{MBFuncionario.funcionario.senha}"
+						maxlength="8" size="20" />
+						
+					<p:outputLabel value="Endereço:" />
+					<p:selectOneMenu
+						value="#{MBFuncionario.funcionario.endereco.codigo}" filter="true">
+						<f:selectItem itemValue="" itemLabel="Selecione o Endereço" />
+						<f:selectItems value="#{MBFuncionario.comboEndereco}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.cidade}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Setor:" />
+					<p:selectOneMenu value="#{MBFuncionario.funcionario.setor.codigo}" filter="true">
+						<f:selectItem itemValue="" itemLabel="Selecione o Setor" />
+						<f:selectItems value="#{MBFuncionario.comboSetor}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+					
+				</h:panelGrid>
+				
+				<h:panelGrid columns="5">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFuncionario.editar}"
+						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
+						oncomplete="PF('dlgEditarFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();" />
+						
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dlgEditarFuncionario').hide();" />
+					
+				</h:panelGrid>
+			</h:form>
 		</p:dialog>
 
 	</ui:define>
