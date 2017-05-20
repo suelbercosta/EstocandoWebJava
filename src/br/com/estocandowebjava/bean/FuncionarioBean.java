@@ -135,6 +135,7 @@ public class FuncionarioBean {
 		}
 	}
 	
+	// COMANDO PARA EXCLUIR UM FUNCIONÁRIOS
 	public void excluir() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
@@ -144,6 +145,50 @@ public class FuncionarioBean {
 			itens = fdao.listar();
 			
 			JSFUtil.adicionarMensagemSucesso("Dados excluidos com sucesso!");
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
+	
+	// COMANDO PARA PREPARAR EDITAR FUNCIONÁRIOS
+	public void prepararEditar() {
+		try {
+			CargoDAO cdao = new CargoDAO();
+
+			comboCargo = cdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+
+		try {
+			SetorDAO sdao = new SetorDAO();
+
+			comboSetor = sdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+
+		try {
+			EnderecoDAO edao = new EnderecoDAO();
+
+			comboEndereco = edao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
+	
+	public void editar() {
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			fdao.editar(funcionario);
+
+			itens = fdao.listar();
+
+			JSFUtil.adicionarMensagemSucesso("Dados editados com sucesso!");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
