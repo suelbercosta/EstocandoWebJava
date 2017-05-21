@@ -184,6 +184,7 @@ public class FuncionarioBean {
 	public void editar() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
+			
 			fdao.editar(funcionario);
 
 			itens = fdao.listar();

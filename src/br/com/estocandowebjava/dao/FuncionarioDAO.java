@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.estocandowebjava.domain.Cargo;
+import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Funcionario;
 import br.com.estocandowebjava.domain.Setor;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
@@ -53,7 +54,8 @@ public class FuncionarioDAO {
 		sql.append("SELECT * ");
 		sql.append("FROM Funcionario f inner join cargo c ");
 		sql.append("on c.cod_cargo = f.Cargo_cod_cargo ");
-		sql.append("inner join setor s on s.cod_setor = f.Setor_cod_setor order by f.nome");
+		sql.append("inner join setor s on s.cod_setor = f.Setor_cod_setor ");
+		sql.append("inner join endereco e on e.codigo = f.Endereco_codigo order by f.nome");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -73,12 +75,12 @@ public class FuncionarioDAO {
 			f.setRg(resultado.getString("f.rg"));
 			f.setData_nasc(resultado.getString("f.data_nasc"));
 			f.setSexo(resultado.getString("f.sexo"));
-			f.setCtps(resultado.getString("f.ctps"));//ctps
-			f.setData_admissao(resultado.getString("f.data_admissao"));//data_admissao
-			f.setPis(resultado.getString("f.pis"));//pis
-			f.setTipo_sang(resultado.getString("f.tipo_sang"));//tipo_sang
-			f.setLogin(resultado.getString("f.login"));//login
-			f.setSenha(resultado.getString("f.senha"));//senha
+			f.setCtps(resultado.getString("f.ctps"));
+			f.setData_admissao(resultado.getString("f.data_admissao"));
+			f.setPis(resultado.getString("f.pis"));
+			f.setTipo_sang(resultado.getString("f.tipo_sang"));
+			f.setLogin(resultado.getString("f.login"));
+			f.setSenha(resultado.getString("f.senha"));
 			
 			Cargo c = new Cargo();
 			c.setDescricao(resultado.getString("c.descricao"));
@@ -89,12 +91,67 @@ public class FuncionarioDAO {
 			s.setDescricao(resultado.getString("s.descricao"));
 			f.setSetor(s);
 			
+			Endereco e = new Endereco();
+			e.setCidade(resultado.getString("e.cidade"));
+			f.setEndereco(e);
+			
 			itens.add(f);
 		}
 		
 		return itens;
 
 	}
+	
+	//----------------------------------------------------------------
+	
+	//DEFINIÇÃO DO COMANDO PARA LISTAR OS DADOS DA TABELA
+		public ArrayList<Funcionario> listarDistincao() throws SQLException {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT DISTINCT nome ");
+			sql.append("FROM Funcionario f inner join cargo c ");
+			sql.append("on c.cod_cargo = f.Cargo_cod_cargo ");
+			sql.append("inner join setor s on s.cod_setor = f.Setor_cod_setor order by f.nome");
+			
+			// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
+			Connection conexao = ConexaoFactory.conectar();
+
+			// COMANDO DE PREPARAÇÃO
+			PreparedStatement comando = conexao.prepareStatement(sql.toString());
+			
+			ResultSet resultado = comando.executeQuery();
+			
+			ArrayList<Funcionario> itens = new ArrayList<Funcionario>();
+			
+			while(resultado.next()) {
+				Funcionario f = new Funcionario();
+				f.setMatricula(resultado.getLong("f.matricula"));
+				f.setNome(resultado.getString("f.nome"));
+				f.setCpf(resultado.getString("f.cpf"));
+				f.setRg(resultado.getString("f.rg"));
+				f.setData_nasc(resultado.getString("f.data_nasc"));
+				f.setSexo(resultado.getString("f.sexo"));
+				f.setCtps(resultado.getString("f.ctps"));//ctps
+				f.setData_admissao(resultado.getString("f.data_admissao"));//data_admissao
+				f.setPis(resultado.getString("f.pis"));//pis
+				f.setTipo_sang(resultado.getString("f.tipo_sang"));//tipo_sang
+				f.setLogin(resultado.getString("f.login"));//login
+				f.setSenha(resultado.getString("f.senha"));//senha
+				
+				Cargo c = new Cargo();
+				c.setDescricao(resultado.getString("c.descricao"));
+				c.setSalario(resultado.getDouble("c.salario"));
+				f.setCargo(c);
+				
+				Setor s = new Setor();
+				s.setDescricao(resultado.getString("s.descricao"));
+				f.setSetor(s);
+				
+				itens.add(f);
+			}
+			
+			return itens;
+
+		}
 	
 	//----------------------------------------------------------------
 	

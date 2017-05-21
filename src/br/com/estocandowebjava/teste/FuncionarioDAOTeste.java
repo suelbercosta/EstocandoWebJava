@@ -49,7 +49,6 @@ public class FuncionarioDAOTeste {
 	}
 	
 	@Test
-	@Ignore
 	//MÉTODO PARA LISTAR OS DADOS
 	public void listar() throws SQLException {
 		FuncionarioDAO  dao = new FuncionarioDAO();
@@ -77,6 +76,7 @@ public class FuncionarioDAOTeste {
 	}
 	
 	@Test
+	@Ignore
 	//MÉTODO PARA EDITAR OS DADOS
 	public void editar() throws SQLException {
 		Funcionario f = new Funcionario();
