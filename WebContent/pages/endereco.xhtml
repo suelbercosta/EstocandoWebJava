@@ -87,31 +87,31 @@
 			draggable="false">
 			<h:form id="formNovoEndereco">
 				<h:panelGrid id="pnlNovoEndereco" columns="2">
-					<p:outputLabel value="Rua" />
-					<p:inputText size="40" maxlength="40"
-						value="#{MBEndereco.endereco.rua}" />
+					<p:outputLabel for="txtRuaEndNovo" value="Rua" />
+					<p:inputText id="txtRuaEndNovo" size="40" maxlength="40"
+						value="#{MBEndereco.endereco.rua}" required="true" requiredMessage="O campo rua é obrigatório."/>
 
 					<p:outputLabel value="Número" />
 					<p:inputText size="9" maxlength="7"
 						value="#{MBEndereco.endereco.numero}" />
 
-					<p:outputLabel value="Bairro" />
-					<p:inputText size="40" maxlength="30"
-						value="#{MBEndereco.endereco.bairro}" />
+					<p:outputLabel for="txtBairroEndNovo" value="Bairro" />
+					<p:inputText id="txtBairroEndNovo" size="40" maxlength="30"
+						value="#{MBEndereco.endereco.bairro}" required="true" requiredMessage="O campo bairro é obrigatório."/>
 
-					<p:outputLabel value="Cidade" />
-					<p:inputText size="40" maxlength="30"
-						value="#{MBEndereco.endereco.cidade}" />
+					<p:outputLabel for="txtCidadeEndNovo" value="Cidade" />
+					<p:inputText id="txtCidadeEndNovo" size="40" maxlength="30"
+						value="#{MBEndereco.endereco.cidade}" required="true" requiredMessage="O campo cidade é obrigatório."/>
 
-					<p:outputLabel value="Estado" />
-					<p:inputText size="9" maxlength="2"
-						value="#{MBEndereco.endereco.estado}" />
+					<p:outputLabel for="txtestadoEndNovo" value="Estado" />
+					<p:inputText id="txtestadoEndNovo" size="9" maxlength="2"
+						value="#{MBEndereco.endereco.estado}" required="true" requiredMessage="O campo estado é obrigatório."/>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{MBEndereco.novoEndereco}"
-						oncomplete="PF('dlgNovoEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgNovoEndereco', 'tabelaEnderecos');"
 						update=":formListagemEndereco:tblEndereco :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgNovoEndereco').hide();" />
@@ -158,31 +158,31 @@
 					<p:outputLabel value="Código" />
 					<p:outputLabel value="#{MBEndereco.endereco.codigo}" />
 
-					<p:outputLabel value="Rua" />
-					<p:inputText size="40" maxlength="40"
-						value="#{MBEndereco.endereco.rua}" />
+					<p:outputLabel for="txtRuaEndEditar" value="Rua" />
+					<p:inputText id="txtRuaEndEditar" size="40" maxlength="40"
+						value="#{MBEndereco.endereco.rua}" required="true" requiredMessage="O campo rua é obrigatório."/>
 
 					<p:outputLabel value="Número" />
 					<p:inputText size="9" maxlength="7"
 						value="#{MBEndereco.endereco.numero}" />
 
-					<p:outputLabel value="Bairro" />
-					<p:inputText size="40" maxlength="30"
-						value="#{MBEndereco.endereco.bairro}" />
+					<p:outputLabel for="txtBairroEndEditar" value="Bairro" />
+					<p:inputText id="txtBairroEndEditar" size="40" maxlength="30"
+						value="#{MBEndereco.endereco.bairro}" required="true" requiredMessage="O campo bairro é obrigatório."/>
 
-					<p:outputLabel value="Cidade" />
-					<p:inputText size="40" maxlength="30"
-						value="#{MBEndereco.endereco.cidade}" />
+					<p:outputLabel for="txtCidadeEndEditar" value="Cidade" />
+					<p:inputText id="txtCidadeEndEditar" size="40" maxlength="30"
+						value="#{MBEndereco.endereco.cidade}" required="true" requiredMessage="O campo cidade é obrigatório."/>
 
-					<p:outputLabel value="Estado" />
-					<p:inputText size="9" maxlength="2"
-						value="#{MBEndereco.endereco.estado}" />
+					<p:outputLabel for="txtestadoEndEditar" value="Estado" />
+					<p:inputText id="txtestadoEndEditar" size="9" maxlength="2"
+						value="#{MBEndereco.endereco.estado}" required="true" requiredMessage="O campo estado é obrigatório."/>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBEndereco.editarEndereco}"
-						oncomplete="PF('dlgEditarEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarEndereco', 'tabelaEnderecos');"
 						update=":formListagemEndereco:tblEndereco :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgEditarEndereco').hide();" />

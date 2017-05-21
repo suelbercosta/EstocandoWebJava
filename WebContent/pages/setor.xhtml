@@ -71,20 +71,20 @@
 			appendTo="@(body)" height="90" closable="true" draggable="false" resizable="false">
 			<h:form id="formNovoSetor">
 				<h:panelGrid id="pnlNovoSetor" columns="2">
-					<p:outputLabel value="Descrição" />
-					<p:inputText size="30" maxlength="40"
-						value="#{MBSetor.setor.descricao}" />
+					<p:outputLabel for="txtDescSetorNovo" value="Descrição" />
+					<p:inputText id="txtDescSetorNovo" size="30" maxlength="40"
+						value="#{MBSetor.setor.descricao}" required="true" requiredMessage="O campo descrição é obrigatório."/>
 
-					<p:outputLabel value="Andar" />
-					<p:inputText size="15" maxlength="10"
-						value="#{MBSetor.setor.andar}" />
+					<p:outputLabel for="txtAndarSetorNovo" value="Andar" />
+					<p:inputText id="txtAndarSetorNovo" size="15" maxlength="10"
+						value="#{MBSetor.setor.andar}" required="true" requiredMessage="O campo andar é obrigatório."/>
 
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{MBSetor.novoSetor}"
-						oncomplete="PF('dlgNovoSetor').hide(); " 
+						oncomplete="verificar(xhr, status, args, 'dlgNovoSetor', 'tabelaSetor');" 
 						update=":formListagemSetor:tblSetor :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgNovoSetor').hide();" />
@@ -125,20 +125,20 @@
 					<p:outputLabel value="Código" />
 					<p:outputLabel value="#{MBSetor.setor.codigo}" />
 
-					<p:outputLabel value="Descrição" />
-					<p:inputText value="#{MBSetor.setor.descricao}" size="30"
-						maxlength="40" />
+					<p:outputLabel for="txtDescSetorEditar" value="Descrição" />
+					<p:inputText id="txtDescSetorEditar" size="30" maxlength="40"
+						value="#{MBSetor.setor.descricao}" required="true" requiredMessage="O campo descrição é obrigatório."/>
 
-					<p:outputLabel value="Andar" />
-					<p:inputText value="#{MBSetor.setor.andar}" size="15"
-						maxlength="10" />
+					<p:outputLabel for="txtAndarSetorEditar" value="Andar" />
+					<p:inputText id="txtAndarSetorEditar" size="15" maxlength="10"
+						value="#{MBSetor.setor.andar}" required="true" requiredMessage="O campo andar é obrigatório."/>
 
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBSetor.editarSetor}"
-						oncomplete="PF('dlgEditarSetor').hide(); PF('tabelaSetor').clearFilters();" 
+						oncomplete="verificar(xhr, status, args, 'dlgEditarSetor', 'tabelaSetor');" 
 						update=":formListagemSetor:tblSetor :msgGlobal" />
 					<p:commandButton value="Cancelar"
 						onclick="PF('dlgEditarSetor').hide();" />

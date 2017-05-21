@@ -13,4 +13,10 @@
 	margin_left: 20px;
 }
 
-
+img.logoPrincipal {
+	box-sizing: border-box;
+	margin-left:270px;
+	margin-top:150px;
+	vertical-align: middle;
+	position: static;
+}
