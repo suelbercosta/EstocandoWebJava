@@ -25,7 +25,7 @@
 				emptyMessage="Nenhum registro encontrado."
 				value="#{MBEndereco.itens}" var="item"
 				filteredValue="#{MBEndereco.itensFiltrados}" paginator="true"
-				rows="12">
+				rows="10">
 				<f:facet name="header">
 					<h:outputText value="Enderecos Cadastrados" />
 				</f:facet>
@@ -113,8 +113,10 @@
 						actionListener="#{MBEndereco.novoEndereco}"
 						oncomplete="verificar(xhr, status, args, 'dlgNovoEndereco', 'tabelaEnderecos');"
 						update=":formListagemEndereco:tblEndereco :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgNovoEndereco').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgNovoEndereco').hide();">
+						<p:resetInput target="pnlNovoEndereco" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -143,7 +145,7 @@
 						actionListener="#{MBEndereco.excluirEndereco}"
 						oncomplete="PF('dlgExcluirEndereco').hide(); PF('tabelaEnderecos').clearFilters();"
 						update=":formListagemEndereco:tblEndereco :msgGlobal" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgExcluirEndereco').hide();" />
 				</h:panelGrid>
 			</h:form>
@@ -174,8 +176,8 @@
 					<p:inputText id="txtCidadeEndEditar" size="40" maxlength="30"
 						value="#{MBEndereco.endereco.cidade}" required="true" requiredMessage="O campo cidade é obrigatório."/>
 
-					<p:outputLabel for="txtestadoEndEditar" value="Estado" />
-					<p:inputText id="txtestadoEndEditar" size="9" maxlength="2"
+					<p:outputLabel for="txtEstadoEndEditar" value="Estado" />
+					<p:inputText id="txtEstadoEndEditar" size="9" maxlength="2"
 						value="#{MBEndereco.endereco.estado}" required="true" requiredMessage="O campo estado é obrigatório."/>
 				</h:panelGrid>
 
@@ -184,8 +186,10 @@
 						actionListener="#{MBEndereco.editarEndereco}"
 						oncomplete="verificar(xhr, status, args, 'dlgEditarEndereco', 'tabelaEnderecos');"
 						update=":formListagemEndereco:tblEndereco :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgEditarEndereco').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgEditarEndereco').hide();">
+						<p:resetInput target="pnlEditarEndereco" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

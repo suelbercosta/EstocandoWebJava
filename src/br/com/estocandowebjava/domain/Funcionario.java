@@ -15,7 +15,6 @@ public class Funcionario {
 	private String login;
 	private String senha;
 	private Setor setor = new Setor();
-	private Endereco endereco = new Endereco();
 	
 	public Long getMatricula() {
 		return matricula;
@@ -100,12 +99,6 @@ public class Funcionario {
 	}
 	public void setSetor(Setor setor) {
 		this.setor = setor;
-	}
-	public Endereco getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
 	}
 	
 }

@@ -23,7 +23,7 @@
 			<!-- TABELA COM OS DADOS DOS TIPO DO PRODUTOS -->
 			<p:dataTable id="tblTipoProduto" widgetVar="tabelaTipoProdutos" emptyMessage="Nenhum registro encontrado."
 				value="#{MBTipoProduto.itens}" var="item" filteredValue="#{MBTipoProduto.itensFiltrados}"
-				paginator="true" rows="12">
+				paginator="true" rows="10">
 				<f:facet name="header">
 					<h:outputText value="Tipos de Produtos Cadastrados" />
 				</f:facet>
@@ -63,21 +63,23 @@
 
 		<!-- XML PARA INSERIR UM NOVO TIPO DO PRODUTO -->
 		<p:dialog header="Novo TipoProduto" widgetVar="dlgNovoTipoProduto" modal="true"
-			appendTo="@(body)" height="110" closable="true" draggable="false">
+			appendTo="@(body)" closable="true" draggable="false" resizable="false">
 			<h:form id="formNovoTipoProduto">
 				<h:panelGrid id="pnlNovoTipoProduto" columns="2">
-					<p:outputLabel value="Descrição" />
-					<p:inputText size="30" maxlength="40"
-						value="#{MBTipoProduto.tipoProduto.descricao}" />
+					<p:outputLabel for="txtDescTipoNovo" value="Descrição" />
+					<p:inputText id="txtDescTipoNovo" size="30" maxlength="40"
+						value="#{MBTipoProduto.tipoProduto.descricao}" required="true" requiredMessage="O campo descrição é obrigatório."/>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{MBTipoProduto.novoTipoProduto}"
-						oncomplete="PF('dlgNovoTipoProduto').hide(); PF('tabelaTipoProdutos').clearFilters();" 
+						oncomplete="verificar(xhr, status, args, 'dlgNovoTipoProduto', 'tabelaTipoProdutos');" 
 						update=":formListagemTipoProduto:tblTipoProduto :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgNovoTipoProduto').hide();" />
+					<p:commandButton value="Cancelar" process="@this" 
+						onclick="PF('dlgNovoTipoProduto').hide();">
+						<p:resetInput target="pnlNovoTipoProduto" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -100,7 +102,7 @@
 						actionListener="#{MBTipoProduto.excluirTipoProduto}"
 						oncomplete="PF('dlgExcluirTipoProduto').hide(); PF('tabelaTipoProdutos').clearFilters();" 
 						update=":formListagemTipoProduto:tblTipoProduto :msgGlobal" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgExcluirTipoProduto').hide();" />
 				</h:panelGrid>
 			</h:form>
@@ -115,18 +117,20 @@
 					<p:outputLabel value="Código" />
 					<p:outputLabel value="#{MBTipoProduto.tipoProduto.codigo}" />
 
-					<p:outputLabel value="Descrição" />
-					<p:inputText value="#{MBTipoProduto.tipoProduto.descricao}" size="30"
-						maxlength="40" />
+					<p:outputLabel for="txtDescTipoEditar" value="Descrição" />
+					<p:inputText id="txtDescTipoEditar" value="#{MBTipoProduto.tipoProduto.descricao}" size="30"
+						maxlength="40" required="true" requiredMessage="O campo descrição é obrigatório."/>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBTipoProduto.editarTipoProduto}"
-						oncomplete="PF('dlgEditarTipoProduto').hide(); PF('tabelaTipoProdutos').clearFilters();" 
+						oncomplete="verificar(xhr, status, args, 'dlgEditarTipoProduto', 'tabelaTipoProdutos');"
 						update=":formListagemTipoProduto:tblTipoProduto :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgEditarTipoProduto').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgEditarTipoProduto').hide();">
+						<p:resetInput target="pnlEditarTipoProduto" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

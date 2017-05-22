@@ -20,8 +20,8 @@ public class FuncionarioDAO {
 		sql.append("insert into Funcionario ");
 		sql.append("(nome, cpf, rg, data_nasc, sexo, ctps, ");
 		sql.append("data_admissao, pis, tipo_sang, Cargo_cod_cargo, login, ");
-		sql.append("senha, Endereco_codigo, Setor_cod_setor) ");
-		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+		sql.append("senha, Setor_cod_setor) ");
+		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -40,8 +40,7 @@ public class FuncionarioDAO {
 		comando.setLong(10, f.getCargo().getCodigo());
 		comando.setString(11, f.getLogin());
 		comando.setString(12, f.getSenha());
-		comando.setLong(13, f.getEndereco().getCodigo());
-		comando.setLong(14, f.getSetor().getCodigo());
+		comando.setLong(13, f.getSetor().getCodigo());
 
 		comando.executeUpdate();
 	}
@@ -55,7 +54,6 @@ public class FuncionarioDAO {
 		sql.append("FROM Funcionario f inner join cargo c ");
 		sql.append("on c.cod_cargo = f.Cargo_cod_cargo ");
 		sql.append("inner join setor s on s.cod_setor = f.Setor_cod_setor ");
-		sql.append("inner join endereco e on e.codigo = f.Endereco_codigo order by f.nome");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -90,10 +88,6 @@ public class FuncionarioDAO {
 			Setor s = new Setor();
 			s.setDescricao(resultado.getString("s.descricao"));
 			f.setSetor(s);
-			
-			Endereco e = new Endereco();
-			e.setCidade(resultado.getString("e.cidade"));
-			f.setEndereco(e);
 			
 			itens.add(f);
 		}
@@ -178,7 +172,7 @@ public class FuncionarioDAO {
 		sql.append("UPDATE Funcionario SET ");
 		sql.append("nome = ?, cpf = ?, rg = ?, data_nasc = ?, sexo = ?, ctps = ?, ");
 		sql.append("data_admissao = ?, pis = ?, tipo_sang = ?, Cargo_cod_cargo = ?, login = ?, ");
-		sql.append("senha = ?, Endereco_codigo = ?, Setor_cod_setor = ? ");
+		sql.append("senha = ?, Setor_cod_setor = ? ");
 		sql.append("WHERE matricula = ?");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
@@ -198,9 +192,8 @@ public class FuncionarioDAO {
 		comando.setLong(10, f.getCargo().getCodigo());
 		comando.setString(11, f.getLogin());
 		comando.setString(12, f.getSenha());
-		comando.setLong(13, f.getEndereco().getCodigo());
-		comando.setLong(14, f.getSetor().getCodigo());
-		comando.setLong(15, f.getMatricula());
+		comando.setLong(13, f.getSetor().getCodigo());
+		comando.setLong(14, f.getMatricula());
 
 		comando.executeUpdate();
 	}

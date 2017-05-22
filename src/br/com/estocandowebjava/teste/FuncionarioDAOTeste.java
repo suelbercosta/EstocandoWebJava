@@ -37,12 +37,7 @@ public class FuncionarioDAOTeste {
 		
 		Setor s = new Setor();
 		s.setCodigo(2L);
-		f.setSetor(s);
-	
-		Endereco e = new Endereco();
-		e.setCodigo(3L);
-		f.setEndereco(e);
-		
+		f.setSetor(s);		
 		
 		FuncionarioDAO dao = new FuncionarioDAO();
 		dao.salvar(f);
@@ -100,12 +95,7 @@ public class FuncionarioDAOTeste {
 		
 		Setor s = new Setor();
 		s.setCodigo(1L);
-		f.setSetor(s);
-	
-		Endereco e = new Endereco();
-		e.setCodigo(1L);
-		f.setEndereco(e);
-		
+		f.setSetor(s);		
 		
 		FuncionarioDAO dao = new FuncionarioDAO();
 		dao.editar(f);

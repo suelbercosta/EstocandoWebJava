@@ -23,7 +23,7 @@
 			<!-- TABELA COM OS DADOS DOS SETORES -->
 			<p:dataTable id="tblSetor" widgetVar="tabelaSetor" emptyMessage="Nenhum registro encontrado."
 				value="#{MBSetor.itens}" var="item" filteredValue="#{MBSetor.itensFiltrados}"
-				paginator="true" rows="12">
+				paginator="true" rows="10">
 				<f:facet name="header">
 					<h:outputText value="Setores Cadastrados" />
 				</f:facet>
@@ -86,8 +86,10 @@
 						actionListener="#{MBSetor.novoSetor}"
 						oncomplete="verificar(xhr, status, args, 'dlgNovoSetor', 'tabelaSetor');" 
 						update=":formListagemSetor:tblSetor :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgNovoSetor').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgNovoSetor').hide();">
+						<p:resetInput target="pnlNovoSetor" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -110,7 +112,7 @@
 						actionListener="#{MBSetor.excluirSetor}"
 						oncomplete="PF('dlgExcluirSetor').hide(); PF('tabelaSetor').clearFilters();" 
 						update=":formListagemSetor:tblSetor :msgGlobal" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgExcluirSetor').hide();" />
 				</h:panelGrid>
 			</h:form>
@@ -140,8 +142,10 @@
 						actionListener="#{MBSetor.editarSetor}"
 						oncomplete="verificar(xhr, status, args, 'dlgEditarSetor', 'tabelaSetor');" 
 						update=":formListagemSetor:tblSetor :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgEditarSetor').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgEditarSetor').hide();">
+						<p:resetInput target="pnlEditarSetor" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

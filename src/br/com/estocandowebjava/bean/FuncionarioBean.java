@@ -109,16 +109,6 @@ public class FuncionarioBean {
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 
-		try {
-			funcionario = new Funcionario();
-
-			EnderecoDAO edao = new EnderecoDAO();
-
-			comboEndereco = edao.listar();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
 	}
 
 	public void novo() {
@@ -171,14 +161,6 @@ public class FuncionarioBean {
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 
-		try {
-			EnderecoDAO edao = new EnderecoDAO();
-
-			comboEndereco = edao.listar();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
 	}
 	
 	public void editar() {

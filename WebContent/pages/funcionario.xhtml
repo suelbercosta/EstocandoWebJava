@@ -19,12 +19,12 @@
 
 	<!-- CONTEUDO DA PÁGINA -->
 	<ui:define id="conteudo" name="conteudo">
-	
+
 		<f:event listener="#{MBFuncionario.carregarListagem}"
 			type="preRenderView" />
-			
+
 		<h:form id="formListagemFuncionario">
-		
+
 			<!-- TABELA COM OS DADOS DOS FUNCIONÁRIOS -->
 			<p:dataTable id="tblListagemFuncionario"
 				widgetVar="tabelaListagemFuncionario"
@@ -56,21 +56,27 @@
 
 				<p:column headerText="Salário" filterBy="#{item.cargo.salario}"
 					width="110">
-					<h:outputText value="#{item.cargo.salario}" />
+					<h:outputText value="R$ " /><h:outputText value="#{item.cargo.salario}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Opções" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
-					<p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgExcluirFuncionario').show();"
-									 update=":formExcluirFuncionario:pnlExcluirFuncionario">
-						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}" value="#{item}"/>
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirFuncionario').show();"
+						update=":formExcluirFuncionario:pnlExcluirFuncionario">
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}"
+							value="#{item}" />
 					</p:commandButton>
 
 					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
-					<p:commandButton icon="ui-icon-pencil" actionListener="#{MBFuncionario.prepararEditar}" 
-									 oncomplete="PF('dlgEditarFuncionario').show();"
-									 update=":msgGlobal :formEditarFuncionario:pnlEditarFuncionario">
-						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}" value="#{item}"/>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBFuncionario.prepararEditar}"
+						oncomplete="PF('dlgEditarFuncionario').show();"
+						update=":msgGlobal :formEditarFuncionario:pnlEditarFuncionario">
+						<f:setPropertyActionListener target="#{MBFuncionario.funcionario}"
+							value="#{item}" />
 					</p:commandButton>
 				</p:column>
 
@@ -87,220 +93,244 @@
 		<!-- TELA PARA INSERIR UM NOVO FUNCIONÁRIO -->
 		<p:dialog widgetVar="dlgNovoFuncionario" closable="true"
 			draggable="false" resizable="false" header="Cadastro de Funcionários">
-			
+
 			<h:form id="formNovoFuncionario">
-			
+
 				<h:panelGrid id="pnlNovoFuncionario" columns="2">
-				
-					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{MBFuncionario.funcionario.nome}"
-						maxlength="50" size="40" required="true"/>
-						
-					<p:outputLabel value="CPF:" />
-					<p:inputMask mask="999.999.999-99"
-						value="#{MBFuncionario.funcionario.cpf}" maxlength="15" size="20" required="true" />
-						
-					<p:outputLabel value="RG:" />
-					<p:inputMask mask="9.999.999"
+
+					<p:outputLabel for="txtNomeFuncNovo" value="Nome:" />
+					<p:inputText id="txtNomeFuncNovo"
+						value="#{MBFuncionario.funcionario.nome}" maxlength="50" size="40"
+						required="true" requiredMessage="O campo nome é obrigatório." />
+
+					<p:outputLabel for="txtCpfFuncNovo" value="CPF:" />
+					<p:inputMask id="txtCpfFuncNovo" mask="999.999.999-99"
+						required="true" requiredMessage="O campo CPF é obrigatório."
+						value="#{MBFuncionario.funcionario.cpf}" maxlength="15" size="20" />
+
+					<p:outputLabel for="txtRgFuncNovo" value="RG:" />
+					<p:inputMask id="txtRgFuncNovo" mask="9.999.999"
 						value="#{MBFuncionario.funcionario.rg}" maxlength="15" size="20" />
-						
-					<p:outputLabel value="Data Nascimento:" />
-					<p:inputMask mask="99/99/9999"
-						value="#{MBFuncionario.funcionario.data_nasc}" maxlength="10"
-						size="20" />
-						
-					<p:outputLabel value="Sexo:" />
-					<p:inputText value="#{MBFuncionario.funcionario.sexo}"
-						maxlength="1" size="10" />
-						
-					<p:outputLabel value="CTPS:" />
-					<p:inputText value="#{MBFuncionario.funcionario.ctps}"
-						maxlength="5" size="10" />
-						
-					<p:outputLabel value="Data Admissão:" />
-					<p:inputMask mask="99/99/9999"
+
+					<p:outputLabel for="txtDataNascFuncNovo" value="Data Nascimento:" />
+					<p:inputMask id="txtDataNascFuncNovo" mask="99/99/9999"
+						required="true" requiredMessage="O campo data de nascimento é obrigatório."
+						value="#{MBFuncionario.funcionario.data_nasc}"/>
+
+					<p:outputLabel for="txtSexoFuncNovo" value="Sexo:" />
+					<p:selectOneMenu id="txtSexoFuncNovo"
+						value="#{MBFuncionario.funcionario.sexo}">
+						<f:selectItem itemLabel="Selecione o sexo" itemValue="" />
+						<f:selectItem itemLabel="Masculino" itemValue="M" />
+						<f:selectItem itemLabel="Feminino" itemValue="F" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtCtpsFuncNovo" value="CTPS:" />
+					<p:inputMask id="txtCtpsFuncNovo"
+						value="#{MBFuncionario.funcionario.ctps}" maxlength="5" size="10"
+						required="true" requiredMessage="O campo CTPS é obrigatório."
+						mask="99999" />
+
+					<p:outputLabel for="txtDataAdmissaoFuncNovo" value="Data Admissão:" />
+					<p:inputMask id="txtDataAdmissaoFuncNovo" mask="99/99/9999" 
 						value="#{MBFuncionario.funcionario.data_admissao}" maxlength="10"
-						size="20" />
-						
+						size="20" required="true"
+						requiredMessage="O campo data da admissão é obrigatório."/>
+
 					<p:outputLabel value="PIS:" />
-					<p:inputMask value="#{MBFuncionario.funcionario.pis}" mask="999.99999.99-9"
-						maxlength="15" size="20" />
-						
-					<p:outputLabel value="Tipo Sanguínio:" />
-					<p:inputText value="#{MBFuncionario.funcionario.tipo_sang}"
-						maxlength="3" size="10" />
-						
-					<p:outputLabel value="Cargo:" />
-					<p:selectOneMenu value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true">
+					<p:inputMask value="#{MBFuncionario.funcionario.pis}"
+						mask="999.99999.99-9" maxlength="15" size="20" />
+
+					<p:outputLabel for="txtTipoSangFuncNovo" value="Tipo Sanguínio:" />
+					<p:selectOneMenu id="txtTipoSangFuncNovo"
+						value="#{MBFuncionario.funcionario.tipo_sang}">
+						<f:selectItem itemLabel="Selecione o tipo" itemValue="" />
+						<f:selectItem itemLabel="A+" itemValue="A+" />
+						<f:selectItem itemLabel="A-" itemValue="A-" />
+						<f:selectItem itemLabel="B+" itemValue="B+" />
+						<f:selectItem itemLabel="B-" itemValue="B-" />
+						<f:selectItem itemLabel="AB+" itemValue="AB+" />
+						<f:selectItem itemLabel="AB-" itemValue="AB-" />
+						<f:selectItem itemLabel="O+" itemValue="O+" />
+						<f:selectItem itemLabel="O-" itemValue="O-" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtCargoFuncNovo" value="Cargo:" />
+					<p:selectOneMenu id="txtCargoFuncNovo"
+						value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true"
+						required="true" requiredMessage="O campo cargo é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Cargo" />
 						<f:selectItems value="#{MBFuncionario.comboCargo}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
-					
+
 					<p:outputLabel value="Login:" />
 					<p:inputText value="#{MBFuncionario.funcionario.login}"
 						maxlength="20" size="20" />
-						
+
 					<p:outputLabel value="Senha:" />
 					<p:password value="#{MBFuncionario.funcionario.senha}"
 						maxlength="8" size="20" />
-						
-					<p:outputLabel value="Endereço:" />
-					<p:selectOneMenu
-						value="#{MBFuncionario.funcionario.endereco.codigo}" filter="true">
-						<f:selectItem itemValue="" itemLabel="Selecione o Endereço" />
-						<f:selectItems value="#{MBFuncionario.comboEndereco}" var="item"
-							itemValue="#{item.codigo}" itemLabel="#{item.cidade}" />
-					</p:selectOneMenu>
-					
-					<p:outputLabel value="Setor:" />
-					<p:selectOneMenu value="#{MBFuncionario.funcionario.setor.codigo}" filter="true">
+
+					<p:outputLabel for="txtSetorFuncNovo" value="Setor:" />
+					<p:selectOneMenu id="txtSetorFuncNovo"
+						value="#{MBFuncionario.funcionario.setor.codigo}" filter="true"
+						required="true" requiredMessage="O campo setor é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Setor" />
 						<f:selectItems value="#{MBFuncionario.comboSetor}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
-					
+
 				</h:panelGrid>
-				
-				<h:panelGrid columns="5">
+
+				<h:panelGrid columns="2">
 					<p:commandButton value="Gravar"
 						actionListener="#{MBFuncionario.novo}"
 						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
-						oncomplete="PF('dlgNovoFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();" />
-						
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dlgNovoFuncionario').hide();" />
-					<p:commandButton value="Cadastrar Cargo" />
-					<p:commandButton value="Cadastrar Setor"/>
-					<p:commandButton value="Cadastrar Endereço" />
-					
+						oncomplete="verificar(xhr, status, args, 'dlgNovoFuncionario', 'tabelaListagemFuncionario');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovoFuncionario').hide();">
+						<p:resetInput target="pnlNovoFuncionario" />
+					</p:commandButton>
+
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 		<!-- TELA PARA EXCLUIR O FUNCIONÁRIO SELECIONADO -->
 		<p:dialog widgetVar="dlgExcluirFuncionario" draggable="false"
-		resizable="false" closable="true" header="Exclusão de Funcionários">
+			resizable="false" closable="true" header="Exclusão de Funcionários">
 			<h:form id="formExcluirFuncionario">
 				<h:panelGrid id="pnlExcluirFuncionario" columns="2">
-					<p:outputLabel value="Matrícula"/>
+					<p:outputLabel value="Matrícula" />
 					<h:outputText value="#{MBFuncionario.funcionario.matricula}" />
-					
-					<p:outputLabel value="Nome"/>
+
+					<p:outputLabel value="Nome" />
 					<h:outputText value="#{MBFuncionario.funcionario.nome}" />
-					
-					<p:outputLabel value="CPF"/>
+
+					<p:outputLabel value="CPF" />
 					<h:outputText value="#{MBFuncionario.funcionario.cpf}" />
-					
-					<p:outputLabel value="RG"/>
+
+					<p:outputLabel value="RG" />
 					<h:outputText value="#{MBFuncionario.funcionario.rg}" />
-					
-					<p:outputLabel value="Cargo"/>
+
+					<p:outputLabel value="Cargo" />
 					<h:outputText value="#{MBFuncionario.funcionario.cargo.descricao}" />
-					
-					<p:outputLabel value="Setor"/>
+
+					<p:outputLabel value="Setor" />
 					<h:outputText value="#{MBFuncionario.funcionario.setor.descricao}" />
 				</h:panelGrid>
-				
+
 				<h:panelGrid columns="2">
-					<p:commandButton value="Excluir" actionListener="#{MBFuncionario.excluir}"
-									 update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
-									 oncomplete="PF('dlgExcluirFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();"/>
-					<p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirFuncionario').hide();"/>
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFuncionario.excluir}"
+						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
+						oncomplete="PF('dlgExcluirFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirFuncionario').hide();" />
 				</h:panelGrid>
 			</h:form>
-		
+
 		</p:dialog>
-		
+
 		<!-- TELA PARA EDITAR O FUNCIONÁRIO SELECIONADO -->
 		<p:dialog widgetVar="dlgEditarFuncionario" closable="true"
 			draggable="false" resizable="false" header="Editar Funcionários">
-			
+
 			<h:form id="formEditarFuncionario">
-			
+
 				<h:panelGrid id="pnlEditarFuncionario" columns="2">
 					<p:outputLabel value="Matrícula:" />
-					<h:outputText value="#{MBFuncionario.funcionario.matricula}"/>
-				
-					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{MBFuncionario.funcionario.nome}"
-						maxlength="50" size="40" />
-						
-					<p:outputLabel value="CPF:" />
-					<p:inputMask mask="999.999.999-99"
+					<h:outputText value="#{MBFuncionario.funcionario.matricula}" />
+
+					<p:outputLabel for="txtNomeFuncNovo" value="Nome:" />
+					<p:inputText id="txtNomeFuncNovo"
+						value="#{MBFuncionario.funcionario.nome}" maxlength="50" size="40"
+						required="true" requiredMessage="O campo nome é obrigatório." />
+
+					<p:outputLabel for="txtCpfFuncNovo" value="CPF:" />
+					<p:inputMask id="txtCpfFuncNovo" mask="999.999.999-99"
+						required="true" requiredMessage="O campo CPF é obrigatório."
 						value="#{MBFuncionario.funcionario.cpf}" maxlength="15" size="20" />
-						
-					<p:outputLabel value="RG:" />
-					<p:inputMask mask="9.999.999"
+
+					<p:outputLabel for="txtRgFuncNovo" value="RG:" />
+					<p:inputMask id="txtRgFuncNovo" mask="9.999.999"
 						value="#{MBFuncionario.funcionario.rg}" maxlength="15" size="20" />
-						
-					<p:outputLabel value="Data Nascimento:" />
-					<p:inputMask mask="99/99/9999"
+
+					<p:outputLabel for="txtDataNascFuncNovo" value="Data Nascimento:" />
+					<p:inputMask id="txtDataNascFuncNovo" mask="99/99/9999"
+						required="true"
+						requiredMessage="O campo data de nascimento é obrigatório."
 						value="#{MBFuncionario.funcionario.data_nasc}" maxlength="10"
 						size="20" />
-						
-					<p:outputLabel value="Sexo:" />
-					<p:inputText value="#{MBFuncionario.funcionario.sexo}"
-						maxlength="1" size="10" />
-						
-					<p:outputLabel value="CTPS:" />
-					<p:inputText value="#{MBFuncionario.funcionario.ctps}"
-						maxlength="5" size="10" />
-						
-					<p:outputLabel value="Data Admissão:" />
-					<p:inputMask mask="99/99/9999"
+
+					<p:outputLabel for="txtSexoFuncNovo" value="Sexo:" />
+					<p:selectOneMenu id="txtSexoFuncNovo"
+						value="#{MBFuncionario.funcionario.sexo}">
+						<f:selectItem itemLabel="Selecione o sexo" itemValue="" />
+						<f:selectItem itemLabel="Masculino" itemValue="M" />
+						<f:selectItem itemLabel="Feminino" itemValue="F" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtCtpsFuncNovo" value="CTPS:" />
+					<p:inputMask id="txtCtpsFuncNovo"
+						value="#{MBFuncionario.funcionario.ctps}" maxlength="5" size="10"
+						required="true" requiredMessage="O campo CTPS é obrigatório."
+						mask="99999" />
+
+					<p:outputLabel for="txtDataAdmissaoFuncNovo" value="Data Admissão:" />
+					<p:inputMask id="txtDataAdmissaoFuncNovo" mask="99/99/9999"
 						value="#{MBFuncionario.funcionario.data_admissao}" maxlength="10"
-						size="20" />
-						
+						size="20" required="true"
+						requiredMessage="O campo data da admissão é obrigatório." />
+
 					<p:outputLabel value="PIS:" />
-					<p:inputMask mask="999.99999.99-9" value="#{MBFuncionario.funcionario.pis}"
-						maxlength="15" size="20" />
-						
+					<p:inputMask value="#{MBFuncionario.funcionario.pis}"
+						mask="999.99999.99-9" maxlength="15" size="20" />
+
 					<p:outputLabel value="Tipo Sanguínio:" />
 					<p:inputText value="#{MBFuncionario.funcionario.tipo_sang}"
 						maxlength="3" size="10" />
-						
-					<p:outputLabel value="Cargo:" />
-					<p:selectOneMenu value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true">
+
+					<p:outputLabel for="txtCargoFuncNovo" value="Cargo:" />
+					<p:selectOneMenu id="txtCargoFuncNovo"
+						value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true"
+						required="true" requiredMessage="O campo cargo é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Cargo" />
 						<f:selectItems value="#{MBFuncionario.comboCargo}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
-					
+
 					<p:outputLabel value="Login:" />
 					<p:inputText value="#{MBFuncionario.funcionario.login}"
 						maxlength="20" size="20" />
-						
+
 					<p:outputLabel value="Senha:" />
-					<p:inputText value="#{MBFuncionario.funcionario.senha}"
+					<p:password value="#{MBFuncionario.funcionario.senha}"
 						maxlength="8" size="20" />
-						
-					<p:outputLabel value="Endereço:" />
-					<p:selectOneMenu
-						value="#{MBFuncionario.funcionario.endereco.codigo}" filter="true">
-						<f:selectItem itemValue="" itemLabel="Selecione o Endereço" />
-						<f:selectItems value="#{MBFuncionario.comboEndereco}" var="item"
-							itemValue="#{item.codigo}" itemLabel="#{item.cidade}" />
-					</p:selectOneMenu>
-					
-					<p:outputLabel value="Setor:" />
-					<p:selectOneMenu value="#{MBFuncionario.funcionario.setor.codigo}" filter="true">
+
+					<p:outputLabel for="txtSetorFuncNovo" value="Setor:" />
+					<p:selectOneMenu id="txtSetorFuncNovo"
+						value="#{MBFuncionario.funcionario.setor.codigo}" filter="true"
+						required="true" requiredMessage="O campo setor é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Setor" />
 						<f:selectItems value="#{MBFuncionario.comboSetor}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
-					
 				</h:panelGrid>
-				
-				<h:panelGrid columns="5">
+
+				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBFuncionario.editar}"
 						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
-						oncomplete="PF('dlgEditarFuncionario').hide(); PF('tabelaListagemFuncionario').clearFilters();" />
-						
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dlgEditarFuncionario').hide();" />
-					
+						oncomplete="verificar(xhr, status, args, 'dlgEditarFuncionario', 'tabelaListagemFuncionario');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarFuncionario').hide();">
+						<p:resetInput target="pnlEditarFuncionario" />
+					</p:commandButton>
+
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

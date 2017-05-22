@@ -24,7 +24,7 @@
 			<p:dataTable id="tblCargo" widgetVar="tabelaCargos"
 				emptyMessage="Nenhum registro encontrado." value="#{MBCargo.itens}"
 				var="item" filteredValue="#{MBCargo.itensFiltrados}"
-				paginator="true" rows="12">
+				paginator="true" rows="10">
 				<f:facet name="header">
 					<h:outputText value="Cargos Cadastrados" />
 				</f:facet>
@@ -38,7 +38,9 @@
 				</p:column>
 
 				<p:column headerText="Salário" filterBy="#{item.salario}">
-					<h:outputText value="#{item.salario}" />
+					<h:outputText value="R$ " /><h:outputText value="#{item.salario}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Permissão" filterBy="#{item.permissao}"
@@ -76,7 +78,7 @@
 
 		<!-- XML PARA INSERIR UM NOVO CARGO -->
 		<p:dialog header="Novo Cargo" widgetVar="dlgNovoCargo" modal="true"
-			appendTo="@(body)"  closable="true" draggable="false">
+			appendTo="@(body)"  closable="true" draggable="false" resizable="false">
 			<h:form id="formNovoCargo">
 				<h:panelGrid id="pnlNovoCargo" columns="2">
 					<p:outputLabel for="txtDescCargoNovo" value="Descrição" />
@@ -85,11 +87,19 @@
 
 					<p:outputLabel for="txtSalCargoNovo" value="Salário" />
 					<p:inputText id="txtSalCargoNovo" size="9" maxlength="7"
-						value="#{MBCargo.cargo.salario}" required="true" requiredMessage="O campo salário é obrigatório."/>
+						value="#{MBCargo.cargo.salario}" required="true" requiredMessage="O campo salário é obrigatório."
+						converterMessage="Informe um valor válido para o campo salário.">
+						<f:convertNumber />
+					</p:inputText>
 
 					<p:outputLabel for="txtPermCargoNovo" value="Permissão" />
-					<p:inputText id="txtPermCargoNovo" size="5" maxlength="1"
-						value="#{MBCargo.cargo.permissao}" required="true" requiredMessage="O campo permissão é obrigatório."/>
+					<p:selectOneMenu id="txtPermCargoNovo" 
+						value="#{MBCargo.cargo.permissao}" required="true" requiredMessage="O campo permissão é obrigatório.">
+						<f:selectItem itemLabel="Selecione a permissão" itemValue="" />
+						<f:selectItem itemLabel="Sem Permissão" itemValue="0" />
+						<f:selectItem itemLabel="Uso Restrito" itemValue="1" />
+						<f:selectItem itemLabel="Acesso Total" itemValue="2" />
+					</p:selectOneMenu>
 				</h:panelGrid>
 				
 				<h:panelGrid columns="2">
@@ -97,8 +107,10 @@
 						actionListener="#{MBCargo.novoCargo}"
 						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
 						update=":formListagemCargo:tblCargo :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgNovoCargo').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgNovoCargo').hide();">
+						<p:resetInput target="pnlNovoCargo" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -121,7 +133,7 @@
 						actionListener="#{MBCargo.excluirCargo}"
 						oncomplete="PF('dlgExcluirCargo').hide(); PF('tabelaCargos').clearFilters();"
 						update=":formListagemCargo:tblCargo :msgGlobal" />
-					<p:commandButton value="Cancelar"
+					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgExcluirCargo').hide();" />
 				</h:panelGrid>
 			</h:form>
@@ -136,17 +148,22 @@
 					<p:outputLabel value="Código" />
 					<p:outputLabel value="#{MBCargo.cargo.codigo}" />
 
-					<p:outputLabel for="txtDescEditarCargo" value="Descrição" />
-					<p:inputText id="txtDescEditarCargo" value="#{MBCargo.cargo.descricao}" size="30"
+					<p:outputLabel for="txtDescCargoEditar" value="Descrição" />
+					<p:inputText id="txtDescCargoEditar" value="#{MBCargo.cargo.descricao}" size="30"
 						maxlength="40" required="true" requiredMessage="O campo descrição é obrigatório."/>
 
-					<p:outputLabel for="txtSalEditarCargo" value="Salário" />
-					<p:inputText id="txtSalEditarCargo" value="#{MBCargo.cargo.salario}" size="9"
+					<p:outputLabel for="txtSalCargoEditar" value="Salário" />
+					<p:inputText id="txtSalCargoEditar" value="#{MBCargo.cargo.salario}" size="9"
 						maxlength="7" required="true" requiredMessage="O campo salário é obrigatório."/>
 
-					<p:outputLabel for="txtPermEditarCargo" value="Permissão" />
-					<p:inputText id="txtPermEditarCargo" value="#{MBCargo.cargo.permissao}" size="5"
-						maxlength="1" required="true" requiredMessage="O campo permissão é obrigatório."/>
+					<p:outputLabel for="txtPermCargoEditar" value="Permissão" />
+					<p:selectOneMenu id="txtPermCargoEditar" 
+						value="#{MBCargo.cargo.permissao}" required="true" requiredMessage="O campo permissão é obrigatório.">
+						<f:selectItem itemLabel="Selecione a permissão" itemValue="" />
+						<f:selectItem itemLabel="Sem Permissão" itemValue="0" />
+						<f:selectItem itemLabel="Uso Restrito" itemValue="1" />
+						<f:selectItem itemLabel="Acesso Total" itemValue="2" />
+					</p:selectOneMenu>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
@@ -154,8 +171,10 @@
 						actionListener="#{MBCargo.editarCargo}"
 						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
 						update=":formListagemCargo:tblCargo :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgEditarCargo').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgEditarCargo').hide();">
+						<p:resetInput target="pnlEditarCargo" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
