@@ -1,27 +1,24 @@
 package br.com.estocandowebjava.domain;
 
-import java.util.*;
-
 public class Requisicao {
-	private Long cod_requisicao;
-	private Date data;
-	private Funcionario almoxarife;
-	private Funcionario requisitante;
-	private Funcionario funcionario;
+	private Long codigo;
+	private String data;
+	private Funcionario almoxarife = new Funcionario();
+	private Funcionario requisitante = new Funcionario();
 
-	public Long getCod_requisicao() {
-		return cod_requisicao;
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setCod_requisicao(Long cod_requisicao) {
-		this.cod_requisicao = cod_requisicao;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -39,14 +36,6 @@ public class Requisicao {
 
 	public void setRequisitante(Funcionario requisitante) {
 		this.requisitante = requisitante;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
 	}
 
 }

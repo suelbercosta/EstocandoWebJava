@@ -183,7 +183,7 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="4">
 					<p:commandButton value="Gravar"
 						actionListener="#{MBFuncionario.novo}"
 						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
@@ -193,6 +193,12 @@
 						oncomplete="PF('dlgNovoFuncionario').hide();">
 						<p:resetInput target="pnlNovoFuncionario" />
 					</p:commandButton>
+					
+					<p:commandButton value="Adicionar Cargo" process="@this"
+						oncomplete="PF('dlgNovoCargo').show();"/>
+						
+					<p:commandButton value="Adicionar Setor" process="@this"
+						oncomplete="PF('dlgNovoSetor').show();"/>
 
 				</h:panelGrid>
 			</h:form>
@@ -331,6 +337,45 @@
 						<p:resetInput target="pnlEditarFuncionario" />
 					</p:commandButton>
 
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+				<!-- XML PARA INSERIR UM NOVO CARGO -->
+		<p:dialog header="Novo Cargo" widgetVar="dlgNovoCargo"
+			appendTo="@(body)"  closable="true" draggable="false" resizable="false">
+			<h:form id="formNovoCargo">
+				<h:panelGrid id="pnlNovoCargo" columns="2">
+					<p:outputLabel for="txtDescCargoNovo" value="Descrição" />
+					<p:inputText id="txtDescCargoNovo" size="30" maxlength="40"
+						value="#{MBCargo.cargo.descricao}" required="true" requiredMessage="O campo descrição é obrigatório."/>
+
+					<p:outputLabel for="txtSalCargoNovo" value="Salário" />
+					<p:inputText id="txtSalCargoNovo" size="9" maxlength="7"
+						value="#{MBCargo.cargo.salario}" required="true" requiredMessage="O campo salário é obrigatório."
+						converterMessage="Informe um valor válido para o campo salário.">
+						<f:convertNumber />
+					</p:inputText>
+
+					<p:outputLabel for="txtPermCargoNovo" value="Permissão" />
+					<p:selectOneMenu id="txtPermCargoNovo" 
+						value="#{MBCargo.cargo.permissao}" required="true" requiredMessage="O campo permissão é obrigatório.">
+						<f:selectItem itemLabel="Selecione a permissão" itemValue="" />
+						<f:selectItem itemLabel="Sem Permissão" itemValue="0" />
+						<f:selectItem itemLabel="Uso Restrito" itemValue="1" />
+						<f:selectItem itemLabel="Acesso Total" itemValue="2" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{MBCargo.novoCargo}"
+						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
+						update=":msgGlobal" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgNovoCargo').hide();">
+						<p:resetInput target="pnlNovoCargo" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import br.com.estocandowebjava.dao.FuncionarioDAO;
 import br.com.estocandowebjava.domain.Cargo;
-import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Funcionario;
 import br.com.estocandowebjava.domain.Setor;
 
