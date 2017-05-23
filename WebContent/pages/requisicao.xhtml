@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+
+		<f:event listener="#{MBRequisicao.carregarListagem}"
+			type="preRenderView" />
+
+		<h:form id="formListagemRequisicao">
+
+			<!-- TABELA COM OS DADOS DAS REQUISIÇÕES -->
+			<p:dataTable id="tblListagemRequisicao"
+				widgetVar="tabelaListagemRequisicao"
+				emptyMessage="Nenhum registro encontrado."
+				value="#{MBRequisicao.itens}" var="item" paginator="true" rows="10"
+				filteredValue="#{MBRequisicao.itensFiltrados}">
+
+				<f:facet name="header">
+					<h:outputText value=" Lista de Requisicões" />
+				</f:facet>
+				<p:column headerText="Código" sortBy="#{item.codigo}" filterBy="#{item.codigo}"
+					width="110">
+					<h:outputText id="teste" value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Data" sortBy="#{item.data}" filterBy="#{item.data}"
+					width="110">
+					<h:outputText value="#{item.data}" />
+				</p:column>
+
+				<p:column headerText="Almoxarife" sortBy="#{item.almoxarife.nome}" filterBy="#{item.almoxarife.nome}">
+					<h:outputText value="#{item.almoxarife.nome}" />
+				</p:column>
+
+				<p:column headerText="Requisitante" sortBy="#{item.requisitante.nome}" filterBy="#{item.requisitante.nome}">
+					<h:outputText value="#{item.requisitante.nome}" />
+				</p:column>
+
+				<p:column headerText="Opções" >
+					<!-- BOTÃO DE INCLUIR PRODUTOS NA REQUISIÇÃO -->
+					<p:commandButton value="Incluir Produtos"
+						oncomplete="PF('dlgIncluirProdutosRequisicao').show();"
+						update=":formIncluirProdutosRequisicao:pnlIncluirProdutosRequisicao">
+						<f:setPropertyActionListener target="#{MBRequisicao.requisicao}"
+							value="#{item}" />
+					</p:commandButton>
+				
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirRequisicao').show();"
+						update=":formExcluirRequisicao:pnlExcluirRequisicao">
+						<f:setPropertyActionListener target="#{MBRequisicao.requisicao}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBRequisicao.prepararEditar}"
+						oncomplete="PF('dlgEditarRequisicao').show();"
+						update=":msgGlobal :formEditarRequisicao:pnlEditarRequisicao">
+						<f:setPropertyActionListener target="#{MBRequisicao.requisicao}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVA REQUISIÇÃO -->
+				<f:facet name="footer">
+					<p:commandButton value="Gerar nova requisição"
+						oncomplete="PF('dlgNovaRequisicao').show();"
+						actionListener="#{MBRequisicao.prepararNova}"
+						update=":formNovaRequisicao:pnlNovaRequisicao :msgGlobal" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- TELA PARA GERAR UMA NOVA REQUISIÇÃO -->
+		<p:dialog widgetVar="dlgNovaRequisicao" closable="true"
+			draggable="false" resizable="false" header="Gerar Requisição">
+
+			<h:form id="formNovaRequisicao">
+
+				<h:panelGrid id="pnlNovaRequisicao" columns="2">
+
+					<p:outputLabel for="txtDataRequisNova" value="Data:" />
+					<p:inputMask id="txtDataRequisNova" mask="99/99/9999"
+						value="#{MBRequisicao.requisicao.data}" 
+						required="true" requiredMessage="O campo data é obrigatório." />
+
+					<p:outputLabel for="txtAlmoxRequisNova" value="Almoxarife:" />
+					<p:selectOneMenu id="txtAlmoxRequisNova"
+						value="#{MBRequisicao.requisicao.almoxarife.matricula}" filter="true"
+						required="true" requiredMessage="O campo almoxarife é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Almoxarife" />
+						<f:selectItems value="#{MBRequisicao.comboAlmoxarife}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="txtRequisRequisNova" value="Requisitante:" />
+					<p:selectOneMenu id="txtRequisRequisNova"
+						value="#{MBRequisicao.requisicao.requisitante.matricula}" filter="true"
+						required="true" requiredMessage="O campo requiistante é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Requisitante" />
+						<f:selectItems value="#{MBRequisicao.comboRequisitante}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gerar"
+						actionListener="#{MBRequisicao.nova}"
+						update=":msgGlobal :formListagemRequisicao:tblListagemRequisicao"
+						oncomplete="verificar(xhr, status, args, 'dlgNovaRequisicao', 'tabelaListagemRequisicao');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovaRequisicao').hide();">
+						<p:resetInput target="pnlNovaRequisicao" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- TELA PARA EXCLUIR O REQUISIÇÃO SELECIONADO -->
+		<p:dialog widgetVar="dlgExcluirRequisicao" draggable="false"
+			resizable="false" closable="true" header="Exclusão de Funcionários">
+			<h:form id="formExcluirRequisicao">
+				<h:panelGrid id="pnlExcluirRequisicao" columns="2">
+				
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBRequisicao.requisicao.codigo}" />
+
+					<p:outputLabel value="Data" />
+					<h:outputText value="#{MBRequisicao.requisicao.data}" />
+
+					<p:outputLabel value="Almoxarife" />
+					<h:outputText value="#{MBRequisicao.requisicao.almoxarife.nome}" />
+
+					<p:outputLabel value="Requisitante" />
+					<h:outputText value="#{MBRequisicao.requisicao.requisitante.nome}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBRequisicao.excluir}"
+						update=":msgGlobal :formListagemRequisicao:tblListagemRequisicao"
+						oncomplete="PF('dlgExcluirRequisicao').hide(); PF('tabelaListagemRequisicao').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirRequisicao').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<!-- TELA PARA EDITAR A REQUISIÇÃO SELECIONADA -->
+		<p:dialog widgetVar="dlgEditarRequisicao" closable="true"
+			draggable="false" resizable="false" header="Editar Funcionários">
+
+			<h:form id="formEditarRequisicao">
+
+				<h:panelGrid id="pnlEditarRequisicao" columns="2">
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBRequisicao.requisicao.codigo}" />
+
+					<p:outputLabel for="txtDataRequisNova" value="Data:" />
+					<p:inputMask id="txtDataRequisNova" mask="99/99/9999"
+						value="#{MBRequisicao.requisicao.data}" 
+						required="true" requiredMessage="O campo data é obrigatório." />
+
+					<p:outputLabel for="txtAlmoxRequisEditar" value="Almoxarife:" />
+					<p:selectOneMenu id="txtAlmoxRequisEditar"
+						value="#{MBRequisicao.requisicao.almoxarife.matricula}" filter="true"
+						required="true" requiredMessage="O campo almoxarife é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Almoxarife" />
+						<f:selectItems value="#{MBRequisicao.comboAlmoxarife}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="txtRequisRequisEditar" value="Requisitante:" />
+					<p:selectOneMenu id="txtRequisRequisEditar"
+						value="#{MBRequisicao.requisicao.requisitante.matricula}" filter="true"
+						required="true" requiredMessage="O campo requiistante é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Requisitante" />
+						<f:selectItems value="#{MBRequisicao.comboRequisitante}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBRequisicao.editar}"
+						update=":msgGlobal :formListagemRequisicao:tblListagemRequisicao"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarRequisicao', 'tabelaListagemRequisicao');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarRequisicao').hide();">
+						<p:resetInput target="pnlEditarRequisicao" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+				<!-- TELA PARA INCLUIR PRODUTOS NA REQUISIÇÃO SELECIONADA -->
+		<p:dialog widgetVar="dlgIncluirProdutosRequisicao" closable="true"
+			draggable="false" resizable="false" header="Editar Funcionários">
+
+			<h:form id="formIncluirProdutosRequisicao">
+
+				<h:panelGrid id="pnlIncluirProdutosRequisicao" columns="2">
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBRequisicao.requisicao.codigo}" />
+
+					<p:outputLabel value="Data:" />
+					<h:outputText value="#{MBRequisicao.requisicao.data}"  />
+
+					<p:outputLabel value="Almoxarife:" />
+					<h:outputText value="#{MBRequisicao.requisicao.almoxarife.nome}"/>
+					
+					<p:outputLabel for="txtProdIncluir" value="Produto:" />
+					<p:inputText id="txtProdIncluir"
+						value="" required="true" requiredMessage="O campo produto é obrigatório." />
+						
+					<p:outputLabel for="txtQuantProdRequisIncluir" value="Quantidade:" />
+					<p:inputText id="txtQuantProdRequisIncluir"
+						value="" required="true" requiredMessage="O campo quantidade é obrigatório." />
+					
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Incluir"
+						actionListener="#{MBRequisicao.editar}"
+						update=":msgGlobal :formListagemRequisicao:tblListagemRequisicao"
+						oncomplete="verificar(xhr, status, args, 'dlgIncluirProdutosRequisicao', 'tabelaListagemRequisicao');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgIncluirProdutosRequisicao').hide();">
+						<p:resetInput target="pnlIncluirProdutosRequisicao" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
