@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.estocandowebjava.domain.Cargo;
-import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Funcionario;
 import br.com.estocandowebjava.domain.Setor;
 import br.com.estocandowebjava.factoty.ConexaoFactory;

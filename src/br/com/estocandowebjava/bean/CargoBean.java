@@ -43,6 +43,7 @@ public class CargoBean {
 	}
 
 	@PostConstruct
+	// MÉTODO PARA CONSULTA
 	public void prepararPesquisaCargo() {
 		try {
 			CargoDAO dao = new CargoDAO();
@@ -53,6 +54,7 @@ public class CargoBean {
 		}
 	}
 
+	// MÉTODO PARA NOVO CARGO
 	public void prepararNovoCargo() {
 		cargo = new Cargo();
 	}

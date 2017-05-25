@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.estocandowebjava.dao.CargoDAO;
-import br.com.estocandowebjava.dao.EnderecoDAO;
 import br.com.estocandowebjava.dao.FuncionarioDAO;
 import br.com.estocandowebjava.dao.SetorDAO;
 import br.com.estocandowebjava.domain.Cargo;
@@ -18,7 +17,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBFuncionario")
 @ViewScoped
-public class FuncionarioBean {
+public class FuncionarioBean implements InterfaceBean {
 	private Funcionario funcionario;
 	private ArrayList<Cargo> comboCargo;
 	private ArrayList<Setor> comboSetor;
@@ -75,6 +74,7 @@ public class FuncionarioBean {
 		this.comboEndereco = comboEndereco;
 	}
 
+	@Override
 	public void carregarListagem() {
 		try {
 			FuncionarioDAO dao = new FuncionarioDAO();
@@ -86,6 +86,7 @@ public class FuncionarioBean {
 	}
 
 	// COMANDO PARA PREPARAR NOVO FUNCIONÁRIOS
+	@Override
 	public void prepararNovo() {
 		try {
 			funcionario = new Funcionario();
@@ -111,6 +112,7 @@ public class FuncionarioBean {
 
 	}
 
+	@Override
 	public void novo() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
@@ -126,6 +128,7 @@ public class FuncionarioBean {
 	}
 	
 	// COMANDO PARA EXCLUIR UM FUNCIONÁRIOS
+	@Override
 	public void excluir() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
@@ -142,6 +145,7 @@ public class FuncionarioBean {
 	}
 	
 	// COMANDO PARA PREPARAR EDITAR FUNCIONÁRIOS
+	@Override
 	public void prepararEditar() {
 		try {
 			CargoDAO cdao = new CargoDAO();
@@ -163,6 +167,7 @@ public class FuncionarioBean {
 
 	}
 	
+	@Override
 	public void editar() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();

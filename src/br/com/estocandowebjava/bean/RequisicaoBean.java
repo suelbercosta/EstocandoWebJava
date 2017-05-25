@@ -3,7 +3,6 @@ package br.com.estocandowebjava.bean;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -15,7 +14,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBRequisicao")
 @ViewScoped
-public class RequisicaoBean {
+public class RequisicaoBean implements InterfaceBean {
 	private Requisicao requisicao;
 	private ArrayList<Funcionario> comboAlmoxarife;
 	private ArrayList<Funcionario> comboRequisitante;
@@ -65,6 +64,7 @@ public class RequisicaoBean {
 		this.itensFiltrados = itensFiltrados;
 	}
 
+	@Override
 	public void carregarListagem() {
 		try {
 			RequisicaoDAO dao = new RequisicaoDAO();
@@ -76,7 +76,8 @@ public class RequisicaoBean {
 	}
 
 	// COMANDO PARA PREPARAR NOVA REQUISIÇÃO
-	public void prepararNova() {
+	@Override
+	public void prepararNovo() {
 		try {
 			requisicao = new Requisicao();
 
@@ -91,7 +92,8 @@ public class RequisicaoBean {
 
 	}
 
-	public void nova() {
+	@Override
+	public void novo() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();
 			rdao.salvar(requisicao);
@@ -106,6 +108,7 @@ public class RequisicaoBean {
 	}
 	
 	// COMANDO PARA EXCLUIR UMA REQUISIÇÃO
+	@Override
 	public void excluir() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();
@@ -122,6 +125,7 @@ public class RequisicaoBean {
 	}
 	
 	// COMANDO PARA PREPARAR EDITAR UMA REQUISIÇÃO
+	@Override
 	public void prepararEditar() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
@@ -143,6 +147,7 @@ public class RequisicaoBean {
 
 	}
 	
+	@Override
 	public void editar() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();

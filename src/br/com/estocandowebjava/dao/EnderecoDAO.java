@@ -100,7 +100,7 @@ public class EnderecoDAO {
 	//CRIAÇÃO DE ARRAYLIST PARA LISTAR TODOS OS EnderecoS
 	public ArrayList<Endereco> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select * from Endereco group by cidade asc ");
+		sql.append("select * from Endereco ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -129,9 +129,9 @@ public class EnderecoDAO {
 		return lista;
 	}
 	
-	public ArrayList<Endereco> listarCidade() throws SQLException {
+	public ArrayList<Endereco> listarCidades() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select distinct cidade from Endereco ORDER BY cidade asc ");
+		sql.append("select * from Endereco group by cidade asc");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -147,7 +147,12 @@ public class EnderecoDAO {
 		//ESTRUTURA DE REPETIÇÃO PARA COLETAR TODOS OS DADOS DA CONSULTA
 		while (resultado.next()) {
 			Endereco e1 = new Endereco();
+			e1.setCodigo(resultado.getLong("codigo"));
+			e1.setRua(resultado.getString("rua"));
+			e1.setNumero(resultado.getString("numero"));
+			e1.setBairro(resultado.getString("bairro"));
 			e1.setCidade(resultado.getString("cidade"));
+			e1.setEstado(resultado.getString("estado"));
 
 			lista.add(e1);
 		}

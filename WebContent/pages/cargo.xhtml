@@ -169,7 +169,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBCargo.editarCargo}"
-						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarCargo', 'tabelaCargos');"
 						update=":formListagemCargo:tblCargo :msgGlobal" />
 					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgEditarCargo').hide();">
