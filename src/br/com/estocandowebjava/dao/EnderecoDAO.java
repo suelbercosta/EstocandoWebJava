@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.fabric.FabricCommunicationException;
-
 import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
