@@ -1,5 +1,5 @@
 package br.com.estocandowebjava.dao;
 
-public class PessoaJurudicaDAO {
+public class PessoaJurudicaDAO extends FornecedorDAO{
 
 }
