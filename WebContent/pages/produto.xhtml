@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+
+		<f:event listener="#{MBProduto.carregarListagem}"
+			type="preRenderView" />
+
+		<h:form id="formListagemProduto">
+
+			<!-- TABELA COM OS DADOS DOS PRODUTOS -->
+			<p:dataTable id="tblListagemProduto"
+				widgetVar="tabelaListagemProduto"
+				emptyMessage="Nenhum registro encontrado."
+				value="#{MBProduto.itens}" var="item" paginator="true" rows="10"
+				filteredValue="#{MBProduto.itensFiltrados}">
+
+				<f:facet name="header">
+					<h:outputText value=" Lista de Produtos Cadastrados" />
+				</f:facet>
+				<p:column headerText="Código" filterBy="#{item.codigo}"
+					width="110">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Quantidade" filterBy="#{item.quantidade}"
+					width="110">
+					<h:outputText value="#{item.quantidade}" />
+				</p:column>
+
+				<p:column headerText="Valor Unitário" filterBy="#{item.valor}"
+					width="110">
+					<h:outputText value="R$ " /> <h:outputText value="#{item.valor}">
+						<f:convertNumber pattern="0.00"/>
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Data Aquisição" filterBy="#{item.data_aquis}"
+					width="110">
+					<h:outputText value="#{item.data_aquis}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirProduto').show();"
+						update=":formExcluirProduto:pnlExcluirProduto">
+						<f:setPropertyActionListener target="#{MBProduto.produto}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBProduto.prepararEditar}"
+						oncomplete="PF('dlgEditarProduto').show();"
+						update=":msgGlobal :formEditarProduto:pnlEditarProduto">
+						<f:setPropertyActionListener target="#{MBProduto.produto}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVO PRODUTO -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar novo produto"
+						oncomplete="PF('dlgNovoProduto').show();"
+						actionListener="#{MBProduto.prepararNovo}"
+						update=":formNovoProduto:pnlNovoProduto :msgGlobal" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- TELA PARA INSERIR UM NOVO PRODUTO -->
+		<p:dialog widgetVar="dlgNovoProduto" closable="true"
+			draggable="false" resizable="false" header="Cadastro de Funcionários">
+
+			<h:form id="formNovoProduto">
+
+				<h:panelGrid id="pnlNovoProduto" columns="2">
+
+					<p:outputLabel for="txtDescNovoProd" value="Descrição:" />
+					<p:inputText id="txtDescNovoProd"
+						value="#{MBProduto.produto.descricao}" maxlength="50" size="40"
+						required="true" requiredMessage="O campo descrição é obrigatório." />
+
+					<p:outputLabel for="txtQuantNovoProd" value="Quantidade:" />
+					<p:inputText id="txtQuantNovoProd"
+						required="true" requiredMessage="O campo quantidade é obrigatório."
+						value="#{MBProduto.produto.quantidade}" maxlength="15" size="20" />
+						
+					<p:outputLabel for="txtUnidMedNovoProd" value="Unid. de Medida:" />
+					<p:selectOneMenu id="txtUnidMedNovoProd"
+						value="#{MBProduto.produto.unid_med}">
+						<f:selectItem itemLabel="Selecione a unidade" itemValue="" />
+						<f:selectItem itemLabel="Arroba" itemValue="ARROB" />
+						<f:selectItem itemLabel="Caixa" itemValue="CX" />
+						<f:selectItem itemLabel="Centímetro" itemValue="CM" />
+						<f:selectItem itemLabel="Fardo" itemValue="FRD" />
+						<f:selectItem itemLabel="Litro" itemValue="LT" />
+						<f:selectItem itemLabel="Metro" itemValue="MT" />
+						<f:selectItem itemLabel="Peça" itemValue="PC" />
+						<f:selectItem itemLabel="Quilo" itemValue="QL" />
+						<f:selectItem itemLabel="Resma" itemValue="RSM" />
+						<f:selectItem itemLabel="Saco" itemValue="SC" />			
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="txtValorUnitNovoProd" value="Valor Unitário:" />
+					<p:inputText id="txtValorUnitNovoProd"
+						required="true" requiredMessage="O campo valor unitário é obrigatório."
+						value="#{MBProduto.produto.valor}" maxlength="15" size="20" />
+					
+					<p:outputLabel for="txtDataValidNovoProd" value="Data Validade:" />
+					<p:calendar id="txtDataValidNovoProd" required="true" readonlyInput="true" 
+					requiredMessage="O campo data de validade é obrigatório." value="#{MBProduto.produto.data_val}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+					</p:calendar>
+					
+					<p:outputLabel for="txtDataAquisNovoProd" value="Data Aquisição:" />
+					<p:calendar id="txtDataAquisNovoProd" required="true" readonlyInput="true"
+					requiredMessage="O campo data de aquisição é obrigatório." value="#{MBProduto.produto.data_aquis}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+					</p:calendar>
+
+					<p:outputLabel for="txtQuantMinNovoProd" value="Quantidade Mínima:" />
+					<p:inputText id="txtQuantMinNovoProd"
+						value="#{MBProduto.produto.quant_minima}" maxlength="10" size="10"
+						required="true" requiredMessage="O campo quantidade mínima é obrigatório."/>
+
+					<p:outputLabel value="Peso:" />
+					<p:inputText value="#{MBProduto.produto.peso}" maxlength="15" size="20" />
+					
+					<p:outputLabel value="Cor:" />
+					<p:selectOneMenu id="txtCorNovoProd"
+						value="#{MBProduto.produto.cor}">
+						<f:selectItem itemLabel="Selecione a cor" itemValue="" />
+						<f:selectItem itemLabel="Amarelo" itemValue="Amarelo" />
+						<f:selectItem itemLabel="Azul" itemValue="Azul" />
+						<f:selectItem itemLabel="Branco" itemValue="Branco" />
+						<f:selectItem itemLabel="Cinza" itemValue="Cinza" />
+						<f:selectItem itemLabel="Verde" itemValue="Verde" />
+						<f:selectItem itemLabel="Marrom" itemValue="Marrom" />
+						<f:selectItem itemLabel="Preto" itemValue="Preto" />
+						<f:selectItem itemLabel="Rosa" itemValue="Rosa" />
+						<f:selectItem itemLabel="Laranja" itemValue="Laranja" />
+						<f:selectItem itemLabel="Roxo" itemValue="Roxo" />
+						<f:selectItem itemLabel="Lilás" itemValue="Lilas" />			
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtTipoProdNovoProd" value="Tipo do Produto:" />
+					<p:selectOneMenu id="txtTipoProdNovoProd"
+						value="#{MBProduto.produto.tipo_produto.codigo}" filter="true"
+						required="true" requiredMessage="O campo tipo do produto é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Tipo" />
+						<f:selectItems value="#{MBProduto.comboTipoProduto}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBProduto.novo}"
+						update=":msgGlobal :formListagemProduto:tblListagemProduto"
+						oncomplete="verificar(xhr, status, args, 'dlgNovoProduto', 'tabelaListagemProduto');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovoProduto').hide();">
+						<p:resetInput target="pnlNovoProduto" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- TELA PARA EXCLUIR O PRODUTO SELECIONADO -->
+		<p:dialog widgetVar="dlgExcluirProduto" draggable="false"
+			resizable="false" closable="true" header="Exclusão de Produto">
+			<h:form id="formExcluirProduto">
+				<h:panelGrid id="pnlExcluirProduto" columns="2">
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBProduto.produto.codigo}" />
+
+					<p:outputLabel value="Descrição" />
+					<h:outputText value="#{MBProduto.produto.descricao}" />
+
+					<p:outputLabel value="Data da Aquisição" />
+					<h:outputText value="#{MBProduto.produto.data_aquis}" />
+
+					<p:outputLabel value="Quantidade" />
+					<h:outputText value="#{MBProduto.produto.quantidade}" />
+
+					<p:outputLabel value="Valor Unitário" />
+					<h:outputText value="#{MBProduto.produto.valor}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBProduto.excluir}"
+						update=":msgGlobal :formListagemProduto:tblListagemProduto"
+						oncomplete="PF('dlgExcluirProduto').hide(); PF('tabelaListagemProduto').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirProduto').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<!-- TELA PARA EDITAR O PRODUTO SELECIONADO -->
+		<p:dialog widgetVar="dlgEditarProduto" closable="true"
+			draggable="false" resizable="false" header="Editar Funcionários">
+
+			<h:form id="formEditarProduto">
+
+				<h:panelGrid id="pnlEditarProduto" columns="2">
+				
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBProduto.produto.codigo}" />
+
+					<p:outputLabel for="txtDescEditarProd" value="Descrição:" />
+					<p:inputText id="txtDescEditarProd"
+						value="#{MBProduto.produto.descricao}" maxlength="50" size="40"
+						required="true" requiredMessage="O campo descrição é obrigatório." />
+
+					<p:outputLabel for="txtQuantEditarProd" value="Quantidade:" />
+					<p:inputText id="txtQuantEditarProd"
+						required="true" requiredMessage="O campo quantidade é obrigatório."
+						value="#{MBProduto.produto.quantidade}" maxlength="15" size="20" />
+						
+					<p:outputLabel for="txtUnidMedEditarProd" value="Unid. de Medida:" />
+					<p:selectOneMenu id="txtUnidMedEditarProd"
+						value="#{MBProduto.produto.unid_med}">
+						<f:selectItem itemLabel="Selecione a unidade" itemValue="" />
+						<f:selectItem itemLabel="Arroba" itemValue="ARROB" />
+						<f:selectItem itemLabel="Caixa" itemValue="CX" />
+						<f:selectItem itemLabel="Centímetro" itemValue="CM" />
+						<f:selectItem itemLabel="Fardo" itemValue="FRD" />
+						<f:selectItem itemLabel="Litro" itemValue="LT" />
+						<f:selectItem itemLabel="Metro" itemValue="MT" />
+						<f:selectItem itemLabel="Peça" itemValue="PC" />
+						<f:selectItem itemLabel="Quilo" itemValue="QL" />
+						<f:selectItem itemLabel="Resma" itemValue="RSM" />
+						<f:selectItem itemLabel="Saco" itemValue="SC" />			
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="txtValorUnitEditarProd" value="Valor Unitário:" />
+					<p:inputText id="txtValorUnitEditarProd"
+						required="true" requiredMessage="O campo valor unitário é obrigatório."
+						value="#{MBProduto.produto.valor}" maxlength="15" size="20" />
+					
+					<p:outputLabel for="txtDataValidEditarProd" value="Data Validade:" />
+					<p:calendar id="txtDataValidEditarProd" required="true" pattern="dd/MM/yyyy" mask="true" readonlyInput="true"
+					requiredMessage="O campo data de validade é obrigatório." value="#{MBProduto.produto.data_val}"/>
+					
+					<p:outputLabel for="txtDataAquisEditarProd" value="Data Aquisição:" />
+					<p:calendar id="txtDataAquisEditarProd" required="true" pattern="dd/MM/yyyy" mask="true" readonlyInput="true"
+					requiredMessage="O campo data de aquisição é obrigatório." value="#{MBProduto.produto.data_aquis}"/>
+
+					<p:outputLabel for="txtQuantMinEditarProd" value="Quantidade Mínima:" />
+					<p:inputText id="txtQuantMinEditarProd"
+						value="#{MBProduto.produto.quant_minima}" maxlength="10" size="10"
+						required="true" requiredMessage="O campo quantidade mínima é obrigatório."/>
+
+					<p:outputLabel value="Peso:" />
+					<p:inputText value="#{MBProduto.produto.peso}" maxlength="15" size="20" />
+					
+					<p:outputLabel value="Cor:" />
+					<p:selectOneMenu id="txtCorNovoProd"
+						value="#{MBProduto.produto.cor}">
+						<f:selectItem itemLabel="Selecione a cor" itemValue="" />
+						<f:selectItem itemLabel="Amarelo" itemValue="Amarelo" />
+						<f:selectItem itemLabel="Azul" itemValue="Azul" />
+						<f:selectItem itemLabel="Branco" itemValue="Branco" />
+						<f:selectItem itemLabel="Cinza" itemValue="Cinza" />
+						<f:selectItem itemLabel="Verde" itemValue="Verde" />
+						<f:selectItem itemLabel="Marrom" itemValue="Marrom" />
+						<f:selectItem itemLabel="Preto" itemValue="Preto" />
+						<f:selectItem itemLabel="Rosa" itemValue="Rosa" />
+						<f:selectItem itemLabel="Laranja" itemValue="Laranja" />
+						<f:selectItem itemLabel="Roxo" itemValue="Roxo" />
+						<f:selectItem itemLabel="Lilás" itemValue="Lilas" />			
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtTipoProdEditarProd" value="Tipo do Produto:" />
+					<p:selectOneMenu id="txtTipoProdEditarProd"
+						value="#{MBProduto.produto.tipo_produto.descricao}" filter="true"
+						required="true" requiredMessage="O campo tipo do produto é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Tipo" />
+						<f:selectItems value="#{MBProduto.comboTipoProduto}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBProduto.editar}"
+						update=":msgGlobal :formListagemProduto:tblListagemProduto"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarProduto', 'tabelaListagemProduto');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarProduto').hide();">
+						<p:resetInput target="pnlEditarProduto" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
