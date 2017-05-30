@@ -1,19 +1,17 @@
 package br.com.estocandowebjava.domain;
 
-import java.util.*;
-
 public class Produto {
 	private Long codigo;
 	private String descricao;
 	private Long quantidade;
 	private String unid_med;
-	private Double valor_unit;
-	private Date data_valid;
-	private Date data_aquisicao;
+	private Double valor;
+	private String data_val;
+	private String data_aquis;
 	private Long quant_minima;
 	private Double peso;
 	private String cor;
-	private TipoProduto tipo_produto;
+	private TipoProduto tipo_produto = new TipoProduto();
 
 	public Long getCodigo() {
 		return codigo;
@@ -47,28 +45,28 @@ public class Produto {
 		this.unid_med = unid_med;
 	}
 
-	public Double getValor_unit() {
-		return valor_unit;
+	public Double getValor() {
+		return valor;
 	}
 
-	public void setValor_unit(Double valor_unit) {
-		this.valor_unit = valor_unit;
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
-	public Date getData_valid() {
-		return data_valid;
+	public String getData_val() {
+		return data_val;
 	}
 
-	public void setData_valid(Date data_valid) {
-		this.data_valid = data_valid;
+	public void setData_val(String data_val) {
+		this.data_val = data_val;
 	}
 
-	public Date getData_aquisicao() {
-		return data_aquisicao;
+	public String getData_aquis() {
+		return data_aquis;
 	}
 
-	public void setData_aquisicao(Date data_aquisicao) {
-		this.data_aquisicao = data_aquisicao;
+	public void setData_aquis(String data_aquis) {
+		this.data_aquis = data_aquis;
 	}
 
 	public Long getQuant_minima() {

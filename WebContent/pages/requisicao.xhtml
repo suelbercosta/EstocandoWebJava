@@ -101,8 +101,8 @@
 
 				<h:panelGrid id="pnlNovaRequisicao" columns="2">
 
-					<p:outputLabel for="txtDataRequisNova" value="Data:" />
-					<p:inputMask id="txtDataRequisNova" mask="99/99/9999"
+					<p:outputLabel for="data" value="Data:" />
+					<p:inputMask id="data" mask="99/99/9999" onfocus="validarData(s)" readonlyInput="true"
 						value="#{MBRequisicao.requisicao.data}" required="true"
 						requiredMessage="O campo data é obrigatório." />
 
@@ -145,7 +145,7 @@
 
 		<!-- TELA PARA EXCLUIR O REQUISIÇÃO SELECIONADO -->
 		<p:dialog widgetVar="dlgExcluirRequisicao" draggable="false"
-			resizable="false" closable="true" header="Exclusão de Funcionários">
+			resizable="false" closable="true" header="Exclusão de Requisição">
 			<h:form id="formExcluirRequisicao">
 				<h:panelGrid id="pnlExcluirRequisicao" columns="2">
 
@@ -177,7 +177,7 @@
 
 		<!-- TELA PARA EDITAR A REQUISIÇÃO SELECIONADA -->
 		<p:dialog widgetVar="dlgEditarRequisicao" closable="true"
-			draggable="false" resizable="false" header="Editar Funcionários">
+			draggable="false" resizable="false" header="Editar Requisição">
 
 			<h:form id="formEditarRequisicao">
 
@@ -228,7 +228,7 @@
 
 		<!-- TELA PARA INCLUIR PRODUTOS NA REQUISIÇÃO SELECIONADA -->
 		<p:dialog widgetVar="dlgIncluirProdutosRequisicao" closable="true"
-			draggable="false" resizable="false" header="Editar Funcionários">
+			draggable="false" resizable="false" header="Incluir Produto na Requisição">
 
 			<h:form id="formIncluirProdutosRequisicao">
 
