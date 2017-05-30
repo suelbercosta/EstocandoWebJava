@@ -24,3 +24,15 @@ function login(usuario, senha){
 		return false;
 	}
 }
+
+//Expect input as d/m/y
+function validatData(s) {
+  var bits = s.split('/');
+  var d = new Date(bits[2], bits[1] - 1, bits[0]);
+  return d && (d.getMonth() + 1) == bits[1];
+}
+
+['0/10/2017','29/2/2016'].forEach(function(s) {
+  console.log(s + ' : ' + isValidDate(s))
+})
+
