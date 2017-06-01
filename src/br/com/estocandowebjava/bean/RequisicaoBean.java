@@ -7,17 +7,20 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.estocandowebjava.dao.FuncionarioDAO;
+import br.com.estocandowebjava.dao.ProdutoDAO;
 import br.com.estocandowebjava.dao.RequisicaoDAO;
 import br.com.estocandowebjava.domain.Funcionario;
+import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.Requisicao;
 import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBRequisicao")
 @ViewScoped
-public class RequisicaoBean implements InterfaceBean {
+public class RequisicaoBean {
 	private Requisicao requisicao;
 	private ArrayList<Funcionario> comboAlmoxarife;
 	private ArrayList<Funcionario> comboRequisitante;
+	private ArrayList<Produto> comboProduto;
 	
 	private ArrayList<Requisicao> itens;
 	private ArrayList<Requisicao> itensFiltrados;
@@ -63,8 +66,15 @@ public class RequisicaoBean implements InterfaceBean {
 	public void setItensFiltrados(ArrayList<Requisicao> itensFiltrados) {
 		this.itensFiltrados = itensFiltrados;
 	}
+	
+	public ArrayList<Produto> getComboProduto() {
+		return comboProduto;
+	}
 
-	@Override
+	public void setComboProduto(ArrayList<Produto> comboProduto) {
+		this.comboProduto = comboProduto;
+	}
+
 	public void carregarListagem() {
 		try {
 			RequisicaoDAO dao = new RequisicaoDAO();
@@ -76,15 +86,16 @@ public class RequisicaoBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA PREPARAR NOVA REQUISIÇÃO
-	@Override
 	public void prepararNovo() {
 		try {
 			requisicao = new Requisicao();
 
 			FuncionarioDAO fdao = new FuncionarioDAO();
+			ProdutoDAO pdao = new ProdutoDAO();
 
-			comboAlmoxarife = fdao.listar();
-			comboRequisitante = fdao.listar();
+			comboAlmoxarife = fdao.listarAlmoxarife();
+			comboRequisitante = fdao.listarRequisitante();
+			comboProduto = pdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -92,7 +103,6 @@ public class RequisicaoBean implements InterfaceBean {
 
 	}
 
-	@Override
 	public void novo() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();
@@ -108,7 +118,6 @@ public class RequisicaoBean implements InterfaceBean {
 	}
 	
 	// COMANDO PARA EXCLUIR UMA REQUISIÇÃO
-	@Override
 	public void excluir() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();
@@ -125,12 +134,11 @@ public class RequisicaoBean implements InterfaceBean {
 	}
 	
 	// COMANDO PARA PREPARAR EDITAR UMA REQUISIÇÃO
-	@Override
 	public void prepararEditar() {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 
-			comboAlmoxarife = fdao.listar();
+			comboAlmoxarife = fdao.listarAlmoxarife();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -139,7 +147,16 @@ public class RequisicaoBean implements InterfaceBean {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 
-			comboRequisitante = fdao.listar();
+			comboRequisitante = fdao.listarRequisitante();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
+		try {
+			ProdutoDAO pdao = new ProdutoDAO();
+
+			comboProduto = pdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -147,7 +164,6 @@ public class RequisicaoBean implements InterfaceBean {
 
 	}
 	
-	@Override
 	public void editar() {
 		try {
 			RequisicaoDAO rdao = new RequisicaoDAO();
@@ -162,4 +178,9 @@ public class RequisicaoBean implements InterfaceBean {
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 	}
+	
+	public void imprimir() {
+		
+	}
+
 }

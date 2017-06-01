@@ -36,3 +36,17 @@ function validatData(s) {
   console.log(s + ' : ' + isValidDate(s))
 })
 
+function data() {
+	var data = new Date();
+	var d = data.getDate();
+	var m = data.getMonth() + 1;
+	var a = data.getFullYear();
+	document.getElementById('dt').value = (d+'/0'+m+'/'+a);
+}
+
+function relRequisicao() {
+	//if (document.getElementById('txtRelFilRequisicao').Value = 'Data') {
+		document.getElementById('txtRelDataRequis').disabled = "False";
+	//}
+}
+

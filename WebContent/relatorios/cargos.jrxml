@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-31T18:10:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="160f60e2-9a79-4f68-ac06-db2d11052088">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="YENhcmdvYCAsMTUsMTUsMTY2NzQwOGItYzJlMy00OGI0LWI0NGEtMTQzOGRkZTllMjhkOw=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="estocando"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="234"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="755"/>
+	<parameter name="CARGO_PERMISSAO" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="CARGO_DESCRICAO" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM `Cargo`
+ORDER BY `Cargo`.descricao ASC]]>
+	</queryString>
+	<field name="cod_cargo" class="java.lang.Integer"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="salario" class="java.math.BigDecimal"/>
+	<field name="permissao" class="java.lang.Integer"/>
+	<variable name="salario1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{salario}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="10" width="260" height="51" uuid="b18d8483-14e2-4269-a21c-e33be92207f5"/>
+				<imageExpression><![CDATA["C:/Desenvolvimento/workspace/EstocandoWebJava/WebContent/resources/img/logo4.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="6" width="552" height="24" forecolor="#0B15D6" uuid="394aafd3-41a7-43e3-ba74-fc0359626d41"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listagem de Cargos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="0" width="49" height="22" forecolor="#0005DB" uuid="057c88cd-e7d5-4019-b836-44f378e80bcf"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="0" width="250" height="22" forecolor="#0005DB" uuid="68e25ab0-b089-444f-a05a-02984b967e14"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="0" width="120" height="22" forecolor="#0005DB" uuid="39629da0-b6e2-43a5-8146-fe4d63d438c4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALÁRIO R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="100" height="23" forecolor="#0005DB" uuid="7e282632-1656-4f92-b350-221a268f998f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERMISSÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="19" width="553" height="5" uuid="28978fe2-6fd2-4c10-a36d-791402ea0b97"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="30" height="16" uuid="5da9ca2c-fc45-423a-b5e2-3424949fb920"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_cargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="250" height="17" uuid="0a60cbfe-d415-4218-9bfe-5b84247271b6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0.00">
+				<reportElement x="320" y="1" width="70" height="18" uuid="8f350d2d-c2cb-4dad-891a-b6373926ca52"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="51" height="17" uuid="d59684f6-81b7-42ea-baf4-c09540ecc410"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{permissao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="430" y="30" width="120" height="13" uuid="ef0138e9-0e94-49e8-a1a8-3e3d8bfc8b1a"/>
+				<text><![CDATA[Criado por Suelber Costa]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

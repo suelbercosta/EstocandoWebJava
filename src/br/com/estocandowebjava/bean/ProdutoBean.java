@@ -56,7 +56,7 @@ public class ProdutoBean implements InterfaceBean {
 		this.itensFiltrados = itensFiltrados;
 	}
 
-	@Override
+	
 	//Sobreescrita do método carregarListagem() da InterfaceBean
 	public void carregarListagem() {
 		try {

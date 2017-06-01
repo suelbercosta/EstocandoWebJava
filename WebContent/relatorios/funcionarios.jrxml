@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-31T15:57:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0f22ee0-2db9-460e-bab9-f236f31aace5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="224"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="769"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="estocando"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT estocando.funcionario.nome,
+	estocando.funcionario.matricula,
+	estocando.cargo.descricao AS cdescricao,
+	estocando.setor.descricao AS sdescricao
+FROM estocando.funcionario
+	INNER JOIN estocando.cargo ON 
+	 estocando.funcionario.`Cargo_cod_cargo` = estocando.cargo.cod_cargo 
+	INNER JOIN estocando.setor ON 
+	 estocando.funcionario.`Setor_cod_setor` = estocando.setor.cod_setor 
+ORDER BY estocando.funcionario.nome ASC]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.Integer"/>
+	<field name="cdescricao" class="java.lang.String"/>
+	<field name="sdescricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="0" y="10" width="260" height="51" uuid="0caa6af0-0414-430c-91f0-cc437fe86f4a"/>
+				<imageExpression><![CDATA["C:/Desenvolvimento/workspace/EstocandoWebJava/WebContent/resources/img/logo4.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="552" height="24" forecolor="#0B15D6" uuid="7e748b63-c3ed-4473-af2c-3cbcafcc7f79"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listagem de Funcionários]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="22" forecolor="#0005DB" uuid="81a376da-cd88-4b3d-ab03-86be5d028999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATR.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="0" width="170" height="22" forecolor="#0005DB" uuid="5fbc88a8-862d-46bc-b304-3cfb4b571991"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="160" height="22" forecolor="#0005DB" uuid="6bb68c71-aa6d-4ab1-8cca-cb56680dd3b4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SETOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="140" height="22" forecolor="#0005DB" uuid="2c0cd40a-fc64-4863-bf2a-da927ead2c94"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="19" width="553" height="5" uuid="42c98f2f-1ad0-40e3-8342-53763a0cdc1a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="30" height="16" uuid="dbf3608f-5241-4d18-825d-106671979eb1"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="170" height="20" uuid="bbe4118a-0a58-4994-a407-ce603c66020e"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="140" height="20" uuid="2ccd018e-7b17-42a5-bec4-a034ec713c8c"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cdescricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="160" height="20" uuid="2d5fa35e-bbe1-46e3-9aca-b5b607cc926b"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sdescricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="430" y="30" width="120" height="13" uuid="d019f23f-c179-412a-b350-5335914ab456"/>
+				<text><![CDATA[Criado por Suelber Costa]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

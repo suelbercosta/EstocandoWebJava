@@ -15,7 +15,7 @@ public class ProdutoDAO {
 	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
 	public void salvar(Produto p) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("insert into Produto ");
+		sql.append("insert into Estoque ");
 		sql.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
 		sql.append("quant_minima, peso, cor, Tipo_Produto_codigo ");
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
@@ -45,7 +45,7 @@ public class ProdutoDAO {
 	public ArrayList<Produto> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * ");
-		sql.append("FROM Produto p inner join Tipo_Produto t ");
+		sql.append("FROM Estoque p inner join Tipo_Produto t ");
 		sql.append("on t.codigo = p.tipo_produto_codigo order by p.descricao ");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
@@ -87,7 +87,7 @@ public class ProdutoDAO {
 	//DEFINIÇÃO DO COMANDO PARA EXCLUIR DADOS DA TABELA
 	public void excluir(Produto p) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM Produto WHERE codigo = ?");
+		sql.append("DELETE FROM Estoque WHERE codigo = ?");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -104,7 +104,7 @@ public class ProdutoDAO {
 	//DEFINIÇÃO DO COMANDO PARA EDITAR DADOS DA TABELA
 	public void editar(Produto p) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE Produto SET ");
+		sql.append("UPDATE Estoque SET ");
 		sql.append("descricao = ?, quantidade = ?, unid_med = ?, valor = ?, data_val = ?, ");
 		sql.append("data_aquis = ?, quant_minima = ?, peso = ?, cor = ?, tipo_produto = ?, ");
 		sql.append("WHERE codigo = ?");

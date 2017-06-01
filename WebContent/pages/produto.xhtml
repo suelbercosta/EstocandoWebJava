@@ -92,7 +92,7 @@
 
 		<!-- TELA PARA INSERIR UM NOVO PRODUTO -->
 		<p:dialog widgetVar="dlgNovoProduto" closable="true"
-			draggable="false" resizable="false" header="Cadastro de Funcionários">
+			draggable="false" resizable="false" header="Cadastro de Produtos">
 
 			<h:form id="formNovoProduto">
 
@@ -130,16 +130,14 @@
 						value="#{MBProduto.produto.valor}" maxlength="15" size="20" />
 					
 					<p:outputLabel for="txtDataValidNovoProd" value="Data Validade:" />
-					<p:calendar id="txtDataValidNovoProd" required="true" readonlyInput="true" 
-					requiredMessage="O campo data de validade é obrigatório." value="#{MBProduto.produto.data_val}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-					</p:calendar>
+					<p:inputMask id="txtDataValidNovoProd" mask="99/99/9999" readonlyInput="true"
+						value="#{MBProduto.produto.data_val}" required="true"
+						requiredMessage="O campo data de validade é obrigatório." />
 					
 					<p:outputLabel for="txtDataAquisNovoProd" value="Data Aquisição:" />
-					<p:calendar id="txtDataAquisNovoProd" required="true" readonlyInput="true"
-					requiredMessage="O campo data de aquisição é obrigatório." value="#{MBProduto.produto.data_aquis}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-					</p:calendar>
+					<p:inputMask id="txtDataAquisNovoProd" mask="99/99/9999" readonlyInput="true"
+						value="#{MBProduto.produto.data_aquis}" required="true"
+						requiredMessage="O campo data de aquisição é obrigatório." />
 
 					<p:outputLabel for="txtQuantMinNovoProd" value="Quantidade Mínima:" />
 					<p:inputText id="txtQuantMinNovoProd"
@@ -228,7 +226,7 @@
 
 		<!-- TELA PARA EDITAR O PRODUTO SELECIONADO -->
 		<p:dialog widgetVar="dlgEditarProduto" closable="true"
-			draggable="false" resizable="false" header="Editar Funcionários">
+			draggable="false" resizable="false" header="Editar Produtos">
 
 			<h:form id="formEditarProduto">
 

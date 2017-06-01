@@ -2,15 +2,15 @@ package br.com.estocandowebjava.domain;
 
 public class Produto {
 	private Long codigo;
-	private String descricao;
-	private Long quantidade;
-	private String unid_med;
-	private Double valor;
-	private String data_val;
-	private String data_aquis;
-	private Long quant_minima;
-	private Double peso;
-	private String cor;
+	private String descricao = "";
+	private Long quantidade = null;
+	private String unid_med = "";
+	private Double valor = null;
+	private String data_val = "";
+	private String data_aquis = "";
+	private Long quant_minima = null;
+	private Double peso = null;
+	private String cor = "";
 	private TipoProduto tipo_produto = new TipoProduto();
 
 	public Long getCodigo() {
