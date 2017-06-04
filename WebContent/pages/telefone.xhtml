@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+
+		<f:event listener="#{MBTelefone.carregarListagem}"
+			type="preRenderView" />
+
+		<h:form id="formListagemTelefone">
+
+			<!-- TABELA COM OS DADOS DOS TELEFONES -->
+			<p:dataTable id="tblListagemTelefone"
+				widgetVar="tabelaListagemTelefone"
+				emptyMessage="Nenhum registro encontrado."
+				value="#{MBTelefone.itens}" var="item" paginator="true" rows="10"
+				filteredValue="#{MBTelefone.itensFiltrados}">
+
+				<f:facet name="header">
+					<h:outputText value="LISTA DE TELEFONES CADASTRADOS" />
+				</f:facet>
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}"
+					width="110">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+				
+				<p:column headerText="TELEFONE" filterBy="#{item.telefone}"
+					width="150">
+					<h:outputText value="#{item.telefone}" />
+				</p:column>
+
+				<p:column headerText="FUNCIONARIO" filterBy="#{item.funcionario.nome}">
+					<h:outputText value="#{item.funcionario.nome}" />
+				</p:column>
+
+				<p:column headerText="OPÇÕES" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirTelefone').show();"
+						update=":formExcluirTelefone:pnlExcluirTelefone">
+						<f:setPropertyActionListener target="#{MBTelefone.telefone}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBTelefone.prepararEditar}"
+						oncomplete="PF('dlgEditarTelefone').show();"
+						update=":msgGlobal :formEditarTelefone:pnlEditarTelefone">
+						<f:setPropertyActionListener target="#{MBTelefone.telefone}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVO TELEFONE -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar Novo Telefone"
+						oncomplete="PF('dlgNovoTelefone').show();"
+						actionListener="#{MBTelefone.prepararNovo}"
+						update=":formNovoTelefone:pnlNovoTelefone :msgGlobal" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- TELA PARA INSERIR UM NOVO TELEFONE -->
+		<p:dialog widgetVar="dlgNovoTelefone" closable="true"
+			draggable="false" resizable="false" header="Cadastro de Telefones" appendTo="@(body)">
+
+			<h:form id="formNovoTelefone">
+
+				<h:panelGrid id="pnlNovoTelefone" columns="2">
+
+					<p:outputLabel for="txtNovoFuncFunc" value="Funcionário:" />
+					<p:selectOneMenu id="txtNovoFuncFunc"
+						value="#{MBTelefone.comboFuncionario}" filter="true"
+						required="true" requiredMessage="O campo funcionário é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Funcionário" />
+						<f:selectItems value="#{MBTelefone.comboFuncionario}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtNovoFuncTel" value="Telefone:" />
+					<p:inputMask id="txtNovoFuncTel" mask="(99) 9999-9999" value="#{MBTelefone.telefone.telefone}" 
+					required="true" requiredMessage="O campo telefone é obrigatório."/>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBTelefone.novo}"
+						update=":msgGlobal :formListagemTelefone:tblListagemTelefone"
+						oncomplete="verificar(xhr, status, args, 'dlgNovoTelefone', 'tabelaListagemTelefone');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovoTelefone').hide();">
+						<p:resetInput target="pnlNovoTelefone" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- TELA PARA EXCLUIR O TELEFONE SELECIONADO -->
+		<p:dialog widgetVar="dlgExcluirTelefone" draggable="false"
+			resizable="false" closable="true" header="Exclusão de Telefones">
+			<h:form id="formExcluirTelefone">
+				<h:panelGrid id="pnlExcluirTelefone" columns="2">
+					<p:outputLabel value="Matrícula" />
+					<h:outputText value="#{MBTelefone.telefone.matricula}" />
+
+					<p:outputLabel value="Nome" />
+					<h:outputText value="#{MBTelefone.telefone.nome}" />
+
+					<p:outputLabel value="CPF" />
+					<h:outputText value="#{MBTelefone.telefone.cpf}" />
+
+					<p:outputLabel value="RG" />
+					<h:outputText value="#{MBTelefone.telefone.rg}" />
+
+					<p:outputLabel value="Telefone" />
+					<h:outputText value="#{MBTelefone.telefone.telefone.descricao}" />
+
+					<p:outputLabel value="Setor" />
+					<h:outputText value="#{MBTelefone.telefone.setor.descricao}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBTelefone.excluir}"
+						update=":msgGlobal :formListagemTelefone:tblListagemTelefone"
+						oncomplete="PF('dlgExcluirTelefone').hide(); PF('tabelaListagemTelefone').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirTelefone').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<!-- TELA PARA EDITAR O TELEFONE SELECIONADO -->
+		<p:dialog widgetVar="dlgEditarTelefone" closable="true"
+			draggable="false" resizable="false" header="Editar Telefones">
+
+			<h:form id="formEditarTelefone">
+
+				<h:panelGrid id="pnlEditarTelefone" columns="2">
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBTelefone.telefone.codigo}" />
+
+					<p:outputLabel for="txtFuncFuncNovo" value="Funcionário:" />
+					<p:selectOneMenu id="txtFuncFuncNovo"
+						value="#{MBTelefone.telefone.funcionario.matricula}" filter="true"
+						required="true" requiredMessage="O campo funcionário é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Funcionário" />
+						<f:selectItems value="#{MBTelefone.comboFuncionario}" var="item"
+							itemValue="#{item.matricula}" itemLabel="#{item.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Telefone:" />
+					<p:inputMask mask="(99) 9999-9999" value="#{MBTelefone.telefone.telefone}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBTelefone.editar}"
+						update=":msgGlobal :formListagemTelefone:tblListagemTelefone"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarTelefone', 'tabelaListagemTelefone');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarTelefone').hide();">
+						<p:resetInput target="pnlEditarTelefone" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>
