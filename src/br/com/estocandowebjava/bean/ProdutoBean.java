@@ -15,15 +15,14 @@ import br.com.estocandowebjava.util.JSFUtil;
 @ManagedBean(name = "MBProduto")
 @ViewScoped
 public class ProdutoBean implements InterfaceBean {
-	//Declaração de variáveis
-	private Produto produto;
-	private ArrayList<TipoProduto> comboTipoProduto;
+	// Declaração de variáveis
+	private Produto produto = new Produto();
+	private ArrayList<TipoProduto> comboTipoProduto = new ArrayList<TipoProduto>();
 
 	private ArrayList<Produto> itens;
 	private ArrayList<Produto> itensFiltrados;
-	
-	
-	//Declaração dos métodos gets e sets
+
+	// Declaração dos métodos gets e sets
 	public Produto getProduto() {
 		return produto;
 	}
@@ -56,8 +55,7 @@ public class ProdutoBean implements InterfaceBean {
 		this.itensFiltrados = itensFiltrados;
 	}
 
-	
-	//Sobreescrita do método carregarListagem() da InterfaceBean
+	// Sobreescrita do método carregarListagem() da InterfaceBean
 	public void carregarListagem() {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
@@ -70,7 +68,7 @@ public class ProdutoBean implements InterfaceBean {
 
 	// COMANDO PARA PREPARAR NOVO PRODUTOS
 	@Override
-	//Sobreescrita do método prepararNovo() da InterfaceBean
+	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
 		try {
 			produto = new Produto();
@@ -86,7 +84,7 @@ public class ProdutoBean implements InterfaceBean {
 	}
 
 	@Override
-	//Sobreescrita do método novo()
+	// Sobreescrita do método novo()
 	public void novo() {
 		try {
 			ProdutoDAO pdao = new ProdutoDAO();
@@ -100,28 +98,28 @@ public class ProdutoBean implements InterfaceBean {
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 	}
-	
+
 	// COMANDO PARA EXCLUIR UM PRODUTOS
 	@Override
-	//Sobreescrita do método excluir() da InterfaceBean
+	// Sobreescrita do método excluir() da InterfaceBean
 	public void excluir() {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
-			
+
 			dao.excluir(produto);
-			
+
 			itens = dao.listar();
-			
+
 			JSFUtil.adicionarMensagemSucesso("Dados excluidos com sucesso!");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 	}
-	
+
 	// COMANDO PARA PREPARAR EDITAR PRODUTOS
 	@Override
-	//Sobreescrita do método prepararEditar() da InterfaceBean
+	// Sobreescrita do método prepararEditar() da InterfaceBean
 	public void prepararEditar() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
@@ -133,13 +131,13 @@ public class ProdutoBean implements InterfaceBean {
 		}
 
 	}
-	
+
 	@Override
-	//Sobreescrita do método editar() da InterfaceBean
+	// Sobreescrita do método editar() da InterfaceBean
 	public void editar() {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
-			
+
 			dao.editar(produto);
 
 			itens = dao.listar();
@@ -152,4 +150,3 @@ public class ProdutoBean implements InterfaceBean {
 	}
 
 }
-

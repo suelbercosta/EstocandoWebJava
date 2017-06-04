@@ -6,14 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.fabric.FabricCommunicationException;
-
 import br.com.estocandowebjava.domain.TipoProduto;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class TipoProdutoDAO {
 
-	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
+	// DEFINIÇÃO DO MÉTODO PARA SALVAR OS DADOS
 	public void salvarTipoProduto(TipoProduto t) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into Tipo_Produto (descricao) values (?) ");
@@ -28,7 +26,7 @@ public class TipoProdutoDAO {
 		comando.executeUpdate();
 	}
 
-	// DEFINIÇÃO DO COMANDO SQL PARA EXCLUIR DADOS
+	// DEFINIÇÃO DO MÉTODO PARA EXCLUIR DADOS
 	public void excluirTipoProduto(TipoProduto t) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("delete from Tipo_Produto where codigo = ? ");
@@ -44,7 +42,7 @@ public class TipoProdutoDAO {
 
 	}
 
-	// DEFINIÇÃO DO COMANDO SQL PARA EDITAR OS DADOS
+	// DEFINIÇÃO DO MÉTODO PARA EDITAR OS DADOS
 	public void editarTipoProduto(TipoProduto t) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update Tipo_Produto set descricao = ? where codigo = ? ");
@@ -61,7 +59,7 @@ public class TipoProdutoDAO {
 
 	}
 
-	// DEFINIÇÃO DO COMANDO SQL PARA EDITAR OS DADOS
+	// DEFINIÇÃO DO MÉTODO PARA EDITAR OS DADOS
 	public TipoProduto buscarPorCodigo(TipoProduto t) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select codigo, descricao from Tipo_Produto where codigo = ? ");
@@ -87,7 +85,7 @@ public class TipoProdutoDAO {
 		return retorno;
 	}
 
-	//CRIAÇÃO DE ARRAYLIST PARA LISTAR TODOS OS CARGOS
+	//CRIAÇÃO DE MÉTODO PARA LISTAR TODOS OS CARGOS
 	public ArrayList<TipoProduto> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select * from Tipo_Produto ORDER BY descricao asc ");
@@ -115,7 +113,7 @@ public class TipoProdutoDAO {
 		return lista;
 	}
 	
-	//CRIAÇÃO DE ARRAYLIST PARA LISTAR OS DADOS PESQUISADOS POR DESCRIÇÃO
+	//CRIAÇÃO DE MÉTODO PARA LISTAR OS DADOS PESQUISADOS POR DESCRIÇÃO
 	public ArrayList<TipoProduto> buscarPorDescricao(TipoProduto t) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT codigo, descricao FROM Tipo_Produto WHERE descricao LIKE ? ");

@@ -1,6 +1,5 @@
 package br.com.estocandowebjava.bean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -8,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.estocandowebjava.dao.FuncionarioDAO;
-import br.com.estocandowebjava.domain.Cargo;
 import br.com.estocandowebjava.domain.Funcionario;
 
 @ManagedBean(name = "MBLogin")
@@ -53,8 +51,6 @@ public class LoginBean {
 
 	@PostConstruct
 	public void login() {
-			FuncionarioDAO dao = new FuncionarioDAO();
-		//	itens = dao.validarLogin(Funcionario);
 
 	}
 }

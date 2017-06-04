@@ -14,7 +14,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 @ManagedBean(name = "MBEndereco")
 @ViewScoped
 public class EnderecoBean {
-	private Endereco endereco;
+	private Endereco endereco = new Endereco();
 	private ArrayList<Endereco> itens;
 	private ArrayList<Endereco> itensFiltrados;
 

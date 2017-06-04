@@ -43,6 +43,7 @@ public class TipoProdutoBean {
 	}
 
 	@PostConstruct
+	// MÉTODO PARA PREPARAR A PESQUISA DOS TIPO DE PRODUTOS
 	public void prepararPesquisaTipoProduto() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
@@ -53,17 +54,19 @@ public class TipoProdutoBean {
 		}
 	}
 
+	// MÉTODO DE PREPARAÇÃO PARA INSERIR UM NOVO TIPO DO PRODUTO
 	public void prepararNovoTipoProduto() {
 		tipoproduto = new TipoProduto();
 	}
 
+	// MÉTODO PARA INSERIR UM NOVO TIPO DE PRODUTO
 	public void novoTipoProduto() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
 			dao.salvarTipoProduto(tipoproduto);
-			
+
 			itens = dao.listar();
-			
+
 			JSFUtil.adicionarMensagemSucesso("Dados salvos com sucesso");
 
 		} catch (SQLException ex) {
@@ -72,14 +75,14 @@ public class TipoProdutoBean {
 		}
 	}
 
-	// CARREGA OS DADOS DA TABELA QUE SERÃO EXCLUIDOS
+	// MÉTODO PARA EXCLUIR UM TIPO DE PRODUTO
 	public void excluirTipoProduto() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
 			dao.excluirTipoProduto(tipoproduto);
 
 			itens = dao.listar();
-			
+
 			JSFUtil.adicionarMensagemSucesso("Dados removidos com sucesso");
 
 		} catch (SQLException ex) {
@@ -88,14 +91,14 @@ public class TipoProdutoBean {
 		}
 	}
 
-	// CARREGA OS DADOS DA TABELA QUE SERÃO EDITADOS
+	// MÉTODO PARA EDITAR UM TIPO DE PRODUTO
 	public void editarTipoProduto() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
 			dao.editarTipoProduto(tipoproduto);
 
 			itens = dao.listar();
-			
+
 			JSFUtil.adicionarMensagemSucesso("Dados editados com sucesso.");
 
 		} catch (SQLException ex) {

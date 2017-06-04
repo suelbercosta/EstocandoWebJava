@@ -154,7 +154,9 @@
 
 					<p:outputLabel for="txtSalCargoEditar" value="Salário" />
 					<p:inputText id="txtSalCargoEditar" value="#{MBCargo.cargo.salario}" size="9"
-						maxlength="7" required="true" requiredMessage="O campo salário é obrigatório."/>
+						maxlength="7" required="true" requiredMessage="O campo salário é obrigatório.">
+						<f:convertNumber />
+					</p:inputText>
 
 					<p:outputLabel for="txtPermCargoEditar" value="Permissão" />
 					<p:selectOneMenu id="txtPermCargoEditar" 

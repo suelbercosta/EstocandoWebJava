@@ -2,78 +2,62 @@ package br.com.estocandowebjava.domain;
 
 public class Fornecedor {
 	private Long codigo;
-	private Long tipo_pessoa;
-	private Long telefone;
+	private String tipo_pessoa;
+	private String telefone;
 	private String email;
-	private Long fax;
-	private Endereco endereco;
+	private String fax;
+	private Endereco endereco = new Endereco();
 	private Pessoa_Fisica pessoafisica;
 	private Pessoa_Juridica pessoajuridica;
-
 	public Long getCodigo() {
 		return codigo;
 	}
-
-	public void setCodigo(Long cod_forn) {
-		this.codigo = cod_forn;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
-
-	public Long getTipo_pessoa() {
+	public String getTipo_pessoa() {
 		return tipo_pessoa;
 	}
-
-	public void setTipo_pessoa(Long tipo_pessoa) {
+	public void setTipo_pessoa(String tipo_pessoa) {
 		this.tipo_pessoa = tipo_pessoa;
 	}
-
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Long getFax() {
+	public String getFax() {
 		return fax;
 	}
-
-	public void setFax(Long fax) {
+	public void setFax(String fax) {
 		this.fax = fax;
 	}
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
-
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-
-	public Pessoa_Fisica getPf() {
+	public Pessoa_Fisica getPessoafisica() {
 		return pessoafisica;
 	}
-
-	public void setPf(Pessoa_Fisica pessoafisica) {
+	public void setPessoafisica(Pessoa_Fisica pessoafisica) {
 		this.pessoafisica = pessoafisica;
 	}
-
-	public Pessoa_Juridica getPj() {
+	public Pessoa_Juridica getPessoajuridica() {
 		return pessoajuridica;
 	}
-
-	public void setPj(Pessoa_Juridica pessoajuridica) {
+	public void setPessoajuridica(Pessoa_Juridica pessoajuridica) {
 		this.pessoajuridica = pessoajuridica;
 	}
-	
+
 	
 	
 }

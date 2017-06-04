@@ -17,7 +17,7 @@ public class ProdutoDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into Estoque ");
 		sql.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
-		sql.append("quant_minima, peso, cor, Tipo_Produto_codigo ");
+		sql.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
 		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
@@ -26,12 +26,12 @@ public class ProdutoDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, p.getDescricao());
-		comando.setLong(2, p.getQuantidade());
+		comando.setDouble(2, p.getQuantidade());
 		comando.setString(3, p.getUnid_med());
 		comando.setDouble(4, p.getValor());
 		comando.setString(5, p.getData_val());
 		comando.setString(6, p.getData_aquis());
-		comando.setLong(7, p.getQuant_minima());
+		comando.setDouble(7, p.getQuant_minima());
 		comando.setDouble(8, p.getPeso());
 		comando.setString(9, p.getCor());
 		comando.setLong(10, p.getTipo_produto().getCodigo());
@@ -62,12 +62,12 @@ public class ProdutoDAO {
 			Produto p = new Produto();
 			p.setCodigo(resultado.getLong("p.codigo"));
 			p.setDescricao(resultado.getString("p.descricao"));
-			p.setQuantidade(resultado.getLong("p.quantidade"));
+			p.setQuantidade(resultado.getDouble("p.quantidade"));
 			p.setUnid_med(resultado.getString("p.unid_med"));
 			p.setValor(resultado.getDouble("p.valor"));
 			p.setData_val(resultado.getString("p.data_val"));
 			p.setData_aquis(resultado.getString("p.data_aquis"));
-			p.setQuant_minima(resultado.getLong("p.quant_minima"));
+			p.setQuant_minima(resultado.getDouble("p.quant_minima"));
 			p.setPeso(resultado.getDouble("p.peso"));
 			p.setCor(resultado.getString("p.cor"));
 			
@@ -106,8 +106,8 @@ public class ProdutoDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE Estoque SET ");
 		sql.append("descricao = ?, quantidade = ?, unid_med = ?, valor = ?, data_val = ?, ");
-		sql.append("data_aquis = ?, quant_minima = ?, peso = ?, cor = ?, tipo_produto = ?, ");
-		sql.append("WHERE codigo = ?");
+		sql.append("data_aquis = ?, quant_minima = ?, peso = ?, cor = ?, tipo_produto = ? ");
+		sql.append("WHERE codigo = ? ");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -115,12 +115,12 @@ public class ProdutoDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, p.getDescricao());
-		comando.setLong(2, p.getQuantidade());
+		comando.setDouble(2, p.getQuantidade());
 		comando.setString(3, p.getUnid_med());
 		comando.setDouble(4, p.getValor());
 		comando.setString(5, p.getData_val());
 		comando.setString(6, p.getData_aquis());
-		comando.setLong(7, p.getQuant_minima());
+		comando.setDouble(7, p.getQuant_minima());
 		comando.setDouble(8, p.getPeso());
 		comando.setString(9, p.getCor());
 		comando.setLong(10, p.getTipo_produto().getCodigo());

@@ -56,7 +56,8 @@
 
 				<p:column headerText="Salário" filterBy="#{item.cargo.salario}"
 					width="110">
-					<h:outputText value="R$ " /><h:outputText value="#{item.cargo.salario}">
+					<h:outputText value="R$ " />
+					<h:outputText value="#{item.cargo.salario}">
 						<f:convertNumber pattern="0.00" />
 					</h:outputText>
 				</p:column>
@@ -110,12 +111,13 @@
 
 					<p:outputLabel for="txtRgFuncNovo" value="RG:" />
 					<p:inputMask id="txtRgFuncNovo" mask="9.999.999"
-						value="#{MBFuncionario.funcionario.rg}" maxlength="15" size="20" />
+						value="#{MBFuncionario.funcionario.rg}" />
 
 					<p:outputLabel for="txtDataNascFuncNovo" value="Data Nascimento:" />
 					<p:inputMask id="txtDataNascFuncNovo" mask="99/99/9999"
-						required="true" requiredMessage="O campo data de nascimento é obrigatório."
-						value="#{MBFuncionario.funcionario.data_nasc}"/>
+						required="true"
+						requiredMessage="O campo data de nascimento é obrigatório."
+						value="#{MBFuncionario.funcionario.data_nasc}" />
 
 					<p:outputLabel for="txtSexoFuncNovo" value="Sexo:" />
 					<p:selectOneMenu id="txtSexoFuncNovo"
@@ -132,10 +134,10 @@
 						mask="99999" />
 
 					<p:outputLabel for="txtDataAdmissaoFuncNovo" value="Data Admissão:" />
-					<p:inputMask id="txtDataAdmissaoFuncNovo" mask="99/99/9999" 
+					<p:inputMask id="txtDataAdmissaoFuncNovo" mask="99/99/9999"
 						value="#{MBFuncionario.funcionario.data_admissao}" maxlength="10"
 						size="20" required="true"
-						requiredMessage="O campo data da admissão é obrigatório."/>
+						requiredMessage="O campo data da admissão é obrigatório." />
 
 					<p:outputLabel value="PIS:" />
 					<p:inputMask value="#{MBFuncionario.funcionario.pis}"
@@ -183,7 +185,7 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="4">
+				<h:panelGrid columns="2">
 					<p:commandButton value="Gravar"
 						actionListener="#{MBFuncionario.novo}"
 						update=":msgGlobal :formListagemFuncionario:tblListagemFuncionario"
@@ -193,12 +195,6 @@
 						oncomplete="PF('dlgNovoFuncionario').hide();">
 						<p:resetInput target="pnlNovoFuncionario" />
 					</p:commandButton>
-					
-					<p:commandButton value="Adicionar Cargo" process="@this"
-						oncomplete="PF('dlgNovoCargo').show();"/>
-						
-					<p:commandButton value="Adicionar Setor" process="@this"
-						oncomplete="PF('dlgNovoSetor').show();"/>
 
 				</h:panelGrid>
 			</h:form>
@@ -336,49 +332,8 @@
 						oncomplete="PF('dlgEditarFuncionario').hide();">
 						<p:resetInput target="pnlEditarFuncionario" />
 					</p:commandButton>
-
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
-				<!-- XML PARA INSERIR UM NOVO CARGO -->
-		<p:dialog header="Novo Cargo" widgetVar="dlgNovoCargo"
-			appendTo="@(body)"  closable="true" draggable="false" resizable="false">
-			<h:form id="formNovoCargo">
-				<h:panelGrid id="pnlNovoCargo" columns="2">
-					<p:outputLabel for="txtDescCargoNovo" value="Descrição" />
-					<p:inputText id="txtDescCargoNovo" size="30" maxlength="40"
-						value="#{MBCargo.cargo.descricao}" required="true" requiredMessage="O campo descrição é obrigatório."/>
-
-					<p:outputLabel for="txtSalCargoNovo" value="Salário" />
-					<p:inputText id="txtSalCargoNovo" size="9" maxlength="7"
-						value="#{MBCargo.cargo.salario}" required="true" requiredMessage="O campo salário é obrigatório."
-						converterMessage="Informe um valor válido para o campo salário.">
-						<f:convertNumber />
-					</p:inputText>
-
-					<p:outputLabel for="txtPermCargoNovo" value="Permissão" />
-					<p:selectOneMenu id="txtPermCargoNovo" 
-						value="#{MBCargo.cargo.permissao}" required="true" requiredMessage="O campo permissão é obrigatório.">
-						<f:selectItem itemLabel="Selecione a permissão" itemValue="" />
-						<f:selectItem itemLabel="Sem Permissão" itemValue="0" />
-						<f:selectItem itemLabel="Uso Restrito" itemValue="1" />
-						<f:selectItem itemLabel="Acesso Total" itemValue="2" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-				
-				<h:panelGrid columns="2">
-					<p:commandButton value="Salvar"
-						actionListener="#{MBCargo.novoCargo}"
-						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
-						update=":msgGlobal" />
-					<p:commandButton value="Cancelar" process="@this"
-						onclick="PF('dlgNovoCargo').hide();">
-						<p:resetInput target="pnlNovoCargo" />
-					</p:commandButton>
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-
 	</ui:define>
 </ui:composition>

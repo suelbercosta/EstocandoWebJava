@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import br.com.estocandowebjava.dao.FornecedorDAO;
+import br.com.estocandowebjava.dao.PessoaJurudicaDAO;
 import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Fornecedor;
 
@@ -15,17 +15,17 @@ public class FornecedorDAOTeste {
 	@Ignore
 	public void salvar() throws SQLException{
 		Fornecedor f = new Fornecedor();
-		f.setTipo_pessoa(2L);
-		f.setTelefone(991146771L);
+		f.setTipo_pessoa("pf");
+		f.setTelefone("(81) 9114-6771");
 		f.setEmail("rutyleneoliveira@gmail.com");
-		f.setFax(36263626L);
+		f.setFax("(81) 3626-3626");
 		
 		Endereco e = new Endereco();
 		e.setCodigo(2L);
 		
 		f.setEndereco(e);
 		
-		FornecedorDAO dao = new FornecedorDAO();
+		PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
 		dao.salvar(f);
 		
 	}
@@ -33,7 +33,7 @@ public class FornecedorDAOTeste {
 	@Test
 	@Ignore
 	public void listar() throws SQLException {
-		FornecedorDAO dao = new FornecedorDAO();
+		PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
 		ArrayList<Fornecedor> lista = dao.listar();
 		
 		for(Fornecedor p : lista) {
@@ -59,7 +59,7 @@ public class FornecedorDAOTeste {
 		Fornecedor f = new Fornecedor();
 		f.setCodigo(5L);
 		
-		FornecedorDAO dao = new FornecedorDAO();
+		PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
 		dao.excluir(f);
 		System.out.println("Dados excluidos com sucesso!");
 	}
@@ -68,17 +68,17 @@ public class FornecedorDAOTeste {
 	public void editar() throws SQLException {
 		Fornecedor f = new Fornecedor();
 		f.setCodigo(7L);
-		f.setTipo_pessoa(1L);
-		f.setTelefone(995123654L);
+		f.setTipo_pessoa("pj");
+		f.setTelefone("(81) 9512-3654");
 		f.setEmail("testedeemail@email.com");
-		f.setFax(36311100L);
+		f.setFax("(81) 3626-3626");
 		
 		Endereco e = new Endereco();
 		e.setCodigo(1L);
 		
 		f.setEndereco(e);
 		
-		FornecedorDAO dao = new FornecedorDAO();
+		PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
 		dao.editar(f);
 	}
 }

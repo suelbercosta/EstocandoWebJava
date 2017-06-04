@@ -127,7 +127,9 @@
 					<p:outputLabel for="txtValorUnitNovoProd" value="Valor Unitário:" />
 					<p:inputText id="txtValorUnitNovoProd"
 						required="true" requiredMessage="O campo valor unitário é obrigatório."
-						value="#{MBProduto.produto.valor}" maxlength="15" size="20" />
+						value="#{MBProduto.produto.valor}" maxlength="15" size="20" >
+						<f:convertNumber  />
+					</p:inputText>					
 					
 					<p:outputLabel for="txtDataValidNovoProd" value="Data Validade:" />
 					<p:inputMask id="txtDataValidNovoProd" mask="99/99/9999" readonlyInput="true"
@@ -142,10 +144,14 @@
 					<p:outputLabel for="txtQuantMinNovoProd" value="Quantidade Mínima:" />
 					<p:inputText id="txtQuantMinNovoProd"
 						value="#{MBProduto.produto.quant_minima}" maxlength="10" size="10"
-						required="true" requiredMessage="O campo quantidade mínima é obrigatório."/>
+						required="true" requiredMessage="O campo quantidade mínima é obrigatório.">
+						<f:convertNumber  />
+					</p:inputText>	
 
 					<p:outputLabel value="Peso:" />
-					<p:inputText value="#{MBProduto.produto.peso}" maxlength="15" size="20" />
+					<p:inputText value="#{MBProduto.produto.peso}" maxlength="15" size="20" >
+						<f:convertNumber  />
+					</p:inputText>	
 					
 					<p:outputLabel value="Cor:" />
 					<p:selectOneMenu id="txtCorNovoProd"

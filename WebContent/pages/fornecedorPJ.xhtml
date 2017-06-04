@@ -21,34 +21,239 @@
 	<ui:define id="conteudo" name="conteudo">
 		<f:event listener="#{MBFornecedor.carregarListagem}"
 			type="preRenderView" />
-		<h:form id="formListagemFornecedores">
-			<p:dataTable id="tblFornecedores" value="#{MBFornecedor.itens}"
-				var="item" emptyMessage="Nenhum registro encontrado."
-				paginator="true" rows="12">
+		<h:form id="formListagemFornecedor">
+			<p:dataTable id="tblListagemFornecedor" 
+			widgetVar="tabelaListagemFornecedor" 
+			emptyMessage="Nenhum registro encontrado."
+			value="#{MBFornecedor.itens}" var="item" paginator="true" rows="10"
+			filteredValue="#{MBFornecedor.itensFiltrados}">
 				<f:facet name="header">
-					<h:outputText value="Listagem de Fornecedores de Pessoa Jurídica" />
+					<h:outputText value="LISTAGEM DE FORNECEDORES PESSOA JURÍDICA" />
 				</f:facet>
 
-				<p:column headerText="Código" width="110">
+				<p:column headerText="CÓDIGO" width="110" filterBy="#{item.codigo}">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Telefone">
+				<p:column headerText="RAZÃO SOCIAL" filterBy="#{item.pessoajuridica.razao_social}">
+					<h:outputText value="#{item.pessoajuridica.razao_social}" />
+				</p:column>
+
+				<p:column headerText="CNPJ" width="170" filterBy="#{item.pessoajuridica.cnpj}">
+					<h:outputText value="#{item.pessoajuridica.cnpj}" />
+				</p:column>
+
+				<p:column headerText="TELEFONE" width="170" filterBy="#{item.telefone}">
 					<h:outputText value="#{item.telefone}" />
 				</p:column>
+				
+				<p:column headerText="OPÇÕES" width="80">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirFornecedor').show();"
+						update=":formExcluirFornecedor:pnlExcluirFornecedor">
+						<f:setPropertyActionListener target="#{MBFornecedor.fornecedor}"
+							value="#{item}" />
+					</p:commandButton>
 
-				<p:column headerText="Email">
-					<h:outputText value="#{item.email}" />
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBFornecedor.prepararEditar}"
+						oncomplete="PF('dlgEditarFornecedor').show();"
+						update=":msgGlobal :formEditarFornecedor:pnlEditarFornecedor">
+						<f:setPropertyActionListener target="#{MBFornecedor.fornecedor}"
+							value="#{item}" />
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Endereço">
-					<h:outputText value="#{item.endereco.rua} " />
-					<h:outputText value="#{item.endereco.numero}, " />
-					<h:outputText value="#{item.endereco.bairro}, " />
-					<h:outputText value="#{item.endereco.cidade} - " />
-					<h:outputText value="#{item.endereco.estado} " />
-				</p:column>
+				<!-- BOTÃO ADICIONAR NOVO FORNECEDOR -->
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar Novo Fornecedor"
+						oncomplete="PF('dlgNovoFornecedor').show();"
+						actionListener="#{MBFornecedor.prepararNovo}"
+						update=":formNovoFornecedor:pnlNovoFornecedor :msgGlobal" />
+				</f:facet>
 			</p:dataTable>
 		</h:form>
+		
+		<!-- TELA PARA INSERIR UM NOVO FORNECEDOR -->
+		<p:dialog widgetVar="dlgNovoFornecedor" closable="true"
+			draggable="false" resizable="false" header="Cadastro de Fornecedores">
+
+			<h:form id="formNovoFornecedor">
+
+				<h:panelGrid id="pnlNovoFornecedor" columns="2">
+
+					<p:outputLabel for="txtRazaoFornNovo" value="Razão Social:" />
+					<p:inputText id="txtRazaoFornNovo"
+						value="#{MBFornecedor.pJuridica.razao_social}"
+						required="true" requiredMessage="O campo razão social é obrigatório." />
+
+					<p:outputLabel for="txtCnpjFornNovo" value="CNPJ:" />
+					<p:inputMask id="txtCnpjFornNovo" mask="99.999.999/9999-99"
+						required="true" requiredMessage="O campo CNPJ é obrigatório."
+						value="#{MBFornecedor.pJuridica.cnpj}" />
+
+					<p:outputLabel for="txtInscFornNovo" value="Inscrição estadual:" />
+					<p:inputMask id="txtInscFornNovo" mask="999.999.999"
+						value="#{MBFornecedor.pJuridica.inscricao_estadual}" />
+
+					<p:outputLabel for="txtTipoFornNovo" value="Tipo Pessoa:" />
+					<p:selectOneMenu id="txtTipoFornNovo"
+						value="#{MBFornecedor.fornecedor.tipo_pessoa}" required="true" 
+						requiredMessage="O campo tipo pessoa é obrigatório.">
+						<f:selectItem itemLabel="Jurídica" itemValue="pj" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtTelefoneFornNovo" value="Telefone:" />
+					<p:inputMask id="txtTelefoneFornNovo" mask="(99) 9999-9999"
+						value="#{MBFornecedor.fornecedor.telefone}" required="true" 
+						requiredMessage="O campo telefone é obrigatório."/>
+						
+					<p:outputLabel for="txtRuaFornNovo" value="Rua:" />
+					<p:inputText id="txtRuaFornNovo" required="true" 
+						requiredMessage="O campo rua é obrigatório."
+						value="#{MBFornecedor.endereco.rua}" />
+						
+					<p:outputLabel for="txtNumeroFornNovo" value="Número:" />
+					<p:inputText id="txtNumeroFornNovo"
+						value="#{MBFornecedor.endereco.numero}" />
+						
+					<p:outputLabel for="txtBairroFornNovo" value="Bairro:" />
+					<p:inputText id="txtBairroFornNovo" required="true" 
+						requiredMessage="O campo bairro é obrigatório."
+						value="#{MBFornecedor.endereco.bairro}" />
+						
+					<p:outputLabel for="txtCidadeFornNovo" value="Cidade:" />
+					<p:inputText id="txtCidadeFornNovo" required="true" 
+						requiredMessage="O campo cidade é obrigatório."
+						value="#{MBFornecedor.endereco.cidade}" />
+					
+					<p:outputLabel for="txtEstadoFornNovo" value="Estado:" />
+					<p:selectOneMenu id="txtEstadoFornNovo"
+						value="#{MBFornecedor.endereco.estado}">
+						<f:selectItem itemLabel="Selecione o Estado" itemValue="" />
+						<f:selectItem itemLabel="Alagoas" itemValue="AL" />
+						<f:selectItem itemLabel="Bahia" itemValue="BA" />
+						<f:selectItem itemLabel="Ceará" itemValue="CE" />
+						<f:selectItem itemLabel="Maranhão" itemValue="MA" />
+						<f:selectItem itemLabel="Paraíba" itemValue="PB" />
+						<f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+						<f:selectItem itemLabel="Piauí" itemValue="PI" />
+						<f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+						<f:selectItem itemLabel="Sergipe" itemValue="SE" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtEmailFornNovo" value="E-mail:" />
+					<p:inputText id="txtEmailFornNovo" required="true"
+						value="#{MBFornecedor.fornecedor.email}"  
+						requiredMessage="O campo e-mail é obrigatório." />
+
+					<p:outputLabel for="txtFaxFornNovo" value="Fax:" />
+					<p:inputMask id="txtFaxFornNovo" mask="(99) 9999-9999"
+						value="#{MBFornecedor.fornecedor.fax}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBFornecedor.novo}"
+						update=":msgGlobal :formListagemFornecedor:tblListagemFornecedor"
+						oncomplete="verificar(xhr, status, args, 'dlgNovoFornecedor', 'tabelaListagemFornecedor');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovoFornecedor').hide();">
+						<p:resetInput target="pnlNovoFornecedor" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- TELA PARA EXCLUIR O FORNECEDOR SELECIONADO -->
+		<p:dialog widgetVar="dlgExcluirFornecedor" draggable="false"
+			resizable="false" closable="true" header="Exclusão de Fornecedores">
+			<h:form id="formExcluirFornecedor">
+				<h:panelGrid id="pnlExcluirFornecedor" columns="2">
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBFornecedor.fornecedor.codigo}" />
+
+					<p:outputLabel value="Razão Social" />
+					<h:outputText value="#{MBFornecedor.pJuridica.razao_social}" />
+
+					<p:outputLabel value="CNPJ" />
+					<h:outputText value="#{MBFornecedor.pJuridica.cnpj}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFornecedor.excluir}"
+						update=":msgGlobal :formListagemFornecedor:tblListagemFornecedor"
+						oncomplete="PF('dlgExcluirFornecedor').hide(); PF('tabelaListagemFornecedor').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirFornecedor').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<!-- TELA PARA EDITAR O FORNECEDOR SELECIONADO -->
+		<p:dialog widgetVar="dlgEditarFornecedor" closable="true"
+			draggable="false" resizable="false" header="Editar Fornecedores">
+
+			<h:form id="formEditarFornecedor">
+
+				<h:panelGrid id="pnlEditarFornecedor" columns="2">
+					<p:outputLabel value="Códigp:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.codigo}" />
+
+					<p:outputLabel for="txtRazaoFornNovo" value="Razão Social:" />
+					<p:inputText id="txtRazaoFornNovo"
+						value="#{MBFornecedor.pJuridica.razao_social}"
+						required="true" requiredMessage="O campo razão social é obrigatório." />
+
+					<p:outputLabel for="txtCnpjFornNovo" value="CNPJ:" />
+					<p:inputMask id="txtCnpjFornNovo" mask="99.999.999/9999-99"
+						required="true" requiredMessage="O campo CNPJ é obrigatório."
+						value="#{MBFornecedor.pJuridica.cnpj}" />
+
+					<p:outputLabel for="txtInscFornNovo" value="Inscrição estadual:" />
+					<p:inputMask id="txtInscFornNovo" mask="999.999.999"
+						value="#{MBFornecedor.pJuridica.inscricao_estadual}" />
+
+					<p:outputLabel for="txtTipoFornNovo" value="Tipo Pessoa:" />
+					<p:selectOneMenu id="txtTipoFornNovo"
+						value="#{MBFornecedor.fornecedor.tipo_pessoa}" required="true" 
+						requiredMessage="O campo tipo pessoa é obrigatório.">
+						<f:selectItem itemLabel="Jurídica" itemValue="pj" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtTelefoneFornNovo" value="Telefone:" />
+					<p:inputMask id="txtTelefoneFornNovo" mask="(99) 9999-9999"
+						value="#{MBFornecedor.fornecedor.telefone}" required="true" 
+						requiredMessage="O campo telefone é obrigatório."/>
+
+					<p:outputLabel for="txtEmailFornNovo" value="E-mail:" />
+					<p:inputText id="txtEmailFornNovo" required="true"
+						value="#{MBFornecedor.fornecedor.email}"  
+						requiredMessage="O campo e-mail é obrigatório." />
+
+					<p:outputLabel for="txtFaxFornNovo" value="Fax:" />
+					<p:inputMask id="txtFaxFornNovo" mask="(99) 9999-9999"
+						value="#{MBFornecedor.fornecedor.fax}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFornecedor.editar}"
+						update=":msgGlobal :formListagemFornecedor:tblListagemFornecedor"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarFornecedor', 'tabelaListagemFornecedor');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarFornecedor').hide();">
+						<p:resetInput target="pnlEditarFornecedor" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
