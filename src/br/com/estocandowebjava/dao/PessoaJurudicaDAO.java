@@ -18,9 +18,9 @@ public class PessoaJurudicaDAO implements FornecedorDAO{
 		StringBuilder sql = new StringBuilder();
 		sql.append("START TRANSACTION; ");
 			sql.append("INSERT INTO Endereco (rua, numero, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?); ");
-			sql.append("SET @cod_end = LAST_INSERT_ID();");
+			sql.append("SET @cod_end = LAST_INSERT_ID(); ");
 			sql.append("INSERT INTO Fornecedor (tipo_pessoa, telefone, email, fax, Endereco_codigo) VALUES (?, ?, ?, ?, @cod_end); ");
-			sql.append("SET @cod_forn = LAST_INSERT_ID();");
+			sql.append("SET @cod_forn = LAST_INSERT_ID(); ");
 			sql.append("INSERT INTO Pessoa_Juridica (cnpj, razao_social, inscricao_estadual, Fornecedor_codigo) VALUES (?, ?, ?, @cod_forn); ");
 		sql.append("COMMIT; ");
 		
@@ -29,17 +29,30 @@ public class PessoaJurudicaDAO implements FornecedorDAO{
 		PreparedStatement comando = conexao.prepareStatement(sql.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
 		
 		comando.setString(1, f.getEndereco().getRua());
+		System.out.println(f.getEndereco().getRua());
 		comando.setString(2, f.getEndereco().getNumero());
+		System.out.println(f.getEndereco().getNumero());
 		comando.setString(3, f.getEndereco().getBairro());
+		System.out.println(f.getEndereco().getBairro());
 		comando.setString(4, f.getEndereco().getCidade());
+		System.out.println(f.getEndereco().getCidade());
 		comando.setString(5, f.getEndereco().getEstado());
+		System.out.println(f.getEndereco().getEstado());
 		comando.setString(6, f.getTipo_pessoa());
+		System.out.println(f.getTipo_pessoa());
 		comando.setString(7, f.getTelefone());
+		System.out.println(f.getTelefone());
 		comando.setString(8, f.getEmail());
+		System.out.println(f.getEmail());
 		comando.setString(9, f.getFax());
+		System.out.println(f.getFax());
 		comando.setString(10, f.getPessoajuridica().getCnpj());
+		System.out.println(f.getPessoajuridica().getCnpj());
 		comando.setString(11, f.getPessoajuridica().getRazao_social());
+		System.out.println("Razão Social: " + f.getPessoajuridica().getRazao_social());
 		comando.setString(12, f.getPessoajuridica().getInscricao_estadual());
+		System.out.println("Inscrição Estadual: " + f.getPessoajuridica().getInscricao_estadual());
+		System.out.println(comando);
 		
 		comando.executeUpdate();
 	}

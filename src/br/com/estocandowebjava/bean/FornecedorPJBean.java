@@ -95,13 +95,15 @@ public class FornecedorPJBean {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
+		}		
 
 	}
 
 	public void novo() {
 		try {
 			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
+			fornecedor.setEndereco(endereco);
+			fornecedor.setPessoajuridica(pJuridica);
 			fdao.salvar(fornecedor);
 
 			itens = fdao.listar();

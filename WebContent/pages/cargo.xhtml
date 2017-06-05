@@ -103,14 +103,17 @@
 				</h:panelGrid>
 				
 				<h:panelGrid columns="2">
+				
 					<p:commandButton value="Salvar"
 						actionListener="#{MBCargo.novoCargo}"
 						oncomplete="verificar(xhr, status, args, 'dlgNovoCargo', 'tabelaCargos');"
 						update=":formListagemCargo:tblCargo :msgGlobal" />
+						
 					<p:commandButton value="Cancelar" process="@this"
 						onclick="PF('dlgNovoCargo').hide();">
 						<p:resetInput target="pnlNovoCargo" />
 					</p:commandButton>
+					
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

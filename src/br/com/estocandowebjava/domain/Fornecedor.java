@@ -6,7 +6,7 @@ public class Fornecedor {
 	private String telefone;
 	private String email;
 	private String fax;
-	private Endereco endereco = new Endereco();
+	private Endereco endereco;
 	private Pessoa_Fisica pessoafisica;
 	private Pessoa_Juridica pessoajuridica;
 	public Long getCodigo() {
