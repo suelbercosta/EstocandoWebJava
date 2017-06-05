@@ -106,7 +106,7 @@ public class ProdutoDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE Estoque SET ");
 		sql.append("descricao = ?, quantidade = ?, unid_med = ?, valor = ?, data_val = ?, ");
-		sql.append("data_aquis = ?, quant_minima = ?, peso = ?, cor = ?, tipo_produto = ? ");
+		sql.append("data_aquis = ?, quant_minima = ?, peso = ?, cor = ?, Tipo_Produto_codigo = ? ");
 		sql.append("WHERE codigo = ? ");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS

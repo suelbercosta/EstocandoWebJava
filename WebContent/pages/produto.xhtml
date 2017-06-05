@@ -270,14 +270,16 @@
 					<p:outputLabel for="txtValorUnitEditarProd" value="Valor Unitário:" />
 					<p:inputText id="txtValorUnitEditarProd"
 						required="true" requiredMessage="O campo valor unitário é obrigatório."
-						value="#{MBProduto.produto.valor}" maxlength="15" size="20" />
+						value="#{MBProduto.produto.valor}" maxlength="15" size="20">
+						<f:convertNumber />
+					</p:inputText>
 					
 					<p:outputLabel for="txtDataValidEditarProd" value="Data Validade:" />
-					<p:calendar id="txtDataValidEditarProd" required="true" pattern="dd/MM/yyyy" mask="true" readonlyInput="true"
+					<p:inputMask id="txtDataValidEditarProd" required="true" mask="99/99/9999" readonlyInput="true"
 					requiredMessage="O campo data de validade é obrigatório." value="#{MBProduto.produto.data_val}"/>
 					
 					<p:outputLabel for="txtDataAquisEditarProd" value="Data Aquisição:" />
-					<p:calendar id="txtDataAquisEditarProd" required="true" pattern="dd/MM/yyyy" mask="true" readonlyInput="true"
+					<p:inputMask id="txtDataAquisEditarProd" required="true" mask="99/99/9999" readonlyInput="true"
 					requiredMessage="O campo data de aquisição é obrigatório." value="#{MBProduto.produto.data_aquis}"/>
 
 					<p:outputLabel for="txtQuantMinEditarProd" value="Quantidade Mínima:" />
@@ -307,7 +309,7 @@
 
 					<p:outputLabel for="txtTipoProdEditarProd" value="Tipo do Produto:" />
 					<p:selectOneMenu id="txtTipoProdEditarProd"
-						value="#{MBProduto.produto.tipo_produto.descricao}" filter="true"
+						value="#{MBProduto.produto.tipo_produto.codigo}" filter="true"
 						required="true" requiredMessage="O campo tipo do produto é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Tipo" />
 						<f:selectItems value="#{MBProduto.comboTipoProduto}" var="item"

@@ -147,7 +147,8 @@ public class FornecedorPJBean {
 	public void editar() {
 		try {
 			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
-
+			fornecedor.setEndereco(endereco);
+			fornecedor.setPessoajuridica(pJuridica);
 			fdao.editar(fornecedor);
 
 			itens = fdao.listar();

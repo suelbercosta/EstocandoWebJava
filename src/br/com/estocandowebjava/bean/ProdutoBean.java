@@ -17,7 +17,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 public class ProdutoBean implements InterfaceBean {
 	// Declaração de variáveis
 	private Produto produto = new Produto();
-	private ArrayList<TipoProduto> comboTipoProduto = new ArrayList<TipoProduto>();
+	private ArrayList<TipoProduto> comboTipoProduto;
 
 	private ArrayList<Produto> itens;
 	private ArrayList<Produto> itensFiltrados;
@@ -76,6 +76,7 @@ public class ProdutoBean implements InterfaceBean {
 			TipoProdutoDAO cdao = new TipoProdutoDAO();
 
 			comboTipoProduto = cdao.listar();
+			System.out.println(comboTipoProduto);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());

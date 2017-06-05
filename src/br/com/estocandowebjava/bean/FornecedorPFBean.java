@@ -90,7 +90,8 @@ public class FornecedorPFBean implements InterfaceBean {
 	public void prepararNovo() {
 		try {
 			fornecedor = new Fornecedor();
-
+			fornecedor.setPessoafisica(pFisica);
+			fornecedor.setEndereco(endereco);
 			EnderecoDAO edao = new EnderecoDAO();
 
 			comboEndereco = edao.listar();

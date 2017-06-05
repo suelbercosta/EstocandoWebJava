@@ -65,6 +65,7 @@
 							value="#{item}" />
 					</p:commandButton>
 				</p:column>
+				
 				<!-- BOTÃO ADICIONAR NOVO FORNECEDOR -->
 				<f:facet name="footer">
 					<p:commandButton value="Cadastrar Novo Fornecedor"
@@ -203,42 +204,76 @@
 			<h:form id="formEditarFornecedor">
 
 				<h:panelGrid id="pnlEditarFornecedor" columns="2">
-					<p:outputLabel value="Códigp:" />
+					<p:outputLabel value="Código:" />
 					<h:outputText value="#{MBFornecedorPJ.fornecedor.codigo}" />
 
-					<p:outputLabel for="txtRazaoFornNovo" value="Razão Social:" />
-					<p:inputText id="txtRazaoFornNovo"
+					<p:outputLabel for="txtRazaoFornEditar" value="Razão Social:" />
+					<p:inputText id="txtRazaoFornEditar"
 						value="#{MBFornecedorPJ.pJuridica.razao_social}"
 						required="true" requiredMessage="O campo razão social é obrigatório." />
 
-					<p:outputLabel for="txtCnpjFornNovo" value="CNPJ:" />
-					<p:inputMask id="txtCnpjFornNovo" mask="99.999.999/9999-99"
+					<p:outputLabel for="txtCnpjFornEditar" value="CNPJ:" />
+					<p:inputMask id="txtCnpjFornEditar" mask="99.999.999/9999-99"
 						required="true" requiredMessage="O campo CNPJ é obrigatório."
 						value="#{MBFornecedorPJ.pJuridica.cnpj}" />
 
-					<p:outputLabel for="txtInscFornNovo" value="Inscrição estadual:" />
-					<p:inputMask id="txtInscFornNovo" mask="999.999.999"
+					<p:outputLabel for="txtInscFornEditar" value="Inscrição estadual:" />
+					<p:inputMask id="txtInscFornEditar" mask="999.999.999"
 						value="#{MBFornecedorPJ.pJuridica.inscricao_estadual}" />
 
-					<p:outputLabel for="txtTipoFornNovo" value="Tipo Pessoa:" />
-					<p:selectOneMenu id="txtTipoFornNovo"
+					<p:outputLabel for="txtTipoFornEditar" value="Tipo Pessoa:" />
+					<p:selectOneMenu id="txtTipoFornEditar"
 						value="#{MBFornecedorPJ.fornecedor.tipo_pessoa}" required="true" 
 						requiredMessage="O campo tipo pessoa é obrigatório.">
 						<f:selectItem itemLabel="Jurídica" itemValue="pj" />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="txtTelefoneFornNovo" value="Telefone:" />
-					<p:inputMask id="txtTelefoneFornNovo" mask="(99) 9999-9999"
+					<p:outputLabel for="txtTelefoneFornEditar" value="Telefone:" />
+					<p:inputMask id="txtTelefoneFornEditar" mask="(99) 9999-9999"
 						value="#{MBFornecedorPJ.fornecedor.telefone}" required="true" 
 						requiredMessage="O campo telefone é obrigatório."/>
+						
+					<p:outputLabel for="txtRuaFornEditar" value="Rua:" />
+					<p:inputText id="txtRuaFornEditar" required="true" 
+						requiredMessage="O campo rua é obrigatório."
+						value="#{MBFornecedorPJ.endereco.rua}" />
+						
+					<p:outputLabel for="txtNumeroFornEditar" value="Número:" />
+					<p:inputText id="txtNumeroFornEditar"
+						value="#{MBFornecedorPJ.endereco.numero}" />
+						
+					<p:outputLabel for="txtBairroFornEditar" value="Bairro:" />
+					<p:inputText id="txtBairroFornEditar" required="true" 
+						requiredMessage="O campo bairro é obrigatório."
+						value="#{MBFornecedorPJ.endereco.bairro}" />
+						
+					<p:outputLabel for="txtCidadeFornEditar" value="Cidade:" />
+					<p:inputText id="txtCidadeFornEditar" required="true" 
+						requiredMessage="O campo cidade é obrigatório."
+						value="#{MBFornecedorPJ.endereco.cidade}" />
+					
+					<p:outputLabel for="txtEstadoFornEditar" value="Estado:" />
+					<p:selectOneMenu id="txtEstadoFornEditar"
+						value="#{MBFornecedorPJ.endereco.estado}">
+						<f:selectItem itemLabel="Selecione o Estado" itemValue="" />
+						<f:selectItem itemLabel="Alagoas" itemValue="AL" />
+						<f:selectItem itemLabel="Bahia" itemValue="BA" />
+						<f:selectItem itemLabel="Ceará" itemValue="CE" />
+						<f:selectItem itemLabel="Maranhão" itemValue="MA" />
+						<f:selectItem itemLabel="Paraíba" itemValue="PB" />
+						<f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+						<f:selectItem itemLabel="Piauí" itemValue="PI" />
+						<f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+						<f:selectItem itemLabel="Sergipe" itemValue="SE" />
+					</p:selectOneMenu>
 
-					<p:outputLabel for="txtEmailFornNovo" value="E-mail:" />
-					<p:inputText id="txtEmailFornNovo" required="true"
+					<p:outputLabel for="txtEmailFornEditar" value="E-mail:" />
+					<p:inputText id="txtEmailFornEditar" required="true"
 						value="#{MBFornecedorPJ.fornecedor.email}"  
 						requiredMessage="O campo e-mail é obrigatório." />
 
-					<p:outputLabel for="txtFaxFornNovo" value="Fax:" />
-					<p:inputMask id="txtFaxFornNovo" mask="(99) 9999-9999"
+					<p:outputLabel for="txtFaxFornEditar" value="Fax:" />
+					<p:inputMask id="txtFaxFornEditar" mask="(99) 9999-9999"
 						value="#{MBFornecedorPJ.fornecedor.fax}" />
 				</h:panelGrid>
 
