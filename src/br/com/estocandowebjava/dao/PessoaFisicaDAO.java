@@ -17,32 +17,52 @@ public class PessoaFisicaDAO implements FornecedorDAO{
 	public void salvar(Fornecedor f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("START TRANSACTION; ");
-			sql.append("INSERT INTO Endereco (rua, numero, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?); ");
-			sql.append("SET @cod_end = LAST_INSERT_ID();");
-			sql.append("INSERT INTO Fornecedor (tipo_pessoa, telefone, email, fax, Endereco_codigo) VALUES (?, ?, ?, ?, @cod_end); ");
-			sql.append("SET @cod_forn = LAST_INSERT_ID();");
-			sql.append("INSERT INTO Pessoa_Fisica (cpf, nome, rg, data_nasc, Fornecedor_codigo) VALUES (?, ?, ?, ?, @cod_forn); ");
-		sql.append("COMMIT; ");
+			StringBuilder sql1 = new StringBuilder();
+			sql1.append("INSERT INTO Endereco (rua, numero, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?); ");
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("SET @cod_end = LAST_INSERT_ID();");
+			StringBuilder sql3 = new StringBuilder();
+			sql3.append("INSERT INTO Fornecedor (tipo_pessoa, telefone, email, fax, Endereco_codigo) VALUES (?, ?, ?, ?, @cod_end); ");
+			StringBuilder sql4 = new StringBuilder();
+			sql4.append("SET @cod_forn = LAST_INSERT_ID();");
+			StringBuilder sql5 = new StringBuilder();
+			sql5.append("INSERT INTO Pessoa_Fisica (cpf, nome, rg, data_nasc, Fornecedor_codigo) VALUES (?, ?, ?, ?, @cod_forn); ");
+		StringBuilder sql6 = new StringBuilder();
+		sql6.append("COMMIT; ");
 		
 		Connection conexao = ConexaoFactory.conectar(); // COMANDO PARA CONECTAR COM O BANCO DE DADOS
 		
 		PreparedStatement comando = conexao.prepareStatement(sql.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando2 = conexao.prepareStatement(sql2.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando3 = conexao.prepareStatement(sql3.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando4 = conexao.prepareStatement(sql4.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando5 = conexao.prepareStatement(sql5.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando6 = conexao.prepareStatement(sql6.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
 		
-		comando.setString(1, f.getEndereco().getRua());
-		comando.setString(2, f.getEndereco().getNumero());
-		comando.setString(3, f.getEndereco().getBairro());
-		comando.setString(4, f.getEndereco().getCidade());
-		comando.setString(5, f.getEndereco().getEstado());
-		comando.setString(6, f.getTipo_pessoa());
-		comando.setString(7, f.getTelefone());
-		comando.setString(8, f.getEmail());
-		comando.setString(9, f.getFax());
-		comando.setString(10, f.getPessoafisica().getCpf());
-		comando.setString(11, f.getPessoafisica().getNome());
-		comando.setString(12, f.getPessoafisica().getRg());
-		comando.setString(12, f.getPessoafisica().getData_nasc());
+		comando1.setString(1, f.getEndereco().getRua());
+		comando1.setString(2, f.getEndereco().getNumero());
+		comando1.setString(3, f.getEndereco().getBairro());
+		comando1.setString(4, f.getEndereco().getCidade());
+		comando1.setString(5, f.getEndereco().getEstado());
+		
+		comando3.setString(1, f.getTipo_pessoa());
+		comando3.setString(2, f.getTelefone());
+		comando3.setString(3, f.getEmail());
+		comando3.setString(4, f.getFax());
+		
+		comando5.setString(1, f.getPessoafisica().getCpf());
+		comando5.setString(2, f.getPessoafisica().getNome());
+		comando5.setString(3, f.getPessoafisica().getRg());
+		comando5.setString(4, f.getPessoafisica().getData_nasc());
 		
 		comando.executeUpdate();
+		comando1.executeUpdate();
+		comando2.executeUpdate();
+		comando3.executeUpdate();
+		comando4.executeUpdate();
+		comando5.executeUpdate();
+		comando6.executeUpdate();
 	}
 	
 	//COMANDO PARA LISTAR OS DADOS DOS FORNECEDORES EM ASSOCIAÇÃO COM A CLASSE ENDEREÇO
@@ -103,58 +123,70 @@ public class PessoaFisicaDAO implements FornecedorDAO{
 	@Override
 	public void excluir(Fornecedor f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("START TRANSACTION; ");
-			sql.append("DELETE pf FROM Pessoa_Fisica pf INNER JOIN Fornecedor f on pf.Fornecedor_codigo = f.codigo WHERE pf.Fornecedor_codigo = ?; ");
-			sql.append("DELETE f FROM Fornecedor f INNER JOIN Pessoa_Fisica pf on pf.Fornecedor_codigo = f.codigo WHERE f.codigo = ?; ");
-		sql.append("COMMIT; ");
+		sql.append("DELETE pf FROM Pessoa_Fisica pf INNER JOIN Fornecedor f on pf.Fornecedor_codigo = f.codigo WHERE pf.Fornecedor_codigo = ?; ");
+		StringBuilder sql1 = new StringBuilder();
+		sql1.append("DELETE FROM Fornecedor WHERE codigo = ?; ");
 		
 		Connection conexao = ConexaoFactory.conectar();
 		
 		PreparedStatement comando = conexao.prepareStatement(sql.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
 		
 		comando.setLong(1, f.getCodigo());
-		comando.setLong(2, f.getCodigo());
+		comando1.setLong(1, f.getCodigo());
 		
 		comando.executeUpdate();
+		comando1.executeUpdate();
 	}
 	
 	//MÉTODO PARA EDITAR OS DADOS DOS FORNECEDORES EM ASSOCIAÇÃO COM A CLASSE ENDEREÇO E PESSOA JURÍDICA
 	@Override
 	public void editar(Fornecedor f) throws SQLException {
 		
-		
-		StringBuilder sql = new StringBuilder();
-		sql.append("START TRANSACTION; ");
-		
-			sql.append("UPDATE Pessoa_Juridica pj ");
-			sql.append("INNER JOIN Fornecedor f ON pj.Fornecedor_codigo = f.codigo ");
-			sql.append("INNER JOIN Endereco e ON f.Endereco_codigo = e.codigo ");
-			sql.append("SET e.rua = ?, e.numero = ?, e.bairro = ?, e.cidade = ?, e.estado, ");
-			sql.append("f.tipo_pessoa = ?, f.telefone = ?, f.email = ?, f.fax = ?, ");
-			sql.append("pf.cpf = ?, pf.nome = ?, pf.rg = ?, pf.data_nasc = ? ");
+		StringBuilder sql = new StringBuilder();		
+			sql.append("UPDATE Endereco e ");
+			sql.append("INNER JOIN Fornecedor f ON e.codigo = f.Endereco_codigo ");
+			sql.append("SET e.rua = ?, e.numero = ?, e.bairro = ?, e.cidade = ?, e.estado = ? ");
 			sql.append("WHERE f.codigo = ?; ");
-
-		sql.append("COMMIT; ");
+		
+		StringBuilder sql1 = new StringBuilder();
+			sql1.append("UPDATE Fornecedor f ");
+			sql1.append("SET f.tipo_pessoa = ?, f.telefone = ?, f.email = ?, f.fax = ? ");
+			sql1.append("WHERE f.codigo = ?; ");
+			
+		StringBuilder sql2 = new StringBuilder();
+			sql2.append("UPDATE Pessoa_Fisica pf ");
+			sql2.append("INNER JOIN Fornecedor f ON f.codigo = pf.Fornecedor_codigo ");
+			sql2.append("SET pf.cpf = ?, pf.nome = ?, pf.rg = ?, pf.data_nasc = ? ");
+			sql2.append("WHERE f.codigo = ?; ");
 		
 		Connection conexao = ConexaoFactory.conectar(); // COMANDO PARA CONECTAR COM O BANCO DE DADOS
 		
 		PreparedStatement comando = conexao.prepareStatement(sql.toString()); // CONVERTE O STRINGBUILDER PARA STRING E ATRIBUI À VARIÁVEL COMANDO
+		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString()); 
+		PreparedStatement comando2 = conexao.prepareStatement(sql2.toString()); 
 		
 		comando.setString(1, f.getEndereco().getRua());
 		comando.setString(2, f.getEndereco().getNumero());
 		comando.setString(3, f.getEndereco().getBairro());
 		comando.setString(4, f.getEndereco().getCidade());
 		comando.setString(5, f.getEndereco().getEstado());
-		comando.setString(6, f.getTipo_pessoa());
-		comando.setString(7, f.getTelefone());
-		comando.setString(8, f.getEmail());
-		comando.setString(9, f.getFax());
-		comando.setString(10, f.getPessoafisica().getCpf());
-		comando.setString(11, f.getPessoafisica().getNome());
-		comando.setString(12, f.getPessoafisica().getRg());
-		comando.setString(13, f.getPessoafisica().getData_nasc());
-		comando.setLong(14, f.getCodigo());
+		comando.setLong(6, f.getCodigo());
+		
+		comando1.setString(1, f.getTipo_pessoa());
+		comando1.setString(2, f.getTelefone());
+		comando1.setString(3, f.getEmail());
+		comando1.setString(4, f.getFax());
+		comando1.setLong(5, f.getCodigo());
+		
+		comando2.setString(1, f.getPessoafisica().getCpf());
+		comando2.setString(2, f.getPessoafisica().getNome());
+		comando2.setString(3, f.getPessoafisica().getRg());
+		comando2.setString(4, f.getPessoafisica().getData_nasc());
+		comando2.setLong(5, f.getCodigo());
 		
 		comando.executeUpdate();
+		comando1.executeUpdate();
+		comando2.executeUpdate();
 	}
 }

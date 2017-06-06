@@ -127,8 +127,6 @@ public class ProdutoDAO {
 		comando.setLong(11, p.getCodigo());
 
 		comando.executeUpdate();
-
-		comando.executeUpdate();
 	}
 
 }

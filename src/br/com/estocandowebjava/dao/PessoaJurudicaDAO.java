@@ -121,9 +121,9 @@ public class PessoaJurudicaDAO implements FornecedorDAO{
 	@Override
 	public void excluir(Fornecedor f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-			sql.append("DELETE pj FROM Pessoa_Juridica pj INNER JOIN Fornecedor f on pj.Fornecedor_codigo = f.codigo WHERE pj.Fornecedor_codigo = ?; ");
-			StringBuilder sql2 = new StringBuilder();
-			sql2.append("DELETE FROM Fornecedor WHERE codigo = ?; ");
+		sql.append("DELETE pj FROM Pessoa_Juridica pj INNER JOIN Fornecedor f on pj.Fornecedor_codigo = f.codigo WHERE pj.Fornecedor_codigo = ?; ");
+		StringBuilder sql2 = new StringBuilder();
+		sql2.append("DELETE FROM Fornecedor WHERE codigo = ?; ");
 		
 		Connection conexao = ConexaoFactory.conectar();
 		
@@ -140,7 +140,6 @@ public class PessoaJurudicaDAO implements FornecedorDAO{
 	//MÉTODO PARA EDITAR OS DADOS DOS FORNECEDORES EM ASSOCIAÇÃO COM A CLASSE ENDEREÇO E PESSOA JURÍDICA
 	@Override
 	public void editar(Fornecedor f) throws SQLException {
-		
 		
 		StringBuilder sql = new StringBuilder();		
 			sql.append("UPDATE Endereco e ");
@@ -182,7 +181,6 @@ public class PessoaJurudicaDAO implements FornecedorDAO{
 		comando2.setString(2, f.getPessoajuridica().getRazao_social());
 		comando2.setString(3, f.getPessoajuridica().getInscricao_estadual());
 		comando2.setLong(4, f.getCodigo());
-		
 		
 		comando.executeUpdate();
 		comando1.executeUpdate();

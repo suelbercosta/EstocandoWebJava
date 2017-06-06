@@ -39,11 +39,15 @@
 					<h:outputText value="#{item.pessoajuridica.razao_social}" />
 				</p:column>
 
-				<p:column headerText="CNPJ" width="170" filterBy="#{item.pessoajuridica.cnpj}">
+				<p:column headerText="CNPJ" width="130" filterBy="#{item.pessoajuridica.cnpj}">
 					<h:outputText value="#{item.pessoajuridica.cnpj}" />
 				</p:column>
+				
+				<p:column headerText="E-MAIL" width="200" filterBy="#{item.email}">
+					<h:outputText value="#{item.email}" />
+				</p:column>
 
-				<p:column headerText="TELEFONE" width="170" filterBy="#{item.telefone}">
+				<p:column headerText="TELEFONE" width="110" filterBy="#{item.telefone}">
 					<h:outputText value="#{item.telefone}" />
 				</p:column>
 				
@@ -198,8 +202,8 @@
 		</p:dialog>
 
 		<!-- TELA PARA EDITAR O FORNECEDOR SELECIONADO -->
-		<p:dialog widgetVar="dlgEditarFornecedor" closable="true"
-			draggable="false" resizable="false" header="Editar Fornecedores">
+		<p:dialog widgetVar="dlgEditarFornecedor" closable="true" modal="true"
+			draggable="false" resizable="false" header="Editar Fornecedores" appendTo="@(body)">
 
 			<h:form id="formEditarFornecedor">
 

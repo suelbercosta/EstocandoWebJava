@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.estocandowebjava.dao.FuncionarioDAO;
 import br.com.estocandowebjava.domain.Funcionario;
 
 @ManagedBean(name = "MBLogin")

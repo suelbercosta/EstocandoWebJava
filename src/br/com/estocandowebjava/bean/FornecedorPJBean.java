@@ -15,7 +15,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBFornecedorPJ")
 @ViewScoped
-public class FornecedorPJBean {
+public class FornecedorPJBean implements InterfaceBean{
 	private Fornecedor fornecedor = new Fornecedor();
 	private Endereco endereco = new Endereco();
 	private Pessoa_Juridica pJuridica = new Pessoa_Juridica();
@@ -74,6 +74,7 @@ public class FornecedorPJBean {
 	}
 
 	// MÉTODO PARA CARREGAR A LISTAGEM DOS FORNECEDORES
+	@Override
 	public void carregarListagem() {
 		try {
 			PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
@@ -85,6 +86,7 @@ public class FornecedorPJBean {
 	}
 
 	// MÉTODO PARA PREPARAR NOVO FORNECEDOR
+	@Override
 	public void prepararNovo() {
 		try {
 			fornecedor = new Fornecedor();
@@ -99,6 +101,8 @@ public class FornecedorPJBean {
 
 	}
 
+	// MÉTODO PARA INSERIR NOVO FORNECEDOR
+	@Override
 	public void novo() {
 		try {
 			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
@@ -116,6 +120,7 @@ public class FornecedorPJBean {
 	}
 
 	// COMANDO PARA EXCLUIR UM FORNECEDORES
+	@Override
 	public void excluir() {
 		try {
 			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
@@ -132,6 +137,7 @@ public class FornecedorPJBean {
 	}
 
 	// COMANDO PARA PREPARAR EDITAR FORNECEDORES
+	@Override
 	public void prepararEditar() {
 		try {
 			EnderecoDAO edao = new EnderecoDAO();
@@ -144,6 +150,7 @@ public class FornecedorPJBean {
 
 	}
 
+	@Override
 	public void editar() {
 		try {
 			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();

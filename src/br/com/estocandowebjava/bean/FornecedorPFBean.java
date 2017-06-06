@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.estocandowebjava.dao.EnderecoDAO;
-import br.com.estocandowebjava.dao.PessoaJurudicaDAO;
+import br.com.estocandowebjava.dao.PessoaFisicaDAO;
 import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.Pessoa_Fisica;
@@ -77,7 +77,7 @@ public class FornecedorPFBean implements InterfaceBean {
 	@Override
 	public void carregarListagem() {
 		try {
-			PessoaJurudicaDAO dao = new PessoaJurudicaDAO();
+			PessoaFisicaDAO dao = new PessoaFisicaDAO();
 			itens = dao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -90,8 +90,7 @@ public class FornecedorPFBean implements InterfaceBean {
 	public void prepararNovo() {
 		try {
 			fornecedor = new Fornecedor();
-			fornecedor.setPessoafisica(pFisica);
-			fornecedor.setEndereco(endereco);
+
 			EnderecoDAO edao = new EnderecoDAO();
 
 			comboEndereco = edao.listar();
@@ -102,10 +101,13 @@ public class FornecedorPFBean implements InterfaceBean {
 
 	}
 
+	// MÉTODO PARA INSERIR NOVO FORNECEDOR
 	@Override
 	public void novo() {
 		try {
-			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
+			PessoaFisicaDAO fdao = new PessoaFisicaDAO();
+			fornecedor.setEndereco(endereco);
+			fornecedor.setPessoafisica(pFisica);
 			fdao.salvar(fornecedor);
 
 			itens = fdao.listar();
@@ -121,7 +123,7 @@ public class FornecedorPFBean implements InterfaceBean {
 	@Override
 	public void excluir() {
 		try {
-			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
+			PessoaFisicaDAO fdao = new PessoaFisicaDAO();
 
 			fdao.excluir(fornecedor);
 
@@ -151,8 +153,9 @@ public class FornecedorPFBean implements InterfaceBean {
 	@Override
 	public void editar() {
 		try {
-			PessoaJurudicaDAO fdao = new PessoaJurudicaDAO();
-
+			PessoaFisicaDAO fdao = new PessoaFisicaDAO();
+			fornecedor.setEndereco(endereco);
+			fornecedor.setPessoafisica(pFisica);
 			fdao.editar(fornecedor);
 
 			itens = fdao.listar();
