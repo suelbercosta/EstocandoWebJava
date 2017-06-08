@@ -91,11 +91,9 @@ public class RequisicaoBean {
 			requisicao = new Requisicao();
 
 			FuncionarioDAO fdao = new FuncionarioDAO();
-			ProdutoDAO pdao = new ProdutoDAO();
 
 			comboAlmoxarife = fdao.listarAlmoxarife();
 			comboRequisitante = fdao.listarRequisitante();
-			comboProduto = pdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
