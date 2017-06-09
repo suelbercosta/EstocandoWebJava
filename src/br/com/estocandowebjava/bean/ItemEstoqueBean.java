@@ -1,5 +1,8 @@
 package br.com.estocandowebjava.bean;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -12,12 +15,15 @@ import br.com.estocandowebjava.dao.RequisicaoDAO;
 import br.com.estocandowebjava.domain.ItemEstoque;
 import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.Requisicao;
+import br.com.estocandowebjava.factoty.ConexaoFactory;
 import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBItemEstoque")
 @ViewScoped
-public class ItemEstoqueBean implements InterfaceBean {
+public class ItemEstoqueBean {
 	// Declaração de variáveis
+	private Long codigo;
+	private Double quant;
 	private ItemEstoque itemEstoque = new ItemEstoque();
 	private ArrayList<Produto> comboProduto;
 	private ArrayList<Requisicao> comboRequisicao;
@@ -26,6 +32,22 @@ public class ItemEstoqueBean implements InterfaceBean {
 	private ArrayList<ItemEstoque> itensFiltrados;
 
 	// Declaração dos métodos gets e sets
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+	
+	public Double getQuant() {
+		return quant;
+	}
+
+	public void setQuant(Double quant) {
+		this.quant = quant;
+	}
+	
 	public ItemEstoque getItemEstoque() {
 		return itemEstoque;
 	}
@@ -66,8 +88,7 @@ public class ItemEstoqueBean implements InterfaceBean {
 		this.itensFiltrados = itensFiltrados;
 	}
 
-	// Sobreescrita do método carregarListagem() da InterfaceBean
-	@Override
+	// MÉTODO CARREGAR LISTAGEM
 	public void carregarListagem() {
 		try {
 			ItemEstoqueDAO dao = new ItemEstoqueDAO();
@@ -79,8 +100,6 @@ public class ItemEstoqueBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA PREPARAR NOVO PRODUTOS
-	@Override
-	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
 		try {
 			itemEstoque = new ItemEstoque();
@@ -95,8 +114,7 @@ public class ItemEstoqueBean implements InterfaceBean {
 
 	}
 
-	@Override
-	// Sobreescrita do método novo()
+	// MÉTODO NOVO
 	public void novo() {
 		try {
 			ItemEstoqueDAO dao = new ItemEstoqueDAO();
@@ -112,8 +130,6 @@ public class ItemEstoqueBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA EXCLUIR UM PRODUTOS
-	@Override
-	// Sobreescrita do método excluir() da InterfaceBean
 	public void excluir() {
 		try {
 			ItemEstoqueDAO dao = new ItemEstoqueDAO();
@@ -130,8 +146,6 @@ public class ItemEstoqueBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA PREPARAR EDITAR PRODUTOS
-	@Override
-	// Sobreescrita do método prepararEditar() da InterfaceBean
 	public void prepararEditar() {
 		try {
 			ProdutoDAO pdao = new ProdutoDAO();
@@ -153,8 +167,7 @@ public class ItemEstoqueBean implements InterfaceBean {
 
 	}
 
-	@Override
-	// Sobreescrita do método editar() da InterfaceBean
+	//MÉTODO EDITAR
 	public void editar() {
 		try {
 			ItemEstoqueDAO dao = new ItemEstoqueDAO();
@@ -170,18 +183,30 @@ public class ItemEstoqueBean implements InterfaceBean {
 		}
 	}
 	
-	public void validQuant() {
-		try {
-			ItemEstoqueDAO dao = new ItemEstoqueDAO();
-			
-			dao.validarQuantidade();
-
-			itens = dao.listar();
-
-			JSFUtil.adicionarMensagemSucesso("Dados editados com sucesso!");
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
+	//MÉTODO PARA VALIDAR A QUANTIDADE SOLICITADA
+	public void validQuant() throws SQLException {
+		//ATRIBUIÇÃO DOS VALORES DIGITADOS ÀS VARIÁVEIS LOCAIS
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO Produto (codigo) VALUES (?) ");
+		Connection conexao = ConexaoFactory.conectar();
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		comando.setLong(1, getCodigo());
+		System.out.println("Suelber Costa");
+		System.out.println(getCodigo());
+	}
+	
+	public void quantidade() throws SQLException {
+		//CONSULTA NO BANCO PARA COMPARAR COM O VALOR DIGITADO
+		StringBuilder sql1 = new StringBuilder();
+		sql1.append("SELECT quantidade FROM Produto WHERE codigo = '" + getCodigo() + "' ");
+		
+		Connection conexao = ConexaoFactory.conectar();
+		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
+		
+		ResultSet resultado = comando1.executeQuery();
+		
+		setQuant(resultado.getDouble("quantidade"));
+		
+		System.out.println(getQuant());
 	}
 }

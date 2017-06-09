@@ -10,6 +10,16 @@ function verificar(xhr, status, args, dlg, tbl) {
 	}
 }
 
+function verificar2(xhr, status, args, dlg) {
+	if (args.validationFailed) {
+		PF(dlg).jq.effect("shake", {
+			times : 5
+		}, 100);
+	} else {
+		PF(dlg).hide();
+	}
+}
+
 //Função para validar o login de acesso
 function login(usuario, senha){
 	var usuario = document.getElementById('usuario').value;

@@ -76,7 +76,6 @@ public class ProdutoBean implements InterfaceBean {
 			TipoProdutoDAO cdao = new TipoProdutoDAO();
 
 			comboTipoProduto = cdao.listar();
-			System.out.println(comboTipoProduto);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());

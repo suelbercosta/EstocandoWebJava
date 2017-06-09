@@ -12,9 +12,6 @@ import br.com.estocandowebjava.domain.Requisicao;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class ItemEstoqueDAO {
-	private Long cod;
-	private Double quant;
-
 	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
 	public void salvar(ItemEstoque ie) throws SQLException {
 		StringBuilder sql = new StringBuilder();
@@ -29,10 +26,14 @@ public class ItemEstoqueDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setLong(1, ie.getRequisicao().getCodigo());
+		System.out.println(ie.getRequisicao().getCodigo());
 		comando.setLong(2, ie.getProduto().getCodigo());
+		System.out.println(ie.getProduto().getCodigo());
 		comando.setDouble(3, ie.getQuantidade());
+		System.out.println(ie.getQuantidade());
 
 		comando.executeUpdate();
+		System.out.println(comando);
 	}
 	
 	//-----------------------------------------------------------------
@@ -114,38 +115,4 @@ public class ItemEstoqueDAO {
 		comando.executeUpdate();
 	}
 	
-	//MÉTODO PARA VALIDAR A QUANTIDADE SOLICITADA
-	public ArrayList<Produto> validarQuantidade() throws SQLException {
-		//CRIAÇÃO DAS VARIÁVEIS LOCAIS
-		Produto p = new Produto();
-		cod = null;
-		quant = null;
-		
-		//ATRIBUIÇÃO DOS VALORES DIGITADOS ÀS VARIÁVEIS LOCAIS
-		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO Produto (codigo) VALUES (?) ");
-		Connection conexao = ConexaoFactory.conectar();
-		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		comando.setLong(1, cod);
-		
-		//CONSULTA NO BANCO PARA COMPARAR COM O VALOR DIGITADO
-		StringBuilder sql1 = new StringBuilder();
-		sql1.append("SELECT quantidade FROM Produto WHERE codigo = '" + cod + "' ");
-
-		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
-		
-		ResultSet resultado = comando1.executeQuery();
-		System.out.println(sql1);
-		System.out.println(comando1);
-		
-		ArrayList<Produto> lista = new ArrayList<Produto>();
-		
-		while (resultado.next()) {
-			p.setQuantidade(resultado.getDouble("quantidade"));
-			
-			lista.add(p);
-		}
-		
-		return lista;
-	}
 }

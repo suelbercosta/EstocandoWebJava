@@ -247,31 +247,27 @@
 
 					<p:outputLabel for="txtProdIncluir" value="Produto:" />
 					<p:selectOneMenu id="txtProdIncluir"
-						value="#{MBItemEstoque.itemEstoque.produto}"
+						value="#{MBItemEstoque.itemEstoque.produto.codigo}"
 						filter="true" required="true"
 						requiredMessage="O campo produto é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o produto" />
 						<f:selectItems value="#{MBItemEstoque.comboProduto}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
-						<p:ajax event="change" update="txtQuantDispRequisIncluir" listener="#{MBItemEstoque.validQuant}" />
 					</p:selectOneMenu>
-					
-					<p:outputLabel for="txtQuantDispRequisIncluir" value="Quant. Disponível:" />
-					<p:inputText id="txtQuantDispRequisIncluir" value="MBItemEstoque.quantidade" />
 
 					<p:outputLabel for="txtQuantProdRequisIncluir" value="Quantidade:" />
-					<p:inputText id="txtQuantProdRequisIncluir" value="#{MBItemEstoque.itemEstoque.requisicao}"
+					<p:inputNumber id="txtQuantProdRequisIncluir" value="#{MBItemEstoque.itemEstoque.quantidade}"
 						required="true" requiredMessage="O campo quantidade é obrigatório.">
 						<f:convertNumber />
-					</p:inputText>
+					</p:inputNumber>
 
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
+				
 					<p:commandButton value="Incluir"
 						actionListener="#{MBItemEstoque.novo}"
-						update=":msgGlobal :formIncluirProdutosRequisicao"
-						oncomplete="verificar(xhr, status, args, 'dlgIncluirProdutosRequisicao', 'tabelaListagemRequisicao');" />
+						update=":msgGlobal :formIncluirProdutosRequisicao" />
 
 					<p:commandButton value="Cancelar" process="@this"
 						oncomplete="PF('dlgIncluirProdutosRequisicao').hide();">

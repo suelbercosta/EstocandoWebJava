@@ -2,8 +2,8 @@ package br.com.estocandowebjava.domain;
 
 public class ItemEstoque {
 	//DECLARAÇÃO DE VARIÁVEIS
-	private Requisicao requisicao;
-	private Produto produto;
+	private Requisicao requisicao = new Requisicao();
+	private Produto produto = new Produto();
 	private Double quantidade;
 	
 	//DECLARAÇÃO DOS MÉTODOS
