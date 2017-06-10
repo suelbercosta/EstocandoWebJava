@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<!-- MENU DA PÁGINA -->
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<!-- CONTEUDO DA PÁGINA -->
+	<ui:define id="conteudo" name="conteudo">
+
+		<f:event listener="#{MBNotaFiscal.carregarListagem}"
+			type="preRenderView" />
+
+		<h:form id="formListagemNotaFiscal">
+
+			<!-- TABELA COM OS DADOS DAS NOTAS FISCAIS -->
+			<p:dataTable id="tblListagemNotaFiscal"
+				widgetVar="tabelaListagemNotaFiscal"
+				emptyMessage="Nenhum registro encontrado."
+				value="#{MBNotaFiscal.itens}" var="item" paginator="true" rows="10"
+				filteredValue="#{MBNotaFiscal.itensFiltrados}">
+
+				<f:facet name="header">
+					<h:outputText value=" Lista de Notas Fiscais" />
+				</f:facet>
+				<p:column headerText="CÓDIGO" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}">
+					<h:outputText id="teste" value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="NÚMERO DA NF" sortBy="#{item.numero_nota}"
+					filterBy="#{item.numero_nota}">
+					<h:outputText value="#{item.numero_nota}" />
+				</p:column>
+
+				<p:column headerText="FORNECEDOR" sortBy="#{item.fornecedor.codigo}"
+					filterBy="#{item.fornecedor.codigo}">
+					<h:outputText value="#{item.fornecedor.codigo}" />
+				</p:column>
+
+				<p:column headerText="OPÇÕES">
+					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgExcluirNotaFiscal').show();"
+						update=":formExcluirNotaFiscal:pnlExcluirNotaFiscal">
+						<f:setPropertyActionListener target="#{MBNotaFiscal.notaFiscal}"
+							value="#{item}" />
+					</p:commandButton>
+
+					<!-- BOTÃO DE EDITAR NA LISTAGEM DE OBJETOS -->
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBNotaFiscal.prepararEditar}"
+						oncomplete="PF('dlgEditarNotaFiscal').show();"
+						update=":msgGlobal :formEditarNotaFiscal:pnlEditarNotaFiscal">
+						<f:setPropertyActionListener target="#{MBNotaFiscal.notaFiscal}"
+							value="#{item}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- BOTÃO ADICIONAR NOVA NOTA FISCAL -->
+				<f:facet name="footer">
+					<p:commandButton value="Gerar Nova Nota Fiscal"
+						oncomplete="PF('dlgNovaNotaFiscal').show();"
+						actionListener="#{MBNotaFiscal.prepararNovo}"
+						update=":formNovaNotaFiscal:pnlNovaNotaFiscal :msgGlobal" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<!-- TELA PARA GERAR UMA NOVA NOTA FISCAL -->
+		<p:dialog widgetVar="dlgNovaNotaFiscal" closable="true"
+			draggable="false" resizable="false" header="Gerar NotaFiscal">
+
+			<h:form id="formNovaNotaFiscal" prependId="false">
+
+				<h:panelGrid id="pnlNovaNotaFiscal" columns="2">
+
+					<p:outputLabel for="numero" value="Número da NF:" />
+					<p:inputNumber id="numero" value="#{MBNotaFiscal.notaFiscal.numeroNota}" 
+						required="true" requiredMessage="O campo número da NF é obrigatório." />
+						
+					<p:outputLabel for="fornecedor" value="Fornecedor:" />
+					<p:inputNumber id="fornecedor" value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" 
+						required="true" requiredMessage="O campo fornecedor é obrigatório." />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Inserir"
+						actionListener="#{MBNotaFiscal.novo}"
+						update=":msgGlobal :formListagemNotaFiscal:tblListagemNotaFiscal"
+						oncomplete="verificar(xhr, status, args, 'dlgNovaNotaFiscal', 'tabelaListagemNotaFiscal');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgNovaNotaFiscal').hide();">
+						<p:resetInput target="pnlNovaNotaFiscal" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- TELA PARA EXCLUIR A NOTA FISCAL SELECIONADA -->
+		<p:dialog widgetVar="dlgExcluirNotaFiscal" draggable="false"
+			resizable="false" closable="true" header="Exclusão de NotaFiscal">
+			<h:form id="formExcluirNotaFiscal">
+				<h:panelGrid id="pnlExcluirNotaFiscal" columns="2">
+
+					<p:outputLabel value="Código" />
+					<h:outputText value="#{MBNotaFiscal.notaFiscal.codigo}" />
+
+					<p:outputLabel value="Número NF" />
+					<h:outputText value="#{MBNotaFiscal.notaFiscal.numeroNota}" />
+
+					<p:outputLabel value="Fornecedor" />
+					<h:outputText value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBNotaFiscal.excluir}"
+						update=":msgGlobal :formListagemNotaFiscal:tblListagemNotaFiscal"
+						oncomplete="PF('dlgExcluirNotaFiscal').hide(); PF('tabelaListagemNotaFiscal').clearFilters();" />
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgExcluirNotaFiscal').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<!-- TELA PARA EDITAR A NOTA FISCAL SELECIONADA -->
+		<p:dialog widgetVar="dlgEditarNotaFiscal" closable="true"
+			draggable="false" resizable="false" header="Editar NotaFiscal">
+
+			<h:form id="formEditarNotaFiscal">
+
+				<h:panelGrid id="pnlEditarNotaFiscal" columns="2">
+				
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBNotaFiscal.notaFiscal.codigo}" />
+
+					<p:outputLabel for="editarNumero" value="Número da NF:" />
+					<p:inputNumber id="editarNumero" value="#{MBNotaFiscal.notaFiscal.numeroNota}" 
+						required="true" requiredMessage="O campo número da NF é obrigatório." />
+						
+					<p:outputLabel for="editarFornecedor" value="Fornecedor:" />
+					<p:inputNumber id="editarFornecedor" value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" 
+						required="true" requiredMessage="O campo fornecedor é obrigatório." />
+						
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBNotaFiscal.editar}"
+						update=":msgGlobal :formListagemNotaFiscal:tblListagemNotaFiscal"
+						oncomplete="verificar(xhr, status, args, 'dlgEditarNotaFiscal', 'tabelaListagemNotaFiscal');" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgEditarNotaFiscal').hide();">
+						<p:resetInput target="pnlEditarNotaFiscal" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
