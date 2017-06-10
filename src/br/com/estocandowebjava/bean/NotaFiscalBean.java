@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.estocandowebjava.dao.FornecedorDAO;
 import br.com.estocandowebjava.dao.NotaFiscalDAO;
-import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.NotaFiscal;
 import br.com.estocandowebjava.util.JSFUtil;
 
@@ -17,7 +15,6 @@ import br.com.estocandowebjava.util.JSFUtil;
 public class NotaFiscalBean implements InterfaceBean {
 	// Declaração de variáveis
 	private NotaFiscal notaFiscal = new NotaFiscal();
-	private ArrayList<Fornecedor> comboFornecedor;
 
 	private ArrayList<NotaFiscal> itens;
 	private ArrayList<NotaFiscal> itensFiltrados;
@@ -29,14 +26,6 @@ public class NotaFiscalBean implements InterfaceBean {
 
 	public void setNotaFiscal(NotaFiscal notaFiscal) {
 		this.notaFiscal = notaFiscal;
-	}
-
-	public ArrayList<Fornecedor> getComboFornecedor() {
-		return comboFornecedor;
-	}
-
-	public void setComboFornecedor(ArrayList<Fornecedor> comboFornecedor) {
-		this.comboFornecedor = comboFornecedor;
 	}
 
 	public ArrayList<NotaFiscal> getItens() {
@@ -70,42 +59,7 @@ public class NotaFiscalBean implements InterfaceBean {
 	@Override
 	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
-		try {
-			notaFiscal = new NotaFiscal();
-
-			FornecedorDAO fdao = new FornecedorDAO() {
-
-				@Override
-				public void salvar(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public ArrayList<Fornecedor> listar() throws SQLException {
-					// TODO Auto-generated method stub
-					return null;
-				}
-
-				@Override
-				public void excluir(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void editar(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-			};
-
-			comboFornecedor = fdao.listar();
-			System.out.println(comboFornecedor);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
+		notaFiscal = new NotaFiscal();
 
 	}
 
@@ -147,39 +101,6 @@ public class NotaFiscalBean implements InterfaceBean {
 	@Override
 	// Sobreescrita do método prepararEditar() da InterfaceBean
 	public void prepararEditar() {
-		try {
-			FornecedorDAO dao = new FornecedorDAO() {
-
-				@Override
-				public void salvar(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public ArrayList<Fornecedor> listar() throws SQLException {
-					// TODO Auto-generated method stub
-					return null;
-				}
-
-				@Override
-				public void excluir(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void editar(Fornecedor f) throws SQLException {
-					// TODO Auto-generated method stub
-
-				}
-			};
-
-			comboFornecedor = dao.listar();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JSFUtil.adicionarMensagemErro(ex.getMessage());
-		}
 
 	}
 

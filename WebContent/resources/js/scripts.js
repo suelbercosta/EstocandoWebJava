@@ -10,16 +10,6 @@ function verificar(xhr, status, args, dlg, tbl) {
 	}
 }
 
-function verificar2(xhr, status, args, dlg) {
-	if (args.validationFailed) {
-		PF(dlg).jq.effect("shake", {
-			times : 5
-		}, 100);
-	} else {
-		PF(dlg).hide();
-	}
-}
-
 //Função para validar o login de acesso
 function login(usuario, senha){
 	var usuario = document.getElementById('usuario').value;
@@ -58,5 +48,15 @@ function relRequisicao() {
 	//if (document.getElementById('txtRelFilRequisicao').Value = 'Data') {
 		document.getElementById('txtRelDataRequis').disabled = "False";
 	//}
+}
+
+function tipoPessoa() {
+	if (document.getElementById('tipoPessoa').itemValue == "pj") {
+		document.getElementById('txtFornPF').style.display="none";
+		document.getElementById('txtFornPJ').disabled = "False";
+		alert("Seja bem vindo ao sistema!");
+	}
+		document.getElementById('selectOneMenu:txtFornPJ').style.display = "none";
+		alert("Te dana!");
 }
 

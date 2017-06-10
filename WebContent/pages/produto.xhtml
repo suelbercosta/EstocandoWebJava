@@ -84,7 +84,7 @@
 				<f:facet name="footer">
 					<p:commandButton value="Cadastrar novo produto"
 						oncomplete="PF('dlgNovoProduto').show();"
-						actionListener="#{MBProduto.prepararNovo}"
+						actionListener="#{MBNotaFiscal_Produto.prepararNovo}"
 						update=":formNovoProduto:pnlNovoProduto :msgGlobal" />
 				</f:facet>
 			</p:dataTable>
@@ -98,7 +98,37 @@
 
 				<h:panelGrid id="pnlNovoProduto" columns="2">
 
-					<p:outputLabel for="txtDescNovoProd" value="Descrição:" />
+					<p:outputLabel for="txtNFNovoProd" value="Nº Nota Fiscal:" />
+					<p:inputText id="txtNFNovoProd"
+						value="#{MBNotaFiscal.notaFiscal.numeroNota}"
+						required="true" requiredMessage="O campo nota fiscal é obrigatório." />
+
+					<p:outputLabel for="tipoPessoa" value="Fornecedor:" />
+					<p:selectOneRadio id="tipoPessoa" value="#{MBNotaFiscal_Produto.valor}">
+						<f:selectItem itemLabel="Pessoa Física" itemValue="pf" value="pj" />
+						<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj" />
+						<p:ajax listener="#{MBNotaFiscal_Produto.tipoPessoa}" update="txtFornPF"/>
+					</p:selectOneRadio>	
+					
+					<p:outputLabel for="txtFornPF" value="Fornecedor"  />
+					<p:selectOneMenu id="txtFornPF" disabled="#{MBNotaFiscal_Produto.txtFornPF}"
+						value="#{MBNotaFiscal_Produto.valor}" filter="true"
+						required="true" requiredMessage="O campo fornecedor é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Fornecedor" />
+						<f:selectItems value="#{MBNotaFiscal_Produto.comboPF}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.pessoafisica.nome}" />
+					</p:selectOneMenu>	
+					
+					<p:outputLabel for="txtFornPJ" value="Fornecedor"  />
+					<p:selectOneMenu id="txtFornPJ" disabled="false"
+						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
+						required="true" requiredMessage="O campo fornecedor é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Selecione o Fornecedor" />
+						<f:selectItems value="#{MBNotaFiscal_Produto.comboPJ}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.pessoajuridica.razao_social}" />
+					</p:selectOneMenu>	
+					
+					<p:outputLabel for="txtDescNovoProd" value="Descrição do Produto:" />
 					<p:inputText id="txtDescNovoProd"
 						value="#{MBProduto.produto.descricao}" maxlength="50" size="40"
 						required="true" requiredMessage="O campo descrição é obrigatório." />

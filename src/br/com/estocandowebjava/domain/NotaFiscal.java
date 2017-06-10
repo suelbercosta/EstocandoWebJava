@@ -3,7 +3,7 @@ package br.com.estocandowebjava.domain;
 public class NotaFiscal {
 	private Long codigo;
 	private Long numero_nota;
-	private Fornecedor fornecedor;
+	private Fornecedor fornecedor = new Fornecedor();
 	
 	public Long getCodigo() {
 		return codigo;

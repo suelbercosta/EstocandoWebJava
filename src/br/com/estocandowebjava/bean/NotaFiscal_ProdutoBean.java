@@ -9,7 +9,10 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.estocandowebjava.dao.NotaFiscalDAO;
 import br.com.estocandowebjava.dao.NotaFiscal_ProdutoDAO;
+import br.com.estocandowebjava.dao.PessoaFisicaDAO;
+import br.com.estocandowebjava.dao.PessoaJurudicaDAO;
 import br.com.estocandowebjava.dao.ProdutoDAO;
+import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.NotaFiscal;
 import br.com.estocandowebjava.domain.NotaFiscal_Produto;
 import br.com.estocandowebjava.domain.Produto;
@@ -21,6 +24,11 @@ public class NotaFiscal_ProdutoBean {
 	private NotaFiscal_Produto notafiscal_produto;
 	private ArrayList<NotaFiscal> comboNF;
 	private ArrayList<Produto> comboProduto;
+	private ArrayList<Fornecedor> comboPF;
+	private ArrayList<Fornecedor> comboPJ;
+	private boolean inLimiteAvaliacao;
+	private boolean txtFornPF;
+	private String valor;
 	
 	private ArrayList<NotaFiscal_Produto> itens;
 	private ArrayList<NotaFiscal_Produto> itensFiltrados;
@@ -48,6 +56,46 @@ public class NotaFiscal_ProdutoBean {
 
 	public void setComboProduto(ArrayList<Produto> comboProduto) {
 		this.comboProduto = comboProduto;
+	}
+	
+	public ArrayList<Fornecedor> getComboPF() {
+		return comboPF;
+	}
+	
+	public void setComboPF(ArrayList<Fornecedor> comboPF) {
+		this.comboPF = comboPF;
+	}
+	
+	public ArrayList<Fornecedor> getComboPJ() {
+		return comboPJ;
+	}
+	
+	public void setComboPJ(ArrayList<Fornecedor> comboPJ) {
+		this.comboPJ = comboPJ;
+	}
+	
+	public boolean isInLimiteAvaliacao() {
+		return inLimiteAvaliacao;
+	}
+
+	public void setInLimiteAvaliacao(boolean inLimiteAvaliacao) {
+		this.inLimiteAvaliacao = inLimiteAvaliacao;
+	}
+	
+	public String getValor() {
+		return valor;
+	}
+	
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public boolean isTxtFornPF() {
+		return txtFornPF;
+	}
+
+	public void setTxtFornPF(boolean txtFornPF) {
+		this.txtFornPF = txtFornPF;
 	}
 
 	public ArrayList<NotaFiscal_Produto> getItens() {
@@ -94,9 +142,31 @@ public class NotaFiscal_ProdutoBean {
 		try {
 			notafiscal_produto = new NotaFiscal_Produto();
 
-			ProdutoDAO dao = new ProdutoDAO();
+			PessoaFisicaDAO pfdao = new PessoaFisicaDAO();
 
-			comboProduto = dao.listar();
+			comboPF = pfdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
+		try {
+			notafiscal_produto = new NotaFiscal_Produto();
+
+			PessoaJurudicaDAO pjdao = new PessoaJurudicaDAO();
+
+			comboPJ = pjdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
+		try {
+			notafiscal_produto = new NotaFiscal_Produto();
+
+			ProdutoDAO pdao = new ProdutoDAO();
+
+			comboProduto = pdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -147,14 +217,31 @@ public class NotaFiscal_ProdutoBean {
 		}
 		
 		try {
-			ProdutoDAO dao = new ProdutoDAO();
+			PessoaFisicaDAO pfdao = new PessoaFisicaDAO();
 
-			comboProduto = dao.listar();
+			comboPF = pfdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
+		
+		try {
+			PessoaJurudicaDAO pjdao = new PessoaJurudicaDAO();
 
+			comboPJ = pjdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
+		try {
+			ProdutoDAO pdao = new ProdutoDAO();
+
+			comboProduto = pdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
 	}
 
 	// MÉTODO PARA EDITAR NOTA FISCAL/PRODUTO
@@ -171,5 +258,17 @@ public class NotaFiscal_ProdutoBean {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
+	}
+	
+	public void valor(){
+		
+	}
+	
+	public void tipoPessoa() {
+	     if(inLimiteAvaliacao){
+	    	 txtFornPF = false;
+	     } else {
+	    	 txtFornPF = true;
+	     }
 	}
 }
