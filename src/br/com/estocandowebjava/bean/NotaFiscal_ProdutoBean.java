@@ -26,7 +26,8 @@ public class NotaFiscal_ProdutoBean {
 	private ArrayList<Produto> comboProduto;
 	private ArrayList<Fornecedor> comboPF;
 	private ArrayList<Fornecedor> comboPJ;
-	private boolean inLimiteAvaliacao;
+	private boolean mostrarpf;
+	private boolean mostrarpj;
 	private boolean txtFornPF;
 	private String valor;
 	
@@ -74,14 +75,22 @@ public class NotaFiscal_ProdutoBean {
 		this.comboPJ = comboPJ;
 	}
 	
-	public boolean isInLimiteAvaliacao() {
-		return inLimiteAvaliacao;
+	public boolean isMostrarpf() {
+		return mostrarpf;
 	}
 
-	public void setInLimiteAvaliacao(boolean inLimiteAvaliacao) {
-		this.inLimiteAvaliacao = inLimiteAvaliacao;
+	public void setMostrarpf(boolean mostrarpf) {
+		this.mostrarpf = mostrarpf;
 	}
 	
+	public boolean isMostrarpj() {
+		return mostrarpj;
+	}
+
+	public void setMostrarpj(boolean mostrarpj) {
+		this.mostrarpj = mostrarpj;
+	}
+
 	public String getValor() {
 		return valor;
 	}
@@ -260,15 +269,21 @@ public class NotaFiscal_ProdutoBean {
 		}
 	}
 	
-	public void valor(){
+	public void pessoa(){
+		valor = getValor();
+		System.out.println(valor);
+		if (valor == "pf"){
+			mostrarpf = true;
+			mostrarpj = false;
+		}
 		
+		if (valor == "pj"){
+			mostrarpj = true;
+			mostrarpf = false;
+		}
 	}
 	
 	public void tipoPessoa() {
-	     if(inLimiteAvaliacao){
-	    	 txtFornPF = false;
-	     } else {
-	    	 txtFornPF = true;
-	     }
+	     
 	}
 }

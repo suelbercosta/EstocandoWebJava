@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.faces.context.FacesContext;
+
 import br.com.estocandowebjava.domain.ItemEstoque;
 import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.Requisicao;
@@ -16,7 +18,7 @@ public class ItemEstoqueDAO {
 	public void salvar(ItemEstoque ie) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into Item_Estoque ");
-		sql.append("(Requisicao_codigo, Produto_codigo, quantidade ");
+		sql.append("(Produto_codigo, Requisicao_codigo, quantidade ");
 		sql.append("values (?, ?, ?) ");
 		
 
@@ -25,24 +27,25 @@ public class ItemEstoqueDAO {
 
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		comando.setLong(1, ie.getRequisicao().getCodigo());
-		System.out.println(ie.getRequisicao().getCodigo());
-		comando.setLong(2, ie.getProduto().getCodigo());
-		System.out.println(ie.getProduto().getCodigo());
+		comando.setLong(1, ie.getProduto().getCodigo());
+		System.out.println("Código do produto escolhido: "+ie.getProduto().getCodigo());
+		comando.setLong(2, ie.getRequisicao().getCodigo());
+		System.out.println("Código da requisição: "+ie.getRequisicao().getCodigo());
 		comando.setDouble(3, ie.getQuantidade());
-		System.out.println(ie.getQuantidade());
+		System.out.println("Quantidade escolhida: "+ie.getQuantidade());
 
 		comando.executeUpdate();
-		System.out.println(comando);
+		System.out.println(sql);
 	}
 	
 	//-----------------------------------------------------------------
 	
 	//DEFINIÇÃO DO COMANDO PARA LISTAR OS DADOS DA TABELA
-	public ArrayList<ItemEstoque> listar() throws SQLException {
+	public ArrayList<ItemEstoque> listar() throws SQLException {		
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM Item_Estoque ie ");
-		sql.append("INNER JOIN Produto p ON p.codigo = ie.Produto_codigo ");
+		sql.append("SELECT e.codigo, e.descricao, e.quantidade, e.valor, ie.quantidade, r.codigo ");
+		sql.append("FROM Item_Estoque ie ");
+		sql.append("INNER JOIN Estoque e ON e.codigo = ie.Produto_codigo ");
 		sql.append("INNER JOIN Requisicao r ON r.codigo = ie.Requisicao_codigo ");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
@@ -56,20 +59,25 @@ public class ItemEstoqueDAO {
 		ArrayList<ItemEstoque> itens = new ArrayList<ItemEstoque>();
 		
 		while(resultado.next()) {
-			ItemEstoque ie = new ItemEstoque();
-			ie.setQuantidade(resultado.getDouble("ie.quantidade"));
-			
 			Produto p = new Produto();
-			p.setCodigo(resultado.getLong("p.codigo"));
-			ie.setProduto(p);
+			p.setCodigo(resultado.getLong("e.codigo"));
+			p.setDescricao(resultado.getString("e.descricao"));
+			p.setQuantidade(resultado.getDouble("e.quantidade"));
+			p.setValor(resultado.getDouble("e.valor"));
+			
+			ItemEstoque ie2 = new ItemEstoque();
+			ie2.setQuantidade(resultado.getDouble("ie.quantidade"));
+			
+			ie2.setProduto(p);
 			
 			Requisicao r = new Requisicao();
 			r.setCodigo(resultado.getLong("r.codigo"));
+			
+			ItemEstoque ie = new ItemEstoque();
 			ie.setRequisicao(r);
 			
-			itens.add(ie);
+			itens.add(ie2);
 		}
-		
 		return itens;
 
 	}
@@ -87,7 +95,9 @@ public class ItemEstoqueDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setLong(1, ie.getProduto().getCodigo());
+		System.out.println("Código do produto: "+ie.getProduto().getCodigo());
 		comando.setLong(2, ie.getRequisicao().getCodigo());
+		System.out.println("Código da requisição "+ie.getRequisicao().getCodigo());
 		
 		comando.executeUpdate();
 	}

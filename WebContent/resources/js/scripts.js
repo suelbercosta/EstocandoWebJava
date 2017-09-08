@@ -50,7 +50,9 @@ function relRequisicao() {
 	//}
 }
 
-function tipoPessoa() {
+function tipoPessoa(id) {
+	var display = documento.getElementById(id).style.display;
+	alert(display);
 	if (document.getElementById('tipoPessoa').itemValue == "pj") {
 		document.getElementById('txtFornPF').style.display="none";
 		document.getElementById('txtFornPJ').disabled = "False";

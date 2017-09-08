@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.estocandowebjava.dao.ItemEstoqueDAO;
 import br.com.estocandowebjava.dao.ProdutoDAO;
@@ -24,6 +25,8 @@ public class ItemEstoqueBean {
 	// Declaração de variáveis
 	private Long codigo;
 	private Double quant;
+	private Produto produto;
+	private Requisicao requisicao;
 	private ItemEstoque itemEstoque = new ItemEstoque();
 	private ArrayList<Produto> comboProduto;
 	private ArrayList<Requisicao> comboRequisicao;
@@ -46,6 +49,22 @@ public class ItemEstoqueBean {
 
 	public void setQuant(Double quant) {
 		this.quant = quant;
+	}
+	
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+	
+	public Requisicao getRequisicao() {
+		return requisicao;
+	}
+
+	public void setRequisicao(Requisicao requisicao) {
+		this.requisicao = requisicao;
 	}
 	
 	public ItemEstoque getItemEstoque() {
@@ -107,6 +126,17 @@ public class ItemEstoqueBean {
 			ProdutoDAO pdao = new ProdutoDAO();
 
 			comboProduto = pdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
+		try {
+			itemEstoque = new ItemEstoque();
+
+			RequisicaoDAO rdao = new RequisicaoDAO();
+			
+			comboRequisicao = rdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -209,4 +239,5 @@ public class ItemEstoqueBean {
 		
 		System.out.println(getQuant());
 	}
+
 }

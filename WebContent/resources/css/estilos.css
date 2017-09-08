@@ -24,3 +24,7 @@
 #teste {
 	text-align: right;
 }
+
+form panelGrid #txtFornPJ {
+	display:none;
+}

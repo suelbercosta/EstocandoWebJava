@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.estocandowebjava.domain.Funcionario;
-import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.Requisicao;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
@@ -16,7 +15,8 @@ public class RequisicaoDAO {
 	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
 	public void salvar(Requisicao r) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("insert into Requisicao (data, almoxarife, requisitante_codigo) values (?, ?, ?) ");
+		sql.append("insert into Requisicao (data, almoxarife, requisitante_codigo) ");
+		sql.append("values (?, ?, ?) ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -39,7 +39,8 @@ public class RequisicaoDAO {
 		sql.append("r.requisitante_codigo, f1.nome, f2.nome ");
 		sql.append("from Requisicao r ");
 		sql.append("inner join Funcionario as f1 on f1.matricula = r.almoxarife ");
-		sql.append("inner join Funcionario as f2 on f2.matricula = r.requisitante_codigo ");
+		sql.append("inner join Funcionario as f2 ");
+		sql.append("on f2.matricula = r.requisitante_codigo ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -72,8 +73,6 @@ public class RequisicaoDAO {
 		return lista;
 	}
 
-	//----------------------------------------------------------------
-
 	// DEFINIÇÃO DO COMANDO SQL PARA EXCLUIR DADOS
 	public void excluir(Requisicao r) throws SQLException {
 		StringBuilder sql = new StringBuilder();
@@ -89,13 +88,12 @@ public class RequisicaoDAO {
 		comando.executeUpdate();
 
 	}
-	
-	//----------------------------------------------------------------
 
 	// DEFINIÇÃO DO COMANDO SQL PARA EDITAR OS DADOS
 	public void editar(Requisicao r) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("update Requisicao set data = ?, almoxarife = ?, requisitante_codigo = ? where codigo = ? ");
+		sql.append("update Requisicao set data = ?, almoxarife = ?, ");
+		sql.append("requisitante_codigo = ? where codigo = ? ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();

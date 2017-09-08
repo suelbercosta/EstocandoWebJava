@@ -104,26 +104,25 @@
 						required="true" requiredMessage="O campo nota fiscal é obrigatório." />
 
 					<p:outputLabel for="tipoPessoa" value="Fornecedor:" />
-					<p:selectOneRadio id="tipoPessoa" value="#{MBNotaFiscal_Produto.valor}">
-						<f:selectItem itemLabel="Pessoa Física" itemValue="pf" value="pj" />
+					<p:selectOneMenu id="tipoPessoa" value="#{MBNotaFiscal_Produto.valor}">
+						<f:selectItem itemLabel="Pessoa Física" itemValue="pf" />
 						<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj" />
-						<p:ajax listener="#{MBNotaFiscal_Produto.tipoPessoa}" update="txtFornPF"/>
-					</p:selectOneRadio>	
-					
+						<p:ajax listener="#{MBNotaFiscal_Produto.tipoPessoa}" update="txtFornPJ" oncomplete="txtFornPF" />
+					</p:selectOneMenu>	
+										
 					<p:outputLabel for="txtFornPF" value="Fornecedor"  />
-					<p:selectOneMenu id="txtFornPF" disabled="#{MBNotaFiscal_Produto.txtFornPF}"
-						value="#{MBNotaFiscal_Produto.valor}" filter="true"
+					<p:selectOneMenu id="txtFornPF" rendered="true"
+						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
 						required="true" requiredMessage="O campo fornecedor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Selecione o Fornecedor" />
+						<f:selectItem itemValue="" itemLabel="Forn. Pessoa Física" />
 						<f:selectItems value="#{MBNotaFiscal_Produto.comboPF}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.pessoafisica.nome}" />
 					</p:selectOneMenu>	
 					
-					<p:outputLabel for="txtFornPJ" value="Fornecedor"  />
-					<p:selectOneMenu id="txtFornPJ" disabled="false"
+					<p:selectOneMenu id="txtFornPJ" rendered="#{MBNotaFiscal_Produto.mostrarpj}"
 						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
 						required="true" requiredMessage="O campo fornecedor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Selecione o Fornecedor" />
+						<f:selectItem itemValue="" itemLabel="Forn. Pessoa Jurídica" />
 						<f:selectItems value="#{MBNotaFiscal_Produto.comboPJ}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.pessoajuridica.razao_social}" />
 					</p:selectOneMenu>	
