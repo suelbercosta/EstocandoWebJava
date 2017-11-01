@@ -92,8 +92,13 @@
 						required="true" requiredMessage="O campo número da NF é obrigatório." />
 						
 					<p:outputLabel for="fornecedor" value="Fornecedor:" />
-					<p:inputNumber id="fornecedor" value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" 
-						required="true" requiredMessage="O campo fornecedor é obrigatório." />
+					<p:selectOneMenu id="fornecedor" rendered="true"
+						value="#{MBFornecedorPJ.fornecedor.codigo}" filter="true"
+						required="true" requiredMessage="O campo fornecedor é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Fornecedor" />
+						<f:selectItems value="#{comboPJ}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.pessoajuridica.nome}" />
+					</p:selectOneMenu>
 
 				</h:panelGrid>
 
