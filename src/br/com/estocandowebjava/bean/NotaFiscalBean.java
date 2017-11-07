@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.estocandowebjava.dao.FornecedoresDAO;
 import br.com.estocandowebjava.dao.NotaFiscalDAO;
+import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.NotaFiscal;
 import br.com.estocandowebjava.util.JSFUtil;
 
@@ -15,6 +17,8 @@ import br.com.estocandowebjava.util.JSFUtil;
 public class NotaFiscalBean implements InterfaceBean {
 	// Declaração de variáveis
 	private NotaFiscal notaFiscal = new NotaFiscal();
+	private Fornecedor fornecedores = new Fornecedor();
+	private ArrayList<Fornecedor> comboFornecedor;
 
 	private ArrayList<NotaFiscal> itens;
 	private ArrayList<NotaFiscal> itensFiltrados;
@@ -59,7 +63,16 @@ public class NotaFiscalBean implements InterfaceBean {
 	@Override
 	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
-		notaFiscal = new NotaFiscal();
+		try {
+			notaFiscal = new NotaFiscal();
+
+			FornecedoresDAO fdao = new FornecedoresDAO();
+
+			comboFornecedor = fdao.fornecedores();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
 
 	}
 

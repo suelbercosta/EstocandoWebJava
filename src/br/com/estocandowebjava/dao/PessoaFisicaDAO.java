@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.Pessoa_Fisica;
+import br.com.estocandowebjava.domain.Pessoa_Juridica;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
-public class PessoaFisicaDAO implements FornecedorDAO{
+public class PessoaFisicaDAO extends FornecedorDAO{
 	//DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS NO BANCO DE DADOS
 	@Override
 	public void salvar(Fornecedor f) throws SQLException {

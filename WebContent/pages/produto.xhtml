@@ -101,20 +101,13 @@
 					<p:outputLabel for="txtNFNovoProd" value="Nº Nota Fiscal:" />
 					<p:inputText id="txtNFNovoProd"
 						value="#{MBNotaFiscal.notaFiscal.numeroNota}"
-						required="true" requiredMessage="O campo nota fiscal é obrigatório." />
-
-					<p:outputLabel for="tipoPessoa" value="Tipo Pessoa:" />
-					<p:selectOneMenu id="tipoPessoa" value="#{MBNotaFiscal_Produto.valor}">
-						<f:selectItem itemLabel="Pessoa Física" itemValue="pf" />
-						<f:selectItem itemLabel="Pessoa Jurídica" itemValue="pj" />
-						<p:ajax listener="#{MBNotaFiscal_Produto.tipoPessoa}" update="txtFornPJ" oncomplete="txtFornPF" />
-					</p:selectOneMenu>	
+						required="true" requiredMessage="O campo nota fiscal é obrigatório." />	
 										
 					<p:outputLabel for="txtFornPF" value="Fornecedor"  />
 					<p:selectOneMenu id="txtFornPF" rendered="true"
 						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
 						required="true" requiredMessage="O campo fornecedor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Forn. Pessoa Física" />
+						<f:selectItem itemValue="" itemLabel="Fornecedor" />
 						<f:selectItems value="#{MBNotaFiscal_Produto.comboPF}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.pessoafisica.nome}" />
 					</p:selectOneMenu>	

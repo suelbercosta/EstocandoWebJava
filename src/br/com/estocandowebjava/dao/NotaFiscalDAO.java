@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.NotaFiscal;
+import br.com.estocandowebjava.domain.Pessoa_Fisica;
+import br.com.estocandowebjava.domain.Pessoa_Juridica;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class NotaFiscalDAO {
@@ -33,11 +35,17 @@ public class NotaFiscalDAO {
 	//-----------------------------------------------------------------
 	
 	//DEFINIÇÃO DO COMANDO PARA LISTAR OS DADOS DA TABELA
-	public ArrayList<NotaFiscal> listar() throws SQLException {
+	/*public ArrayList<NotaFiscal> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * ");
-		sql.append("FROM NotaFiscal nf inner join Fornecedor f ");
+		sql.append("SELECT codigo, numero_nota, Fornecedor_codigo ");
+		sql.append("FROM notafiscal nf inner join Fornecedor f ");
 		sql.append("on f.codigo = nf.Fornecedor_codigo ");
+		
+		StringBuilder sql2 = new StringBuilder();
+		sql2.append("SELECT Fornecedor_codigo AS Codigo, nome AS Fornecedor ");
+		sql2.append("FROM pessoa_fisica UNION ");
+		sql2.append("SELECT Fornecedor_codigo AS Codigo, razao_social AS Fornecedor ");
+		sql2.append("FROM pessoa_juridica order by fornecedor ");
 		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
@@ -57,6 +65,47 @@ public class NotaFiscalDAO {
 			Fornecedor f = new Fornecedor();
 			f.setCodigo(resultado.getLong("f.codigo"));
 			nf.setFornecedor(f);
+			
+			itens.add(nf);
+		}
+		
+		return itens;
+
+	}*/
+	
+	public ArrayList<NotaFiscal> listar() throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT nf.codigo, nf.numero_nota, pj.razao_social as Fornecedor ");
+		sql.append("FROM notafiscal nf, pessoa_juridica pj ");
+		sql.append("WHERE nf.fornecedor_codigo = pj.fornecedor_codigo ");
+		sql.append("group by nf.codigo union ");
+		sql.append("SELECT nf.codigo, nf.numero_nota, pf.nome as Fornecedor ");
+		sql.append("FROM notafiscal nf, pessoa_fisica pf ");
+		sql.append("WHERE nf.fornecedor_codigo = pf.fornecedor_codigo ");
+		sql.append("group by nf.codigo ");
+		
+		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
+		Connection conexao = ConexaoFactory.conectar();
+
+		// COMANDO DE PREPARAÇÃO
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		
+		ResultSet resultado = comando.executeQuery();
+		
+		ArrayList<NotaFiscal> itens = new ArrayList<NotaFiscal>();
+		
+		while(resultado.next()) {
+			NotaFiscal nf = new NotaFiscal();
+			nf.setCodigo(resultado.getLong("codigo"));
+			nf.setNumeroNota(resultado.getLong("numero_nota"));
+			
+			Pessoa_Juridica pj = new Pessoa_Juridica();
+			pj.setRazao_social(resultado.getString("pj.razao_social"));
+			nf.setFornecedor(pj);
+			
+			Pessoa_Fisica pf = new Pessoa_Fisica();
+			pf.setNome(resultado.getString("pf.nome"));
+			nf.setFornecedor(pf);
 			
 			itens.add(nf);
 		}

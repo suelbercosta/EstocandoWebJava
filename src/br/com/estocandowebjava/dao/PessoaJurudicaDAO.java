@@ -11,7 +11,7 @@ import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.Pessoa_Juridica;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
-public class PessoaJurudicaDAO implements FornecedorDAO{
+public class PessoaJurudicaDAO extends FornecedorDAO{
 	//DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS NO BANCO DE DADOS
 	@Override
 	public void salvar(Fornecedor f) throws SQLException {

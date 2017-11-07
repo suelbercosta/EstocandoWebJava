@@ -93,11 +93,11 @@
 						
 					<p:outputLabel for="fornecedor" value="Fornecedor:" />
 					<p:selectOneMenu id="fornecedor" rendered="true"
-						value="#{MBFornecedorPJ.fornecedor.codigo}" filter="true"
+						value="#{MBFornecedores}" filter="true"
 						required="true" requiredMessage="O campo fornecedor é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Fornecedor" />
-						<f:selectItems value="#{comboPJ}" var="item"
-							itemValue="#{item.codigo}" itemLabel="#{item.pessoajuridica.nome}" />
+						<f:selectItems value="#{comboFornecedores}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.fornecedor}" />
 					</p:selectOneMenu>
 
 				</h:panelGrid>
