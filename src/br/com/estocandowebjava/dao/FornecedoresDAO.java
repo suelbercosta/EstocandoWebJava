@@ -6,18 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.com.estocandowebjava.domain.Fornecedor;
-import br.com.estocandowebjava.domain.Pessoa_Fisica;
-import br.com.estocandowebjava.domain.Pessoa_Juridica;
+import br.com.estocandowebjava.domain.Fornecedores;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class FornecedoresDAO {
-	public ArrayList<Fornecedor> fornecedores() throws SQLException{
+	public ArrayList<Fornecedores> listar() throws SQLException{
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT Fornecedor_codigo AS Codigo, nome AS Fornecedor ");
+		sql.append("SELECT Fornecedor_codigo AS codigo, nome AS fornecedor ");
 		sql.append("FROM pessoa_fisica ");
 		sql.append("UNION ");
-		sql.append("SELECT Fornecedor_codigo AS Codigo, razao_social AS Fornecedor ");
+		sql.append("SELECT Fornecedor_codigo AS codigo, razao_social AS fornecedor ");
 		sql.append("FROM pessoa_juridica ");
 		sql.append("ORDER BY fornecedor ");
 		
@@ -27,18 +25,13 @@ public class FornecedoresDAO {
 		
 		ResultSet resultado = comando.executeQuery();
 		
-		ArrayList<Fornecedor> itens = new ArrayList<Fornecedor>();
+		ArrayList<Fornecedores> itens = new ArrayList<Fornecedores>();
 		
 		while (resultado.next()) {
 			
-			Fornecedor f = new Fornecedor();
-			f.setCodigo(resultado.getLong("Codigo"));
-			Pessoa_Fisica pf = new Pessoa_Fisica();
-			Pessoa_Juridica pj = new Pessoa_Juridica();
-			pf.setNome(resultado.getString("Fornecedor"));
-			pj.setRazao_social(resultado.getString("Fornecedor"));
-			f.setPessoafisica(pf);
-			f.setPessoajuridica(pj);
+			Fornecedores f = new Fornecedores();
+			f.setCodigo(resultado.getLong("codigo"));
+			f.setFornecedor(resultado.getString("fornecedor"));
 			
 			itens.add(f);
 		}

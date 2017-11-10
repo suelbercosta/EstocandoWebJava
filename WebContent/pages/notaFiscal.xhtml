@@ -19,10 +19,8 @@
 
 	<!-- CONTEUDO DA PÁGINA -->
 	<ui:define id="conteudo" name="conteudo">
-
-		<f:event listener="#{MBNotaFiscal.carregarListagem}"
+	<f:event listener="#{MBNotaFiscal.carregarListagem}"
 			type="preRenderView" />
-
 		<h:form id="formListagemNotaFiscal">
 
 			<!-- TABELA COM OS DADOS DAS NOTAS FISCAIS -->
@@ -37,17 +35,17 @@
 				</f:facet>
 				<p:column headerText="CÓDIGO" sortBy="#{item.codigo}"
 					filterBy="#{item.codigo}">
-					<h:outputText id="teste" value="#{item.codigo}" />
+					<h:outputText value="#{item.codigo}" />
 				</p:column>
-
+				
 				<p:column headerText="NÚMERO DA NF" sortBy="#{item.numero_nota}"
 					filterBy="#{item.numero_nota}">
-					<h:outputText value="#{item.numero_nota}" />
+					<h:outputText value="Teste" />
 				</p:column>
 
-				<p:column headerText="FORNECEDOR" sortBy="#{item.fornecedor.codigo}"
-					filterBy="#{item.fornecedor.codigo}">
-					<h:outputText value="#{item.fornecedor.codigo}" />
+				<p:column headerText="FORNECEDOR" 
+					filterBy="#{item.Fornecedor}">
+					<h:outputText value="#{item.Fornecedor}" />
 				</p:column>
 
 				<p:column headerText="OPÇÕES">

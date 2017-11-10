@@ -17,20 +17,15 @@ public class NotaFiscal_ProdutoDAO {
 	public void salvar(NotaFiscal_Produto nf_p) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("START TRANSACTION; ");
-		
-			StringBuilder sql1 = new StringBuilder();
-			sql1.append("insert into NotaFiscal ");
-			sql1.append("(numero_nota, Fornecedor_codigo) ");
-			sql1.append("values (?, ?); ");
 			
-			StringBuilder sql2 = new StringBuilder();
-			sql2.append("SET @cod_nf = LAST_INSERT_ID(); ");
+			StringBuilder sql1 = new StringBuilder();
+			sql1.append("insert into Estoque ");
+			sql1.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
+			sql1.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
+			sql1.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			
 			StringBuilder sql3 = new StringBuilder();
-			sql3.append("insert into Estoque ");
-			sql3.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
-			sql3.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
-			sql3.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
+			sql3.append("SET @cod_nf = ?");
 			
 			StringBuilder sql4 = new StringBuilder();
 			sql4.append("SET @cod_prod = LAST_INSERT_ID(); ");
@@ -49,29 +44,27 @@ public class NotaFiscal_ProdutoDAO {
 		// COMANDO DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
-		PreparedStatement comando2 = conexao.prepareStatement(sql2.toString());
 		PreparedStatement comando3 = conexao.prepareStatement(sql3.toString());
 		PreparedStatement comando4 = conexao.prepareStatement(sql4.toString());
 		PreparedStatement comando5 = conexao.prepareStatement(sql5.toString());
 		PreparedStatement comando6 = conexao.prepareStatement(sql6.toString());
 		
-		// INCLUSÃO DOS DADOS NA TABELA NOTA FISCAL
-		NotaFiscal nf = new NotaFiscal();
-		comando1.setLong(1, nf.getCodigo());
-		comando1.setLong(2, nf.getFornecedor().getCodigo());
-		
 		// INCLUSÃO DOS DADOS NA TABELA PRODUTO
 		Produto p = new Produto();
-		comando3.setString(1, p.getDescricao());
-		comando3.setDouble(2, p.getQuantidade());
-		comando3.setString(3, p.getUnid_med());
-		comando3.setDouble(4, p.getValor());
-		comando3.setString(5, p.getData_val());
-		comando3.setString(6, p.getData_aquis());
-		comando3.setDouble(7, p.getQuant_minima());
-		comando3.setDouble(8, p.getPeso());
-		comando3.setString(9, p.getCor());
-		comando3.setLong(10, p.getTipo_produto().getCodigo());
+		comando1.setString(1, p.getDescricao());
+		comando1.setDouble(2, p.getQuantidade());
+		comando1.setString(3, p.getUnid_med());
+		comando1.setDouble(4, p.getValor());
+		comando1.setString(5, p.getData_val());
+		comando1.setString(6, p.getData_aquis());
+		comando1.setDouble(7, p.getQuant_minima());
+		comando1.setDouble(8, p.getPeso());
+		comando1.setString(9, p.getCor());
+		comando1.setLong(10, p.getTipo_produto().getCodigo());
+		
+		// ABSTRAÇÃO DO CÓDIGO DA NOTA FISCAL
+		NotaFiscal nf = new NotaFiscal();
+		comando3.setLong(1, nf.getCodigo());
 		
 		// INCLUSÃO DOS DADOS NA TABELA NOTA FISCAL PRODUTO
 		comando5.setLong(1, nf_p.getNotafiscal().getCodigo());
@@ -79,7 +72,6 @@ public class NotaFiscal_ProdutoDAO {
 
 		comando.executeUpdate();
 		comando1.executeUpdate();
-		comando2.executeUpdate();
 		comando3.executeUpdate();
 		comando4.executeUpdate();
 		comando5.executeUpdate();

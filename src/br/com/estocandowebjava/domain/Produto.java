@@ -9,8 +9,8 @@ public class Produto {
 	private String data_val;
 	private String data_aquis;
 	private Double quant_minima;
-	private Double peso;
-	private String cor;
+	private Double peso = 0D;
+	private String cor = "";
 	private TipoProduto tipo_produto = new TipoProduto();
 	public Long getCodigo() {
 		return codigo;

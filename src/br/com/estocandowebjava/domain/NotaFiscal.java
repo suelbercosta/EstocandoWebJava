@@ -2,7 +2,7 @@ package br.com.estocandowebjava.domain;
 
 public class NotaFiscal {
 	private Long codigo;
-	private Long numero_nota;
+	private double numero_nota;
 	private Fornecedor fornecedor = new Fornecedor();
 	
 	public Long getCodigo() {
@@ -11,10 +11,10 @@ public class NotaFiscal {
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
-	public Long getNumeroNota() {
+	public double getNumeroNota() {
 		return numero_nota;
 	}
-	public void setNumeroNota(Long numero_nota) {
+	public void setNumeroNota(double numero_nota) {
 		this.numero_nota = numero_nota;
 	}
 	public Fornecedor getFornecedor() {

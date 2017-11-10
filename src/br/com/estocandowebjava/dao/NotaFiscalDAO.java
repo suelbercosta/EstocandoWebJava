@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.NotaFiscal;
-import br.com.estocandowebjava.domain.Pessoa_Fisica;
 import br.com.estocandowebjava.domain.Pessoa_Juridica;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
@@ -34,45 +32,7 @@ public class NotaFiscalDAO {
 	
 	//-----------------------------------------------------------------
 	
-	//DEFINI플O DO COMANDO PARA LISTAR OS DADOS DA TABELA
-	/*public ArrayList<NotaFiscal> listar() throws SQLException {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT codigo, numero_nota, Fornecedor_codigo ");
-		sql.append("FROM notafiscal nf inner join Fornecedor f ");
-		sql.append("on f.codigo = nf.Fornecedor_codigo ");
-		
-		StringBuilder sql2 = new StringBuilder();
-		sql2.append("SELECT Fornecedor_codigo AS Codigo, nome AS Fornecedor ");
-		sql2.append("FROM pessoa_fisica UNION ");
-		sql2.append("SELECT Fornecedor_codigo AS Codigo, razao_social AS Fornecedor ");
-		sql2.append("FROM pessoa_juridica order by fornecedor ");
-		
-		// CRIA플O DA CONEX홒 COM O BANCO DE DADOS
-		Connection conexao = ConexaoFactory.conectar();
-
-		// COMANDO DE PREPARA플O
-		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		
-		ResultSet resultado = comando.executeQuery();
-		
-		ArrayList<NotaFiscal> itens = new ArrayList<NotaFiscal>();
-		
-		while(resultado.next()) {
-			NotaFiscal nf = new NotaFiscal();
-			nf.setCodigo(resultado.getLong("nf.codigo"));
-			nf.setNumeroNota(resultado.getLong("nf.numero_nota"));
-			
-			Fornecedor f = new Fornecedor();
-			f.setCodigo(resultado.getLong("f.codigo"));
-			nf.setFornecedor(f);
-			
-			itens.add(nf);
-		}
-		
-		return itens;
-
-	}*/
-	
+	//DEFINI플O DO COMANDO PARA LISTAR OS DADOS DA TABELA	
 	public ArrayList<NotaFiscal> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT nf.codigo, nf.numero_nota, pj.razao_social as Fornecedor ");
@@ -97,15 +57,11 @@ public class NotaFiscalDAO {
 		while(resultado.next()) {
 			NotaFiscal nf = new NotaFiscal();
 			nf.setCodigo(resultado.getLong("codigo"));
-			nf.setNumeroNota(resultado.getLong("numero_nota"));
+			nf.setNumeroNota(resultado.getDouble("numero_nota"));
 			
 			Pessoa_Juridica pj = new Pessoa_Juridica();
-			pj.setRazao_social(resultado.getString("pj.razao_social"));
+			pj.setRazao_social(resultado.getString("Fornecedor"));
 			nf.setFornecedor(pj);
-			
-			Pessoa_Fisica pf = new Pessoa_Fisica();
-			pf.setNome(resultado.getString("pf.nome"));
-			nf.setFornecedor(pf);
 			
 			itens.add(nf);
 		}
@@ -145,7 +101,7 @@ public class NotaFiscalDAO {
 		
 		// COMANDO DE PREPARA플O
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		comando.setLong(1, nf.getNumeroNota());
+		comando.setDouble(1, nf.getNumeroNota());
 		comando.setLong(2, nf.getFornecedor().getCodigo());
 		comando.setLong(3, nf.getCodigo());
 

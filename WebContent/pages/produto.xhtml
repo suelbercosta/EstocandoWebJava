@@ -99,25 +99,12 @@
 				<h:panelGrid id="pnlNovoProduto" columns="2">
 
 					<p:outputLabel for="txtNFNovoProd" value="Nº Nota Fiscal:" />
-					<p:inputText id="txtNFNovoProd"
-						value="#{MBNotaFiscal.notaFiscal.numeroNota}"
-						required="true" requiredMessage="O campo nota fiscal é obrigatório." />	
-										
-					<p:outputLabel for="txtFornPF" value="Fornecedor"  />
-					<p:selectOneMenu id="txtFornPF" rendered="true"
-						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
-						required="true" requiredMessage="O campo fornecedor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Fornecedor" />
-						<f:selectItems value="#{MBNotaFiscal_Produto.comboPF}" var="item"
-							itemValue="#{item.codigo}" itemLabel="#{item.pessoafisica.nome}" />
-					</p:selectOneMenu>	
-					
-					<p:selectOneMenu id="txtFornPJ" rendered="#{MBNotaFiscal_Produto.mostrarpj}"
-						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
-						required="true" requiredMessage="O campo fornecedor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Forn. Pessoa Jurídica" />
-						<f:selectItems value="#{MBNotaFiscal_Produto.comboPJ}" var="item"
-							itemValue="#{item.codigo}" itemLabel="#{item.pessoajuridica.razao_social}" />
+					<p:selectOneMenu id="txtNFNovoProd" rendered="true"
+						value="#{MBNotaFiscal.notaFiscal.codigo}" filter="true"
+						required="true" requiredMessage="O campo nota fiscal é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Nota Fiscal" />
+						<f:selectItems value="#{MBNotaFiscal_Produto.comboNF}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.numeroNota}" />
 					</p:selectOneMenu>	
 					
 					<p:outputLabel for="txtDescNovoProd" value="Descrição do Produto:" />
@@ -193,11 +180,11 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel for="txtTipoProdNovoProd" value="Tipo do Produto:" />
-					<p:selectOneMenu id="txtTipoProdNovoProd"
+					<p:selectOneMenu id="txtTipoProdNovoProd" rendered="true"
 						value="#{MBProduto.produto.tipo_produto.codigo}" filter="true"
 						required="true" requiredMessage="O campo tipo do produto é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Selecione o Tipo" />
-						<f:selectItems value="#{MBProduto.comboTipoProduto}" var="item"
+						<f:selectItems value="#{MBNotaFiscal_Produto.comboTP}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
 

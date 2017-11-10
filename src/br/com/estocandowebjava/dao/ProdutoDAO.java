@@ -72,6 +72,7 @@ public class ProdutoDAO {
 			p.setCor(resultado.getString("p.cor"));
 			
 			TipoProduto t = new TipoProduto();
+			t.setCodigo(resultado.getLong("t.codigo"));
 			t.setDescricao(resultado.getString("t.descricao"));
 			p.setTipo_produto(t);
 			

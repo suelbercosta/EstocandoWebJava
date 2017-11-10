@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.estocandowebjava.dao.NotaFiscal_ProdutoDAO;
 import br.com.estocandowebjava.dao.ProdutoDAO;
 import br.com.estocandowebjava.dao.TipoProdutoDAO;
+import br.com.estocandowebjava.domain.NotaFiscal_Produto;
 import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.TipoProduto;
 import br.com.estocandowebjava.util.JSFUtil;
@@ -17,12 +19,21 @@ import br.com.estocandowebjava.util.JSFUtil;
 public class ProdutoBean implements InterfaceBean {
 	// Declaração de variáveis
 	private Produto produto = new Produto();
+	private NotaFiscal_Produto nfp = new NotaFiscal_Produto();
 	private ArrayList<TipoProduto> comboTipoProduto;
 
 	private ArrayList<Produto> itens;
 	private ArrayList<Produto> itensFiltrados;
 
 	// Declaração dos métodos gets e sets
+	public NotaFiscal_Produto getNfp() {
+		return nfp;
+	}
+
+	public void setNfp(NotaFiscal_Produto nfp) {
+		this.nfp = nfp;
+	}
+	
 	public Produto getProduto() {
 		return produto;
 	}
@@ -73,9 +84,9 @@ public class ProdutoBean implements InterfaceBean {
 		try {
 			produto = new Produto();
 
-			TipoProdutoDAO cdao = new TipoProdutoDAO();
+			TipoProdutoDAO tpdao = new TipoProdutoDAO();
 
-			comboTipoProduto = cdao.listar();
+			comboTipoProduto = tpdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
@@ -88,7 +99,10 @@ public class ProdutoBean implements InterfaceBean {
 	public void novo() {
 		try {
 			ProdutoDAO pdao = new ProdutoDAO();
-			pdao.salvar(produto);
+			//pdao.salvar(produto);
+			
+			NotaFiscal_ProdutoDAO nfpdao = new NotaFiscal_ProdutoDAO();
+			nfpdao.salvar(nfp);
 
 			itens = pdao.listar();
 
