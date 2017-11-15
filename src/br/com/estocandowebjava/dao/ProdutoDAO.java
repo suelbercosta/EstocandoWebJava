@@ -15,28 +15,57 @@ public class ProdutoDAO {
 	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
 	public void salvar(Produto p) throws SQLException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("insert into Estoque ");
-		sql.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
-		sql.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
-		sql.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-
+		sql.append("START TRANSACTION; ");
+			
+			StringBuilder sql1 = new StringBuilder();
+			sql1.append("insert into Estoque ");
+			sql1.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
+			sql1.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
+			sql1.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
+			
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("SET @cod_nf = 1;");
+			
+			StringBuilder sql3 = new StringBuilder();
+			sql3.append("SET @cod_prod = LAST_INSERT_ID(); ");
+			
+			StringBuilder sql4 = new StringBuilder();
+			sql4.append("INSERT INTO NotaFiscal_Produto ");
+			sql4.append("(NotaFiscal_codigo, Produto_codigo) ");
+			sql4.append("VALUES (@cod_nf, @cod_prod); ");
+			
+		StringBuilder sql5 = new StringBuilder();
+		sql5.append("COMMIT; ");
+		
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
-
-		// COMANDO DE PREPARAÇÃO
+		
+		// COMANDOS DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		comando.setString(1, p.getDescricao());
-		comando.setDouble(2, p.getQuantidade());
-		comando.setString(3, p.getUnid_med());
-		comando.setDouble(4, p.getValor());
-		comando.setString(5, p.getData_val());
-		comando.setString(6, p.getData_aquis());
-		comando.setDouble(7, p.getQuant_minima());
-		comando.setDouble(8, p.getPeso());
-		comando.setString(9, p.getCor());
-		comando.setLong(10, p.getTipo_produto().getCodigo());
-
+		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
+		PreparedStatement comando2 = conexao.prepareStatement(sql2.toString());
+		PreparedStatement comando3 = conexao.prepareStatement(sql3.toString());
+		PreparedStatement comando4 = conexao.prepareStatement(sql4.toString());
+		PreparedStatement comando5 = conexao.prepareStatement(sql5.toString());
+		
+		// INCLUSÃO DOS DADOS NA TABELA PRODUTO
+		comando1.setString(1, p.getDescricao()); 
+		comando1.setDouble(2, p.getQuantidade()); 
+		comando1.setString(3, p.getUnid_med()); 
+		comando1.setDouble(4, p.getValor()); 
+		comando1.setString(5, p.getData_val()); 
+		comando1.setString(6, p.getData_aquis()); 
+		comando1.setDouble(7, p.getQuant_minima()); 
+		comando1.setDouble(8, p.getPeso()); 
+		comando1.setString(9, p.getCor()); 
+		comando1.setLong(10, p.getTipo_produto().getCodigo()); 
+		
 		comando.executeUpdate();
+		comando1.executeUpdate();
+		comando2.executeUpdate();
+		comando3.executeUpdate();
+		comando4.executeUpdate();
+		comando5.executeUpdate();
 	}
 	
 	//-----------------------------------------------------------------

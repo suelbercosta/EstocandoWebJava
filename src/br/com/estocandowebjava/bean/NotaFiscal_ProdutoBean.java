@@ -23,7 +23,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 @ViewScoped
 public class NotaFiscal_ProdutoBean {
 	private Produto produto;
-	private NotaFiscal_Produto notafiscal_produto;
+	private NotaFiscal_Produto notafiscal_produto = new NotaFiscal_Produto();
 	private ArrayList<TipoProduto> comboTipo;
 	private ArrayList<NotaFiscal> comboNF;
 	private ArrayList<Produto> comboProduto;
@@ -174,7 +174,6 @@ public class NotaFiscal_ProdutoBean {
 			itens = dao.listar();
 
 			JSFUtil.adicionarMensagemSucesso("Dados salvos com sucesso");
-
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());

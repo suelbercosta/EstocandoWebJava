@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.estocandowebjava.dao.NotaFiscal_ProdutoDAO;
 import br.com.estocandowebjava.dao.ProdutoDAO;
 import br.com.estocandowebjava.dao.TipoProdutoDAO;
 import br.com.estocandowebjava.domain.NotaFiscal_Produto;
@@ -82,7 +81,7 @@ public class ProdutoBean implements InterfaceBean {
 	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
 		try {
-			produto = new Produto();
+			nfp = new NotaFiscal_Produto();
 
 			TipoProdutoDAO tpdao = new TipoProdutoDAO();
 
@@ -99,10 +98,7 @@ public class ProdutoBean implements InterfaceBean {
 	public void novo() {
 		try {
 			ProdutoDAO pdao = new ProdutoDAO();
-			//pdao.salvar(produto);
-			
-			NotaFiscal_ProdutoDAO nfpdao = new NotaFiscal_ProdutoDAO();
-			nfpdao.salvar(nfp);
+			pdao.salvar(produto);
 
 			itens = pdao.listar();
 

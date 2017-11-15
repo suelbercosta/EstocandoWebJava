@@ -1,8 +1,8 @@
 package br.com.estocandowebjava.domain;
 
 public class NotaFiscal_Produto {
-	private NotaFiscal notafiscal;
-	private Produto produto;
+	private NotaFiscal notafiscal = new NotaFiscal();
+	private Produto produto = new Produto();
 	
 	public NotaFiscal getNotafiscal() {
 		return notafiscal;

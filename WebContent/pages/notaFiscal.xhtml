@@ -19,8 +19,10 @@
 
 	<!-- CONTEUDO DA PÁGINA -->
 	<ui:define id="conteudo" name="conteudo">
-	<f:event listener="#{MBNotaFiscal.carregarListagem}"
+	
+		<f:event listener="#{MBNotaFiscal.carregarListagem}"
 			type="preRenderView" />
+			
 		<h:form id="formListagemNotaFiscal">
 
 			<!-- TABELA COM OS DADOS DAS NOTAS FISCAIS -->
@@ -33,22 +35,19 @@
 				<f:facet name="header">
 					<h:outputText value=" Lista de Notas Fiscais" />
 				</f:facet>
-				<p:column headerText="CÓDIGO" sortBy="#{item.codigo}"
-					filterBy="#{item.codigo}">
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}" width="120">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 				
-				<p:column headerText="NÚMERO DA NF" sortBy="#{item.numero_nota}"
-					filterBy="#{item.numero_nota}">
-					<h:outputText value="Teste" />
+				<p:column headerText="NÚMERO DA NF"	filterBy="#{item.numero_nota}" width="120">
+					<h:outputText value="TESTE" />
 				</p:column>
 
-				<p:column headerText="FORNECEDOR" 
-					filterBy="#{item.Fornecedor}">
-					<h:outputText value="#{item.Fornecedor}" />
+				<p:column headerText="FORNECEDOR" filterBy="#{item.fornecedor}">
+					<h:outputText value="#{item.fornecedor}" />
 				</p:column>
 
-				<p:column headerText="OPÇÕES">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirNotaFiscal').show();"

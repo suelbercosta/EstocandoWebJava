@@ -14,7 +14,7 @@ import br.com.estocandowebjava.factoty.ConexaoFactory;
 public class NotaFiscal_ProdutoDAO {
 
 	// DEFINIÇÃO DO COMANDO SQL PARA SALVAR OS DADOS
-	public void salvar(NotaFiscal_Produto nf_p) throws SQLException {
+	public void salvar(NotaFiscal_Produto nfp) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("START TRANSACTION; ");
 			
@@ -22,60 +22,59 @@ public class NotaFiscal_ProdutoDAO {
 			sql1.append("insert into Estoque ");
 			sql1.append("(descricao, quantidade, unid_med, valor, data_val, data_aquis, ");
 			sql1.append("quant_minima, peso, cor, Tipo_Produto_codigo) ");
-			sql1.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+			sql1.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
+			
+			StringBuilder sql2 = new StringBuilder();
+			sql2.append("SET @cod_nf = ?;");
 			
 			StringBuilder sql3 = new StringBuilder();
-			sql3.append("SET @cod_nf = ?");
+			sql3.append("SET @cod_prod = LAST_INSERT_ID(); ");
 			
 			StringBuilder sql4 = new StringBuilder();
-			sql4.append("SET @cod_prod = LAST_INSERT_ID(); ");
+			sql4.append("INSERT INTO NotaFiscal_Produto ");
+			sql4.append("(NotaFiscal_codigo, Produto_codigo) ");
+			sql4.append("VALUES (@cod_nf, @cod_prod); ");
 			
-			StringBuilder sql5 = new StringBuilder();
-			sql5.append("INSERT INTO NotaFiscal_Produto ");
-			sql5.append("(NotaFiscal_codigo, Produto_codigo) ");
-			sql5.append("VALUES (@cod_nf, @cod_prod); ");
-			
-		StringBuilder sql6 = new StringBuilder();
-		sql6.append("COMMIT; ");
+		StringBuilder sql5 = new StringBuilder();
+		sql5.append("COMMIT; ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();
 
-		// COMANDO DE PREPARAÇÃO
+		// COMANDOS DE PREPARAÇÃO
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		PreparedStatement comando1 = conexao.prepareStatement(sql1.toString());
+		PreparedStatement comando2 = conexao.prepareStatement(sql2.toString());
 		PreparedStatement comando3 = conexao.prepareStatement(sql3.toString());
 		PreparedStatement comando4 = conexao.prepareStatement(sql4.toString());
 		PreparedStatement comando5 = conexao.prepareStatement(sql5.toString());
-		PreparedStatement comando6 = conexao.prepareStatement(sql6.toString());
 		
 		// INCLUSÃO DOS DADOS NA TABELA PRODUTO
-		Produto p = new Produto();
-		comando1.setString(1, p.getDescricao());
-		comando1.setDouble(2, p.getQuantidade());
-		comando1.setString(3, p.getUnid_med());
-		comando1.setDouble(4, p.getValor());
-		comando1.setString(5, p.getData_val());
-		comando1.setString(6, p.getData_aquis());
-		comando1.setDouble(7, p.getQuant_minima());
-		comando1.setDouble(8, p.getPeso());
-		comando1.setString(9, p.getCor());
-		comando1.setLong(10, p.getTipo_produto().getCodigo());
+		comando1.setString(1, nfp.getProduto().getDescricao());
+		System.out.println(nfp.getProduto().getDescricao());
+		comando1.setDouble(2, nfp.getProduto().getQuantidade());
+		comando1.setString(3, nfp.getProduto().getUnid_med());
+		comando1.setDouble(4, nfp.getProduto().getValor());
+		comando1.setString(5, nfp.getProduto().getData_val());
+		comando1.setString(6, nfp.getProduto().getData_aquis());
+		comando1.setDouble(7, nfp.getProduto().getQuant_minima());
+		comando1.setDouble(8, nfp.getProduto().getPeso());
+		comando1.setString(9, nfp.getProduto().getCor());
+		comando1.setLong(10, nfp.getProduto().getTipo_produto().getCodigo());
 		
 		// ABSTRAÇÃO DO CÓDIGO DA NOTA FISCAL
-		NotaFiscal nf = new NotaFiscal();
-		comando3.setLong(1, nf.getCodigo());
+		comando2.setLong(1, nfp.getNotafiscal().getCodigo());
 		
 		// INCLUSÃO DOS DADOS NA TABELA NOTA FISCAL PRODUTO
-		comando5.setLong(1, nf_p.getNotafiscal().getCodigo());
-		comando5.setLong(2, nf_p.getProduto().getCodigo());
+		comando4.setLong(1, nfp.getNotafiscal().getCodigo());
+		comando4.setLong(2, nfp.getProduto().getCodigo());
 
 		comando.executeUpdate();
 		comando1.executeUpdate();
+		comando2.executeUpdate();
 		comando3.executeUpdate();
 		comando4.executeUpdate();
 		comando5.executeUpdate();
-		comando6.executeUpdate();
 		
 	}
 	
