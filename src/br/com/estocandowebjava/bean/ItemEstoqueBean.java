@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.estocandowebjava.dao.ItemEstoqueDAO;
 import br.com.estocandowebjava.dao.ProdutoDAO;
@@ -28,6 +27,7 @@ public class ItemEstoqueBean {
 	private Produto produto;
 	private Requisicao requisicao;
 	private ItemEstoque itemEstoque = new ItemEstoque();
+	private ArrayList<ItemEstoque> comboFiltrar;
 	private ArrayList<Produto> comboProduto;
 	private ArrayList<Requisicao> comboRequisicao;
 
@@ -106,6 +106,14 @@ public class ItemEstoqueBean {
 	public void setItensFiltrados(ArrayList<ItemEstoque> itensFiltrados) {
 		this.itensFiltrados = itensFiltrados;
 	}
+	
+	public ArrayList<ItemEstoque> getComboFiltrar() {
+		return comboFiltrar;
+	}
+
+	public void setComboFiltrar(ArrayList<ItemEstoque> comboFiltrar) {
+		this.comboFiltrar = comboFiltrar;
+	}
 
 	// MÉTODO CARREGAR LISTAGEM
 	public void carregarListagem() {
@@ -120,6 +128,17 @@ public class ItemEstoqueBean {
 
 	// COMANDO PARA PREPARAR NOVO PRODUTOS
 	public void prepararNovo() {
+		try {
+			itemEstoque = new ItemEstoque();
+
+			ItemEstoqueDAO iedao = new ItemEstoqueDAO();
+
+			comboFiltrar = iedao.filtrar(); 
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+		
 		try {
 			itemEstoque = new ItemEstoque();
 

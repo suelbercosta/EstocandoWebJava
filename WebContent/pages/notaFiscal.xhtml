@@ -40,11 +40,11 @@
 				</p:column>
 				
 				<p:column headerText="NÚMERO DA NF"	filterBy="#{item.numero_nota}" width="120">
-					<h:outputText value="TESTE" />
+					<h:outputText value="#{item.numero_nota}" />
 				</p:column>
 
-				<p:column headerText="FORNECEDOR" filterBy="#{item.fornecedor}">
-					<h:outputText value="#{item.fornecedor}" />
+				<p:column headerText="FORNECEDOR" filterBy="#{item.fornecedor.fornecedor}">
+					<h:outputText value="#{item.fornecedor.fornecedor}" />
 				</p:column>
 
 				<p:column headerText="OPÇÕES" width="80">
@@ -85,15 +85,15 @@
 				<h:panelGrid id="pnlNovaNotaFiscal" columns="2">
 
 					<p:outputLabel for="numero" value="Número da NF:" />
-					<p:inputNumber id="numero" value="#{MBNotaFiscal.notaFiscal.numeroNota}" 
-						required="true" requiredMessage="O campo número da NF é obrigatório." />
+					<p:inputText id="numero" value="#{MBNotaFiscal.notaFiscal.numero_nota}" 
+						required="true" requiredMessage="O campo número da NF é obrigatório."/>
 						
 					<p:outputLabel for="fornecedor" value="Fornecedor:" />
 					<p:selectOneMenu id="fornecedor" rendered="true"
-						value="#{MBFornecedores}" filter="true"
+						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
 						required="true" requiredMessage="O campo fornecedor é obrigatório.">
 						<f:selectItem itemValue="" itemLabel="Fornecedor" />
-						<f:selectItems value="#{comboFornecedores}" var="item"
+						<f:selectItems value="#{MBNotaFiscal.comboFornecedores}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.fornecedor}" />
 					</p:selectOneMenu>
 
@@ -124,7 +124,7 @@
 					<h:outputText value="#{MBNotaFiscal.notaFiscal.codigo}" />
 
 					<p:outputLabel value="Número NF" />
-					<h:outputText value="#{MBNotaFiscal.notaFiscal.numeroNota}" />
+					<h:outputText value="#{MBNotaFiscal.notaFiscal.numero_nota}" />
 
 					<p:outputLabel value="Fornecedor" />
 					<h:outputText value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" />
@@ -155,12 +155,17 @@
 					<h:outputText value="#{MBNotaFiscal.notaFiscal.codigo}" />
 
 					<p:outputLabel for="editarNumero" value="Número da NF:" />
-					<p:inputNumber id="editarNumero" value="#{MBNotaFiscal.notaFiscal.numeroNota}" 
+					<p:inputNumber id="editarNumero" value="#{MBNotaFiscal.notaFiscal.numero_nota}" 
 						required="true" requiredMessage="O campo número da NF é obrigatório." />
 						
 					<p:outputLabel for="editarFornecedor" value="Fornecedor:" />
-					<p:inputNumber id="editarFornecedor" value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" 
-						required="true" requiredMessage="O campo fornecedor é obrigatório." />
+					<p:selectOneMenu id="editarFornecedor" rendered="true"
+						value="#{MBNotaFiscal.notaFiscal.fornecedor.codigo}" filter="true"
+						required="true" requiredMessage="O campo fornecedor é obrigatório.">
+						<f:selectItem itemValue="" itemLabel="Fornecedor" />
+						<f:selectItems value="#{MBNotaFiscal.comboFornecedores}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.fornecedor}" />
+					</p:selectOneMenu>
 						
 				</h:panelGrid>
 

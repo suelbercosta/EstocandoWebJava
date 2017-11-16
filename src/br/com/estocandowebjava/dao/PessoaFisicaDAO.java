@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import br.com.estocandowebjava.domain.Endereco;
 import br.com.estocandowebjava.domain.Fornecedor;
 import br.com.estocandowebjava.domain.Pessoa_Fisica;
-import br.com.estocandowebjava.domain.Pessoa_Juridica;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class PessoaFisicaDAO extends FornecedorDAO{

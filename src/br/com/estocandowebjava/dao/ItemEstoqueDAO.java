@@ -6,14 +6,53 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.faces.context.FacesContext;
-
 import br.com.estocandowebjava.domain.ItemEstoque;
 import br.com.estocandowebjava.domain.Produto;
 import br.com.estocandowebjava.domain.Requisicao;
 import br.com.estocandowebjava.factoty.ConexaoFactory;
 
 public class ItemEstoqueDAO {
+	//DEFINI플O DO COMANDO PARA FILTRAR OS PRODUTOS DA REQUISI플O
+	public ArrayList<ItemEstoque> filtrar() throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT e.codigo, e.descricao, e.quantidade, e.valor, ie.quantidade, r.codigo ");
+		sql.append("FROM Item_Estoque ie ");
+		sql.append("INNER JOIN Estoque e ON e.codigo = ie.Produto_codigo ");
+		sql.append("INNER JOIN Requisicao r ON r.codigo = ie.Requisicao_codigo ");
+		
+		// CRIA플O DA CONEX홒 COM O BANCO DE DADOS
+		Connection conexao = ConexaoFactory.conectar();
+
+		// COMANDO DE PREPARA플O
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		
+		ResultSet resultado = comando.executeQuery();
+		
+		ArrayList<ItemEstoque> itens = new ArrayList<ItemEstoque>();
+		
+		while(resultado.next()) {
+			Produto p = new Produto();
+			p.setCodigo(resultado.getLong("e.codigo"));
+			p.setDescricao(resultado.getString("e.descricao"));
+			p.setQuantidade(resultado.getDouble("e.quantidade"));
+			p.setValor(resultado.getDouble("e.valor"));
+			
+			ItemEstoque ie2 = new ItemEstoque();
+			ie2.setQuantidade(resultado.getDouble("ie.quantidade"));
+			
+			ie2.setProduto(p);
+			
+			Requisicao r = new Requisicao();
+			r.setCodigo(resultado.getLong("r.codigo"));
+			
+			ItemEstoque ie = new ItemEstoque();
+			ie.setRequisicao(r);
+			
+			itens.add(ie2);
+		}
+		return itens;
+	}
+	
 	// DEFINI플O DO COMANDO SQL PARA SALVAR OS DADOS
 	public void salvar(ItemEstoque ie) throws SQLException {
 		StringBuilder sql = new StringBuilder();

@@ -345,8 +345,8 @@
 
 			<h:form id="formIncluirProdutosRequisicao">
 			
-			<p:outputLabel value="CÓDIGO DA REQUISIÇÃO: " />
-			<h:outputText value="#{MBRequisicao.requisicao.codigo}" />
+			<!--  <p:outputLabel value="CÓDIGO DA REQUISIÇÃO: " />
+			<h:outputText value="#{MBRequisicao.requisicao.codigo}" />-->
 
 				<!-- TABELA COM OS DADOS DAS REQUISIÇÕES -->
 				<p:dataTable id="tblListagemProdutosRequisicao"
@@ -359,9 +359,9 @@
 						<h:outputText value=" Lista de Produtos da Requisição" />
 					</f:facet>
 
-					<p:column headerText="REQUISIÇÃO" sortBy="#{item.codigo}"
-						filterBy="#{item.codigo}" width="110">
-						<h:outputText value="#{item.codigo}" />
+					<p:column headerText="REQUISIÇÃO" sortBy="#{MBRequisicao.requisicao.codigo}"
+						filterBy="#{MBRequisicao.requisicao.codigo}" width="110">
+						<h:outputText value="#{MBRequisicao.requisicao.codigo}" />
 					</p:column>
 
 					<p:column headerText="CÓDIGO" sortBy="#{item.produto.codigo}"

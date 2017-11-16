@@ -104,7 +104,7 @@ public class NotaFiscal_ProdutoDAO {
 			
 			NotaFiscal nf = new NotaFiscal();
 			nf.setCodigo(resultado.getLong("nf.codigo"));
-			nf.setNumeroNota(resultado.getLong("nf.numero_nota"));
+			nf.setNumero_nota(resultado.getLong("nf.numero_nota"));
 			nf_p.setNotafiscal(nf);
 			
 			Produto p = new Produto();

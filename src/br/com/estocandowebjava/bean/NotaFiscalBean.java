@@ -19,7 +19,7 @@ public class NotaFiscalBean implements InterfaceBean {
 	// Declaração de variáveis
 	private NotaFiscal notaFiscal = new NotaFiscal();
 	private Fornecedor fornecedores = new Fornecedor();
-	private ArrayList<Fornecedores> comboFornecedor;
+	private ArrayList<Fornecedores> comboFornecedores;
 
 	private ArrayList<NotaFiscal> itens;
 	private ArrayList<NotaFiscal> itensFiltrados;
@@ -31,6 +31,14 @@ public class NotaFiscalBean implements InterfaceBean {
 
 	public void setNotaFiscal(NotaFiscal notaFiscal) {
 		this.notaFiscal = notaFiscal;
+	}
+	
+	public ArrayList<Fornecedores> getComboFornecedores() {
+		return comboFornecedores;
+	}
+
+	public void setComboFornecedores(ArrayList<Fornecedores> comboFornecedores) {
+		this.comboFornecedores = comboFornecedores;
 	}
 
 	public ArrayList<NotaFiscal> getItens() {
@@ -69,7 +77,7 @@ public class NotaFiscalBean implements InterfaceBean {
 
 			FornecedoresDAO fdao = new FornecedoresDAO();
 
-			comboFornecedor = fdao.listar();
+			comboFornecedores = fdao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
