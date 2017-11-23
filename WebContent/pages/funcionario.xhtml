@@ -29,40 +29,32 @@
 			<p:dataTable id="tblListagemFuncionario"
 				widgetVar="tabelaListagemFuncionario"
 				emptyMessage="Nenhum registro encontrado."
-				value="#{MBFuncionario.itens}" var="item" paginator="true" rows="10"
+				value="#{MBFuncionario.itens}" var="item" scrollable="true" scrollHeight="380"
 				filteredValue="#{MBFuncionario.itensFiltrados}">
 
 				<f:facet name="header">
-					<h:outputText value=" Lista de Funcionarios Cadastrados" />
+					<h:outputText value=" LISTA DE FUNCIONÁRIOS CADASTRADOS" />
 				</f:facet>
-				<p:column headerText="Matrícula" filterBy="#{item.matricula}"
+				<p:column headerText="MATRÍCULA" filterBy="#{item.matricula}"
 					width="110">
 					<h:outputText value="#{item.matricula}" />
 				</p:column>
 
-				<p:column headerText="Nome" filterBy="#{item.nome}">
+				<p:column headerText="NOME" filterBy="#{item.nome}">
 					<h:outputText value="#{item.nome}" />
 				</p:column>
 
-				<p:column headerText="Setor" filterBy="#{item.setor.descricao}"
-					width="150">
+				<p:column headerText="SETOR" filterBy="#{item.setor.descricao}"
+					width="200">
 					<h:outputText value="#{item.setor.descricao}" />
 				</p:column>
 
-				<p:column headerText="Cargo" filterBy="#{item.cargo.descricao}"
-					width="170">
+				<p:column headerText="CARGO" filterBy="#{item.cargo.descricao}"
+					width="240">
 					<h:outputText value="#{item.cargo.descricao}" />
 				</p:column>
 
-				<p:column headerText="Salário" filterBy="#{item.cargo.salario}"
-					width="110">
-					<h:outputText value="R$ " />
-					<h:outputText value="#{item.cargo.salario}">
-						<f:convertNumber pattern="0.00" />
-					</h:outputText>
-				</p:column>
-
-				<p:column headerText="Opções" width="80">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirFuncionario').show();"
@@ -83,7 +75,7 @@
 
 				<!-- BOTÃO ADICIONAR NOVO CARGO -->
 				<f:facet name="footer">
-					<p:commandButton value="Cadastrar novo funcionario"
+					<p:commandButton value="Cadastrar novo funcionário"
 						oncomplete="PF('dlgNovoFuncionario').show();"
 						actionListener="#{MBFuncionario.prepararNovo}"
 						update=":formNovoFuncionario:pnlNovoFuncionario :msgGlobal" />
@@ -299,7 +291,7 @@
 					<p:selectOneMenu id="txtCargoFuncNovo"
 						value="#{MBFuncionario.funcionario.cargo.codigo}" filter="true"
 						required="true" requiredMessage="O campo cargo é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Selecione o Cargo" />
+						<f:selectItem itemValue="" itemLabel="#{MBFuncionario.funcionario.cargo.descricao}" />
 						<f:selectItems value="#{MBFuncionario.comboCargo}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>
@@ -316,7 +308,7 @@
 					<p:selectOneMenu id="txtSetorFuncNovo"
 						value="#{MBFuncionario.funcionario.setor.codigo}" filter="true"
 						required="true" requiredMessage="O campo setor é obrigatório.">
-						<f:selectItem itemValue="" itemLabel="Selecione o Setor" />
+						<f:selectItem itemValue="" itemLabel="#{MBFuncionario.funcionario.setor.descricao}" />
 						<f:selectItems value="#{MBFuncionario.comboSetor}" var="item"
 							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
 					</p:selectOneMenu>

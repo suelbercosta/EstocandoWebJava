@@ -25,7 +25,7 @@
 			<p:dataTable id="tblListagemFornecedor" 
 			widgetVar="tabelaListagemFornecedor" 
 			emptyMessage="Nenhum registro encontrado."
-			value="#{MBFornecedorPF.itens}" var="item" paginator="true" rows="10"
+			value="#{MBFornecedorPF.itens}" var="item" scrollable="true" scrollHeight="380"
 			filteredValue="#{MBFornecedorPF.itensFiltrados}">
 				<f:facet name="header">
 					<h:outputText value="LISTAGEM DE FORNECEDORES PESSOA FÍSICA" />

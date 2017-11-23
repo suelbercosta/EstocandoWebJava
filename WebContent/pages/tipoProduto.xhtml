@@ -23,19 +23,19 @@
 			<!-- TABELA COM OS DADOS DOS TIPO DO PRODUTOS -->
 			<p:dataTable id="tblTipoProduto" widgetVar="tabelaTipoProdutos" emptyMessage="Nenhum registro encontrado."
 				value="#{MBTipoProduto.itens}" var="item" filteredValue="#{MBTipoProduto.itensFiltrados}"
-				paginator="true" rows="10">
+				scrollable="true" scrollHeight="380">
 				<f:facet name="header">
-					<h:outputText value="Tipos de Produtos Cadastrados" />
+					<h:outputText value="lISTA DOS TIPOS DE PRODUTO" />
 				</f:facet>
-				<p:column headerText="Código" filterBy="#{item.codigo}" width="160">
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}" width="160">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Descrição" filterBy="#{item.descricao}">
+				<p:column headerText="DESCRIÇÃO" filterBy="#{item.descricao}">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
-				<p:column headerText="Opções" width="160">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirTipoProduto').show();"

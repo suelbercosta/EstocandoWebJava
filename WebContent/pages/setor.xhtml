@@ -23,24 +23,24 @@
 			<!-- TABELA COM OS DADOS DOS SETORES -->
 			<p:dataTable id="tblSetor" widgetVar="tabelaSetor" emptyMessage="Nenhum registro encontrado."
 				value="#{MBSetor.itens}" var="item" filteredValue="#{MBSetor.itensFiltrados}"
-				paginator="true" rows="10">
+				scrollable="true" scrollHeight="380">
 				<f:facet name="header">
-					<h:outputText value="Setores Cadastrados" />
+					<h:outputText value="SETORES CADASTRADOS" />
 				</f:facet>
-				<p:column headerText="Código" filterBy="#{item.codigo}" width="120">
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}" width="120">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Descrição" filterBy="#{item.descricao}"
+				<p:column headerText="DESCRIÇÃO" filterBy="#{item.descricao}"
 					width="400">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
-				<p:column headerText="Andar" filterBy="#{item.andar}">
+				<p:column headerText="ANDAR" filterBy="#{item.andar}">
 					<h:outputText value="#{item.andar}" />
 				</p:column>
 
-				<p:column headerText="Opções" width="80">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirSetor').show();"

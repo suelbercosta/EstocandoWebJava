@@ -29,7 +29,7 @@
 			<p:dataTable id="tblListagemTelefone"
 				widgetVar="tabelaListagemTelefone"
 				emptyMessage="Nenhum registro encontrado."
-				value="#{MBTelefone.itens}" var="item" paginator="true" rows="10"
+				value="#{MBTelefone.itens}" var="item" scrollable="true" scrollHeight="380"
 				filteredValue="#{MBTelefone.itensFiltrados}">
 
 				<f:facet name="header">

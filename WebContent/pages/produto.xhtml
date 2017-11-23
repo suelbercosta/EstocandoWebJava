@@ -29,39 +29,39 @@
 			<p:dataTable id="tblListagemProduto"
 				widgetVar="tabelaListagemProduto"
 				emptyMessage="Nenhum registro encontrado."
-				value="#{MBProduto.itens}" var="item" paginator="true" rows="10"
+				value="#{MBProduto.itens}" var="item" scrollable="true" scrollHeight="380"
 				filteredValue="#{MBProduto.itensFiltrados}">
 
 				<f:facet name="header">
-					<h:outputText value=" Lista de Produtos Cadastrados" />
+					<h:outputText value=" LISTA DA PRODUTOS CADASTRATDOS" />
 				</f:facet>
-				<p:column headerText="Código" filterBy="#{item.codigo}"
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}"
 					width="110">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Descrição" filterBy="#{item.descricao}">
+				<p:column headerText="DESCRIÇÃO" filterBy="#{item.descricao}">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
-				<p:column headerText="Quantidade" filterBy="#{item.quantidade}"
+				<p:column headerText="QUANTIDADE" filterBy="#{item.quantidade}"
 					width="110">
 					<h:outputText value="#{item.quantidade}" />
 				</p:column>
 
-				<p:column headerText="Valor Unitário" filterBy="#{item.valor}"
+				<p:column headerText="VALOR UNITÁRIO" filterBy="#{item.valor}"
 					width="110">
 					<h:outputText value="R$ " /> <h:outputText value="#{item.valor}">
 						<f:convertNumber pattern="0.00"/>
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Data Aquisição" filterBy="#{item.data_aquis}"
+				<p:column headerText="DATA AQUISIÇÃO" filterBy="#{item.data_aquis}"
 					width="110">
 					<h:outputText value="#{item.data_aquis}" />
 				</p:column>
 
-				<p:column headerText="Opções" width="80">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirProduto').show();"

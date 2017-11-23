@@ -29,11 +29,11 @@
 			<p:dataTable id="tblListagemNotaFiscal"
 				widgetVar="tabelaListagemNotaFiscal"
 				emptyMessage="Nenhum registro encontrado."
-				value="#{MBNotaFiscal.itens}" var="item" paginator="true" rows="10"
+				value="#{MBNotaFiscal.itens}" var="item" scrollable="true" scrollHeight="380"
 				filteredValue="#{MBNotaFiscal.itensFiltrados}">
 
 				<f:facet name="header">
-					<h:outputText value=" Lista de Notas Fiscais" />
+					<h:outputText value="LISTA DE NOTAS FISCAIS" />
 				</f:facet>
 				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}" width="120">
 					<h:outputText value="#{item.codigo}" />

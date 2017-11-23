@@ -40,7 +40,7 @@ public class RequisicaoDAO {
 		sql.append("from Requisicao r ");
 		sql.append("inner join Funcionario as f1 on f1.matricula = r.almoxarife ");
 		sql.append("inner join Funcionario as f2 ");
-		sql.append("on f2.matricula = r.requisitante_codigo ");
+		sql.append("on f2.matricula = r.requisitante_codigo ORDER BY r.codigo DESC ");
 
 		// CRIAÇÃO DA CONEXÃO COM O BANCO DE DADOS
 		Connection conexao = ConexaoFactory.conectar();

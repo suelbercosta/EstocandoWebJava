@@ -24,31 +24,31 @@
 			<p:dataTable id="tblCargo" widgetVar="tabelaCargos"
 				emptyMessage="Nenhum registro encontrado." value="#{MBCargo.itens}"
 				var="item" filteredValue="#{MBCargo.itensFiltrados}"
-				paginator="true" rows="10">
+				scrollable="true" scrollHeight="380">
 				<f:facet name="header">
-					<h:outputText value="Cargos Cadastrados" />
+					<h:outputText value="CARGOS CADASTRADOS" />
 				</f:facet>
-				<p:column headerText="Código" filterBy="#{item.codigo}" width="120">
+				<p:column headerText="CÓDIGO" filterBy="#{item.codigo}" width="120">
 					<h:outputText value="#{item.codigo}" />
 				</p:column>
 
-				<p:column headerText="Descrição" filterBy="#{item.descricao}"
+				<p:column headerText="DESCRIÇÃO" filterBy="#{item.descricao}"
 					width="400">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
-				<p:column headerText="Salário" filterBy="#{item.salario}">
+				<p:column headerText="SALÁRIO" filterBy="#{item.salario}">
 					<h:outputText value="R$ " /><h:outputText value="#{item.salario}">
 						<f:convertNumber pattern="0.00" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Permissão" filterBy="#{item.permissao}"
+				<p:column headerText="PERMISSÃO" filterBy="#{item.permissao}"
 					width="120">
 					<h:outputText value="#{item.permissao}" />
 				</p:column>
 
-				<p:column headerText="Opções" width="80">
+				<p:column headerText="OPÇÕES" width="80">
 					<!-- BOTÃO DE EXCLUIR NA LISTAGEM DE OBJETOS -->
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgExcluirCargo').show();"

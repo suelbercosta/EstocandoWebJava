@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -26,8 +27,9 @@ public class ItemEstoqueBean {
 	private Double quant;
 	private Produto produto;
 	private Requisicao requisicao;
-	private ItemEstoque itemEstoque = new ItemEstoque();
+	private ItemEstoque itemEstoque;
 	private ArrayList<ItemEstoque> comboFiltrar;
+	private ArrayList<ItemEstoque> comboItemEstoque;
 	private ArrayList<Produto> comboProduto;
 	private ArrayList<Requisicao> comboRequisicao;
 
@@ -114,8 +116,17 @@ public class ItemEstoqueBean {
 	public void setComboFiltrar(ArrayList<ItemEstoque> comboFiltrar) {
 		this.comboFiltrar = comboFiltrar;
 	}
+	
+	public ArrayList<ItemEstoque> getComboItemEstoque() {
+		return comboItemEstoque;
+	}
+
+	public void setComboItemEstoque(ArrayList<ItemEstoque> comboItemEstoque) {
+		this.comboItemEstoque = comboItemEstoque;
+	}
 
 	// MÉTODO CARREGAR LISTAGEM
+	@PostConstruct
 	public void carregarListagem() {
 		try {
 			ItemEstoqueDAO dao = new ItemEstoqueDAO();
@@ -133,7 +144,7 @@ public class ItemEstoqueBean {
 
 			ItemEstoqueDAO iedao = new ItemEstoqueDAO();
 
-			comboFiltrar = iedao.filtrar(); 
+			comboItemEstoque = iedao.listar(); 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adicionarMensagemErro(ex.getMessage());

@@ -24,8 +24,7 @@
 			<p:dataTable id="tblEndereco" widgetVar="tabelaEnderecos"
 				emptyMessage="Nenhum registro encontrado."
 				value="#{MBEndereco.itens}" var="item"
-				filteredValue="#{MBEndereco.itensFiltrados}" paginator="true"
-				rows="10">
+				filteredValue="#{MBEndereco.itensFiltrados}" scrollable="true" scrollHeight="380">
 				<f:facet name="header">
 					<h:outputText value="Enderecos Cadastrados" />
 				</f:facet>
