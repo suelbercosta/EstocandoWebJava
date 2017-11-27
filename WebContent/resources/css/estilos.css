@@ -28,3 +28,21 @@
 form panelGrid #txtFornPJ {
 	display:none;
 }
+
+#sobre {
+	text-align: justify;
+	padding: 50px;
+	font-size: 14px;
+	line-height: 2;
+	word-spacing: 5px;
+	text-indent: 4em;
+}
+
+#titulo {
+	text-align: center;
+	margin-top: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 2;
+	word-spacing: 5px;
+}

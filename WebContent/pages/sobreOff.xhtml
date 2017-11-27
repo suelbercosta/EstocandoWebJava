@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="cabecalho">
+		<ui:include src="/includes/cabecalho.xhtml" />
+	</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipalOff.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p id="sobre">O sistema <b>ESTOCANDO WEB JAVA</b> foi desenvolvido com o intuito de ser o trabalho de conclusão de curso (TCC) 
+			do curso de Sistemas de Informação da Faculdade Estácio do Recife.
+			Este sistema foi desenvolvido pelo aluno <b>SUELBER COSTA DA PAZ</b> em computador pessoal utilizando a 
+			liguagem de programação JAVA para o <i>Backend</i>, as linguagens XHTML, CSS, JavaScript para o <i>Frontend</i>
+			e a linguagem SQL para o Banco de Dados relacional.
+			O sistema <b>ESTOCANDO WEB JAVA</b> é uma aplicação web desenvolvida em Java e terá como principal função o 
+			controle de estoque (entrada e saída) de materiais em um almoxarifado. O sistema não contará com interação 
+			cliente/fornecedor, visto que será de uso restrito a uma empresa, semelhante a uma ERP.</p>
+	</ui:define>
+</ui:composition>

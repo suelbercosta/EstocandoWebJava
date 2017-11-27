@@ -10,6 +10,9 @@
 		<p:growl autoUpdate="true" />
 
 		<p:panelMenu style="width:200px">
+			<p:submenu label="Principal">
+				<p:menuitem value="Página Inicial" outcome="/pages/principal.xhtml"/>
+			</p:submenu>
 			<p:submenu label="Menu">
 				<p:menuitem value="Cargo" outcome="/pages/cargo.xhtml"/>
 				<p:menuitem value="Estoque" outcome="/pages/produto.xhtml"/>
@@ -22,6 +25,9 @@
 				<p:menuitem value="Nota Fiscal" outcome="/pages/notaFiscal.xhtml"/>
 				<p:menuitem value="Setor" outcome="/pages/setor.xhtml"/>
 				<p:menuitem value="Tipo do Produto" outcome="/pages/tipoProduto.xhtml"/>
+			</p:submenu>
+			<p:submenu label="Sobre">
+				<p:menuitem value="Sobre o sistema." outcome="/pages/sobre.xhtml" />
 			</p:submenu>
 		</p:panelMenu>
 	</h:form>

@@ -15,7 +15,7 @@
 			</p:submenu>
 
 			<p:submenu label="Sobre">
-				<p:menuitem value="Ajuda" />
+				<p:menuitem value="Sobre o sistema." outcome="/pages/sobreOff.xhtml" />
 			</p:submenu>
 		</p:panelMenu>
 	</h:form>
@@ -23,21 +23,23 @@
 	<p:dialog header="Acessar o Sistema" widgetVar="dlgLogin" modal="true"
 			appendTo="@(body)"  closable="true" draggable="false" resizable="false">
 			<h:form id="formLogin">
+				<p:messages autoUpdate="true"/>
 				<h:panelGrid id="pnlLogin" columns="2">
 					<p:outputLabel for="usuario" value="Usuário:" />
-					<p:inputText id="usuario" size="20" maxlength="20"
-						value="" required="true" requiredMessage="O campo login é obrigatório."/>
+					<p:inputText id="usuario" size="20" maxlength="20" placeholder="Digite o usuário"
+						value="#{MBLogin.login.funcionario.login}" required="true" requiredMessage="O campo usuário é obrigatório."/>
 
 					<p:outputLabel for="senha" value="Senha:" />
-					<p:password id="senha" size="20" maxlength="8"
-						value="" required="true" requiredMessage="O campo senha é obrigatório."/>
+					<p:password id="senha" size="20" maxlength="8" placeholder="Digite a senha"
+						value="#{MBLogin.login.funcionario.senha}" required="true" requiredMessage="O campo senha é obrigatório."/>
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 				
-					<p:commandButton 
-					value="Entrar" onclick="login();" />
+					<p:commandButton value="Entrar" icon="ui-icon-key"
+					actionListener="#{MBLogin.fazerLogin}"
+					update=":formLogin:pnlLogin :msgGlobal"/>
 					
-					<p:commandButton value="Cancelar" process="@this"
+					<p:commandButton value="Cancelar" icon="ui.icon.exit" process="@this"
 						onclick="PF('dlgLogin').hide();">
 						<p:resetInput target="pnlLogin" />
 					</p:commandButton>

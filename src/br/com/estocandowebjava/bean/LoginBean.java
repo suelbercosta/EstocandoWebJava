@@ -1,55 +1,65 @@
 package br.com.estocandowebjava.bean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.estocandowebjava.dao.LoginDAO;
 import br.com.estocandowebjava.domain.Funcionario;
+import br.com.estocandowebjava.domain.Login;
+import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBLogin")
 @ViewScoped
 public class LoginBean {
-	private Funcionario login;
-	private Funcionario senha;
-	private ArrayList<Funcionario> itens;
-	private ArrayList<Funcionario> itensFiltrados;
-
-	public Funcionario getLogin() {
-		return login;
+	private Login login;
+	private ArrayList<Funcionario> comboFuncionario;
+	
+	public ArrayList<Funcionario> getComboFuncionario() {
+		return comboFuncionario;
 	}
 
-	public void setLogin(Funcionario login) {
-		this.login = login;
+	public void setComboFuncionario(ArrayList<Funcionario> comboFuncionario) {
+		this.comboFuncionario = comboFuncionario;
 	}
 
-	public Funcionario getSenha() {
-		return senha;
-	}
-
-	public void setSenha(Funcionario senha) {
-		this.senha = senha;
-	}
-
-	public ArrayList<Funcionario> getItens() {
+	public ArrayList<Login> getItens() {
 		return itens;
 	}
 
-	public void setItens(ArrayList<Funcionario> itens) {
+	public void setItens(ArrayList<Login> itens) {
 		this.itens = itens;
 	}
 
-	public ArrayList<Funcionario> getItensFiltrados() {
+	public ArrayList<Login> getItensFiltrados() {
 		return itensFiltrados;
 	}
 
-	public void setItensFiltrados(ArrayList<Funcionario> itensFiltrados) {
+	public void setItensFiltrados(ArrayList<Login> itensFiltrados) {
 		this.itensFiltrados = itensFiltrados;
 	}
 
-	@PostConstruct
-	public void login() {
 
+	private ArrayList<Login> itens;
+	private ArrayList<Login> itensFiltrados;
+
+	//MÉTODOS GETS E SETS
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+	
+
+	@PostConstruct
+	public void fazerLogin() throws SQLException {
+		login = new Login();
+		LoginDAO dao = new LoginDAO();
+		dao.validarLogin(login);
 	}
 }

@@ -15,7 +15,7 @@ import br.com.estocandowebjava.util.JSFUtil;
 
 @ManagedBean(name = "MBProduto")
 @ViewScoped
-public class ProdutoBean implements InterfaceBean {
+public class ProdutoBean {
 	// Declaração de variáveis
 	private Produto produto = new Produto();
 	private NotaFiscal_Produto nfp = new NotaFiscal_Produto();
@@ -77,8 +77,6 @@ public class ProdutoBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA PREPARAR NOVO PRODUTOS
-	@Override
-	// Sobreescrita do método prepararNovo() da InterfaceBean
 	public void prepararNovo() {
 		try {
 			nfp = new NotaFiscal_Produto();
@@ -93,8 +91,6 @@ public class ProdutoBean implements InterfaceBean {
 
 	}
 
-	@Override
-	// Sobreescrita do método novo()
 	public void novo() {
 		try {
 			ProdutoDAO pdao = new ProdutoDAO();
@@ -110,8 +106,6 @@ public class ProdutoBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA EXCLUIR UM PRODUTOS
-	@Override
-	// Sobreescrita do método excluir() da InterfaceBean
 	public void excluir() {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();
@@ -128,8 +122,6 @@ public class ProdutoBean implements InterfaceBean {
 	}
 
 	// COMANDO PARA PREPARAR EDITAR PRODUTOS
-	@Override
-	// Sobreescrita do método prepararEditar() da InterfaceBean
 	public void prepararEditar() {
 		try {
 			TipoProdutoDAO dao = new TipoProdutoDAO();
@@ -142,8 +134,6 @@ public class ProdutoBean implements InterfaceBean {
 
 	}
 
-	@Override
-	// Sobreescrita do método editar() da InterfaceBean
 	public void editar() {
 		try {
 			ProdutoDAO dao = new ProdutoDAO();

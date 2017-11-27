@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-31T18:10:48 -->
+<!-- 2017-11-23T03:02:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cargos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="160f60e2-9a79-4f68-ac06-db2d11052088">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="YENhcmdvYCAsMTUsMTUsMTY2NzQwOGItYzJlMy00OGI0LWI0NGEtMTQzOGRkZTllMjhkOw=="/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="estocando"/>
@@ -9,9 +9,7 @@
 	<parameter name="CARGO_PERMISSAO" class="java.lang.Long" isForPrompting="false"/>
 	<parameter name="CARGO_DESCRICAO" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT *
-FROM `Cargo`
-ORDER BY `Cargo`.descricao ASC]]>
+		<![CDATA[SELECT * FROM `Cargo` ORDER BY `Cargo`.descricao ASC]]>
 	</queryString>
 	<field name="cod_cargo" class="java.lang.Integer"/>
 	<field name="descricao" class="java.lang.String"/>
